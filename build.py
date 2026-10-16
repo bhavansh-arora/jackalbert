@@ -2,7 +2,7 @@
 """Static site generator for Jack Albert Weddings.
 
 Wraps every page in src/pages/ and every article in src/posts/ in the shared
-layout (head, header, menu, footer, film modal) and writes plain HTML to site/.
+layout (head, header, menu, footer, film modal) and writes plain HTML to the repo root.
 
     python3 build.py
 
@@ -26,7 +26,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).parent
 SRC = ROOT / "src"
-OUT = ROOT / "site"
+OUT = ROOT  # built pages sit at the repo root so any host serves them directly
 DOMAIN = "https://www.jackalbertweddings.ca"
 
 BRAND = {
@@ -456,7 +456,7 @@ def article(p, posts):
 
 def main():
     global VERSION
-    VERSION = str(int((SRC / ".." / "site" / "assets" / "css" / "site.css").stat().st_mtime))
+    VERSION = str(int((OUT / "assets" / "css" / "site.css").stat().st_mtime))
     posts = load_posts()
     pages = sorted((SRC / "pages").glob("*.html"))
     for page in pages:

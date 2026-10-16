@@ -3,21 +3,21 @@
 A multi-page, mobile-first website for **Jack Albert Weddings**, an Ottawa Valley wedding filmmaker.
 It is a plain static site: no framework, no build step needed to host it.
 
-**Deploy the `site/` folder** to any static host (Cloudflare Pages, Netlify, Vercel, GitHub Pages, cPanel).
+The built site lives at the **repo root** (`index.html` and friends), so any static host works with no settings: GitHub Pages (Settings → Pages → Deploy from branch `main`, folder `/ (root)`), Cloudflare Pages, Netlify, Vercel or cPanel.
 
 ## Pages
 
 | Page | File |
 | --- | --- |
-| Home | `site/index.html` |
-| Films | `site/films.html` |
-| The Experience | `site/experience.html` |
-| Investment & FAQ | `site/investment.html` |
-| About | `site/about.html` |
-| Journal (15 articles, filterable) | `site/journal.html` + one file per article |
-| Contact / inquiry form | `site/contact.html` |
-| Ottawa & Pembroke pages (SEO) | `site/ottawa-wedding-videographer.html`, `site/pembroke-wedding-videographer.html` |
-| Privacy, 404 | `site/privacy.html`, `site/404.html` |
+| Home | `index.html` |
+| Films | `films.html` |
+| The Experience | `experience.html` |
+| Investment & FAQ | `investment.html` |
+| About | `about.html` |
+| Journal (15 articles, filterable) | `journal.html` + one file per article |
+| Contact / inquiry form | `contact.html` |
+| Ottawa & Pembroke pages (SEO) | `ottawa-wedding-videographer.html`, `pembroke-wedding-videographer.html` |
+| Privacy, 404 | `privacy.html`, `404.html` |
 
 All article and location URLs match the current live site, so existing Google rankings carry over.
 `blog.html` redirects to `journal.html`. `sitemap.xml` and `robots.txt` are generated.
@@ -39,6 +39,6 @@ Pages live in `src/pages/`, articles in `src/posts/` (JSON), and the shared head
 python3 build.py
 ```
 
-Styles are in `site/assets/css/site.css` (colour and type tokens at the top) and behaviour is in `site/assets/js/site.js`.
+Styles are in `assets/css/site.css` (colour and type tokens at the top) and behaviour is in `assets/js/site.js`.
 
-To preview locally: `cd site && python3 -m http.server 8000`, then open http://localhost:8000.
+To preview locally: `python3 -m http.server 8000`, then open http://localhost:8000.
