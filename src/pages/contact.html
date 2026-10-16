@@ -9,7 +9,7 @@ footer_cta: no
     <div class="page-hero__grid">
       <div>
         <p class="eyebrow fade-in">Let’s Talk</p>
-        <h1 class="display-xl page-hero__title"><span class="split-line"><span>Tell me about</span></span><span class="split-line"><span><em class="accent">your day.</em></span></span></h1>
+        <h1 class="display-xl page-hero__title" data-split data-hero-split>Tell me about <em class="gold-text">your day.</em></h1>
       </div>
       <div class="page-hero__aside fade-in">
         <p class="body-lg">Share a few details and I’ll let you know if your date is open, usually with a reply within 24 hours.</p>
@@ -23,55 +23,80 @@ footer_cta: no
     <aside class="contact-aside reveal">
       <div class="frame-img reveal-img" style="aspect-ratio:16/11"><img src="assets/img/pembroke-kiss.jpg" alt="A couple sharing a kiss in a field of tall grass" loading="lazy"></div>
       <ul class="contact-list">
-        <li><span class="caps">Call / text</span><a href="tel:{{tel}}">{{phone}}</a></li>
+        <li><span class="caps">Call</span><a href="tel:{{tel}}">{{phone}}</a></li>
+        <li><span class="caps">Text</span><a href="sms:{{tel}}">Send Jack a text</a></li>
         <li><span class="caps">Email</span><a href="mailto:{{email}}">{{email}}</a></li>
         <li><span class="caps">Instagram</span><a href="{{instagram}}" target="_blank" rel="noopener">@jackalbertweddings</a></li>
-        <li><span class="caps">Based in</span><span class="lede" style="font-size:22px">Ottawa Valley, Ontario</span></li>
+        <li><span class="caps">Based in</span><span class="v">Ottawa Valley, Ontario</span></li>
       </ul>
       <div class="call-card">
         <h3>Rather just talk?</h3>
         <p>Skip the form and grab a time that works for you. It’s a relaxed, friendly call to see if we’re the right fit for your day.</p>
-        <a class="btn" href="{{calendly}}" target="_blank" rel="noopener">Book a quick call {{arrow}}</a>
+        <a class="btn btn--gold" href="{{calendly}}" target="_blank" rel="noopener">Book a 15-min call {{arrow}}</a>
       </div>
     </aside>
 
     <div class="form-wrap reveal" data-delay="1">
-      <form class="form" id="inquiry-form" action="{{formspree}}" method="POST" novalidate>
+      <form class="msform" id="inquiry-form" action="{{formspree}}" method="POST" novalidate>
         <input type="hidden" name="_subject" value="New wedding inquiry — jackalbertweddings.ca">
+        <input type="hidden" name="entry_point" value="contact">
         <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="display:none" aria-hidden="true">
-        <div class="field"><label for="name">Your name(s)</label><input class="input" id="name" name="name" type="text" autocomplete="name" placeholder="Sam &amp; Alex" required></div>
-        <div class="field"><label for="email">Email</label><input class="input" id="email" name="email" type="email" autocomplete="email" placeholder="you@email.com" required></div>
-        <div class="field"><label for="date">Wedding date</label><input class="input" id="date" name="wedding_date" type="date" required></div>
-        <div class="field"><label for="phone">Phone <span class="opt">(for a quick text)</span></label><input class="input" id="phone" name="phone" type="tel" autocomplete="tel" placeholder="(613) 555-0123"></div>
-        <div class="field field--full"><label for="venue">Venue or location</label><input class="input" id="venue" name="venue" type="text" placeholder="The Farmstead, Pembroke"></div>
-        <fieldset class="field field--full choice-group">
-          <legend>Which collection feels right?</legend>
-          <div class="choices">
-            <label class="choice"><input type="radio" name="collection" value="not-sure" checked><span>Not sure yet</span></label>
-            <label class="choice"><input type="radio" name="collection" value="sweet-simple"><span>Sweet &amp; Simple <small>from $1,950</small></span></label>
-            <label class="choice"><input type="radio" name="collection" value="classic-collection"><span>Classic Collection <small>$2,750</small></span></label>
-            <label class="choice"><input type="radio" name="collection" value="luxury-collection"><span>Luxury Collection <small>from $3,950</small></span></label>
+        <div class="msform__top"><span class="msform__count">Step 1 of 4</span><span class="msform__bar"><span></span></span><span class="msform__saved">Draft saved</span></div>
+
+        <fieldset class="msform__step" style="border:0;padding:0;margin:0">
+          <legend class="msform__q">When’s the <em>big day?</em></legend>
+          <div class="form-grid">
+            <div class="field"><label for="date">Wedding date</label><input class="input" id="date" name="wedding_date" type="date" required></div>
+            <div class="field"><label for="venue">Venue or town</label><input class="input" id="venue" name="venue" type="text" placeholder="The Farmstead, Pembroke"></div>
+            <div class="field field--full"><label class="check"><input type="checkbox" name="no_date_yet"> We don’t have a date yet</label></div>
+            <p class="datecheck__msg field--full" data-date-insight aria-live="polite" style="color:var(--gold)"></p>
           </div>
+          <div class="msform__nav"><span class="msform__hint">Press Enter ↵</span><button class="btn btn--gold magnetic" type="button" data-next>Continue {{arrow}}</button></div>
         </fieldset>
-        <div class="field field--full"><label for="message">Message</label><textarea class="textarea" id="message" name="message" placeholder="Tell me a little about the two of you and your plans…"></textarea></div>
-        <div class="field field--full"><label for="source">How did you find me?</label>
-          <select class="select input" id="source" name="source">
-            <option value="">Choose one</option>
-            <option>Instagram</option><option>Google</option><option>YouTube</option><option>Facebook</option>
-            <option>A friend or family member</option><option>My venue or another vendor</option><option>Other</option>
-          </select>
-        </div>
-        <p class="form__status" role="alert"></p>
-        <div class="form__foot">
-          <p class="form__note">I’ll send you a quick text so you know your inquiry arrived, then reply by email within 24 hours.</p>
-          <button class="btn" type="submit"><span class="label">Send inquiry</span> {{arrow}}</button>
-        </div>
+
+        <fieldset class="msform__step" style="border:0;padding:0;margin:0">
+          <legend class="msform__q">Which collection <em>feels right?</em></legend>
+          <div class="choices" role="radiogroup">
+            <label class="choice"><input type="radio" name="collection" value="not-sure" checked><span>Not sure yet<small>Help me choose</small></span></label>
+            <label class="choice"><input type="radio" name="collection" value="sweet-simple"><span>Sweet &amp; Simple<small>From $1,950 · 6 hours</small></span></label>
+            <label class="choice"><input type="radio" name="collection" value="classic-collection"><span>Classic Collection<small>$2,750 · 10 hours · Most popular</small></span></label>
+            <label class="choice"><input type="radio" name="collection" value="luxury-collection"><span>Luxury Collection<small>From $3,950 · 12+ hours</small></span></label>
+          </div>
+          <div class="msform__nav"><button class="msform__back" type="button" data-back>{{arrow}} Back</button><button class="btn btn--gold magnetic" type="button" data-next>Continue {{arrow}}</button></div>
+        </fieldset>
+
+        <fieldset class="msform__step" style="border:0;padding:0;margin:0">
+          <legend class="msform__q">Who are we <em>celebrating?</em></legend>
+          <div class="form-grid">
+            <div class="field field--full"><label for="name">Your names</label><input class="input" id="name" name="name" type="text" autocomplete="name" placeholder="Sam &amp; Alex" required></div>
+            <div class="field"><label for="email">Email</label><input class="input" id="email" name="email" type="email" autocomplete="email" placeholder="you@email.com" required></div>
+            <div class="field"><label for="phone">Phone <span class="opt">(for a quick text)</span></label><input class="input" id="phone" name="phone" type="tel" autocomplete="tel" placeholder="(613) 555-0123"></div>
+          </div>
+          <div class="msform__nav"><button class="msform__back" type="button" data-back>{{arrow}} Back</button><button class="btn btn--gold magnetic" type="button" data-next>Continue {{arrow}}</button></div>
+        </fieldset>
+
+        <fieldset class="msform__step" style="border:0;padding:0;margin:0">
+          <legend class="msform__q">Anything else <em>I should know?</em></legend>
+          <div class="form-grid">
+            <div class="field field--full"><label for="message">Your story <span class="opt">(optional)</span></label><textarea class="textarea" id="message" name="message" placeholder="How you met, the vibe of the day, the moments you can’t imagine missing…"></textarea></div>
+            <div class="field field--full"><label for="source">How did you find me?</label>
+              <select class="select input" id="source" name="source">
+                <option value="">Choose one</option>
+                <option>Instagram</option><option>Google</option><option>YouTube</option><option>Facebook</option>
+                <option>A friend or family member</option><option>My venue or another vendor</option><option>Other</option>
+              </select>
+            </div>
+          </div>
+          <p class="form__status" role="alert"></p>
+          <div class="msform__nav"><button class="msform__back" type="button" data-back>{{arrow}} Back</button><button class="btn btn--gold magnetic" type="submit"><span class="label">Send inquiry</span> {{arrow}}</button></div>
+          <p class="note" style="margin:0">I’ll send a quick text so you know it arrived, then reply by email within 24 hours.</p>
+        </fieldset>
       </form>
       <div class="form-success" role="status">
-        <p class="eyebrow">Received</p>
-        <h3>Thank <em class="accent">you.</em></h3>
-        <p class="body-lg">Your inquiry is on its way. I’ll reply within 24 hours, usually with a couple of questions and a quick call to see if we’re the right fit for your day.</p>
-        <div class="actions" style="margin-top:24px"><a class="btn" href="films.html">Watch a film while you wait {{arrow}}</a></div>
+        <svg class="success-check" viewBox="0 0 84 84" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="42" cy="42" r="38"/><path d="M27 43l10 10 21-22"/></svg>
+        <h3>Thank you, <em class="accent" data-hi>friend</em>.</h3>
+        <p class="body-lg">Your inquiry is on its way. I’ll reply within 24 hours, usually with a couple of questions. Want to lock things in faster? Grab a time for a quick call now.</p>
+        <div class="actions" style="margin-top:24px"><a class="btn btn--gold magnetic" href="{{calendly}}" target="_blank" rel="noopener">Book a 15-min call {{arrow}}</a><a class="link-line" href="films.html">Watch a film while you wait {{arrow}}</a></div>
       </div>
     </div>
   </div>

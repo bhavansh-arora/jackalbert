@@ -8,24 +8,25 @@ hero: dark
     <img src="assets/img/hero-poster.jpg" alt="" fetchpriority="high">
     <video muted loop playsinline autoplay preload="auto" poster="assets/img/hero-poster.jpg" data-src-desktop="assets/video/hero-1920.mp4" data-src-mobile="assets/video/hero-mobile.mp4" aria-hidden="true"></video>
   </div>
-  <div class="container hero__content">
-    <p class="eyebrow hero__eyebrow fade-in">Ottawa Valley · Ottawa · Kingston · Beyond</p>
-    <h1 class="display-xl hero__title">
-      <span class="split-line"><span>Films that feel</span></span>
-      <span class="split-line"><span>like the day</span></span>
-      <span class="split-line"><span><em>felt.</em></span></span>
-    </h1>
-    <div class="hero__row fade-in">
-      <div>
-        <p class="hero__intro">Wedding films that capture how your day felt, not just how it looked. Warm, cinematic and honest, from the Ottawa Valley and wherever your day takes you.</p>
-        <div class="hero__actions">
-          <a class="btn btn--light" href="contact.html">Check your date {{arrow}}</a>
-          <a class="btn btn--ghost-light" href="films.html">Watch the films</a>
-        </div>
-      </div>
-      <div class="hero__meta">
-        <a class="rating" href="{{google}}" target="_blank" rel="noopener"><span class="rating__stars" aria-hidden="true">★★★★★</span> 5.0 on Google</a>
-        <span class="scroll-cue"><span class="scroll-cue__line"></span>Scroll</span>
+  <div class="hero__scrim"></div>
+  <div class="letterbox letterbox--top"></div>
+  <div class="letterbox letterbox--bottom"></div>
+  <div class="viewfinder" aria-hidden="true">
+    <span class="vf-corner vf-corner--tl"></span><span class="vf-corner vf-corner--tr"></span>
+    <span class="vf-corner vf-corner--bl"></span><span class="vf-corner vf-corner--br"></span>
+    <div class="vf-tl"><span class="vf-rec">REC</span><span data-timecode>00:01:23:00</span></div>
+    <div class="vf-tr"><span class="vf-hide-sm">4K</span><span>24 FPS</span><span class="vf-batt"></span></div>
+  </div>
+  <div class="hero__content">
+    <p class="eyebrow hero__eyebrow">Ottawa Valley · Ottawa · Kingston · Beyond</p>
+    <h1 class="display-xl hero__title" data-split data-hero-split data-delay="350">Films that feel like the day <em class="gold-text">felt.</em></h1>
+    <p class="hero__sub">Warm, cinematic wedding films that capture how your day felt, not just how it looked.</p>
+    <div class="hero__cta">
+      {{datecheck_hero}}
+      <div class="hero__trust">
+        <span><span class="stars" aria-hidden="true">★★★★★</span> 5.0 on Google</span>
+        <span>Reply within 24 hours</span>
+        <span>One filmmaker, start to finish</span>
       </div>
     </div>
   </div>
@@ -33,121 +34,89 @@ hero: dark
 
 <section class="section" aria-labelledby="intro-title">
   <div class="container statement">
-    <div class="statement__media reveal">
-      <div class="frame-img reveal-img"><img src="assets/img/about-jack.jpg" alt="Jack Albert filming a wedding with a gimbal camera on a lawn" loading="lazy"></div>
-      <div class="statement__badge" aria-hidden="true">
-        <svg viewBox="0 0 120 120"><defs><path id="circ" d="M60 60m-46 0a46 46 0 1 1 92 0a46 46 0 1 1-92 0"/></defs><text><textPath href="#circ">Jack Albert · Wedding Films · Est. Ottawa Valley ·</textPath></text><circle class="dot" cx="60" cy="60" r="4"/></svg>
+    <div class="statement__media">
+      <div class="frame-img reveal-img"><img src="assets/img/about-jack.jpg" alt="Jack Albert filming a wedding with a gimbal camera" loading="lazy" data-speed="40"></div>
+      <div class="badge-spin" aria-hidden="true">
+        <svg viewBox="0 0 120 120"><defs><path id="circ" d="M60 60m-46 0a46 46 0 1 1 92 0a46 46 0 1 1-92 0"/></defs><text><textPath href="#circ">Jack Albert · Wedding Films · Ottawa Valley ·</textPath></text><circle class="dot" cx="60" cy="60" r="4"/></svg>
       </div>
     </div>
     <div>
       <p class="eyebrow reveal">Hello, I’m Jack</p>
-      <h2 id="intro-title" class="lede reveal" data-delay="1">I’m a wedding filmmaker based in the Ottawa Valley. I make <em class="accent">warm, cinematic films</em> for couples getting married close to home and wherever the day takes you, from church ceremonies to barns, backyards and ballrooms.</h2>
-      <div class="reveal" data-delay="2" style="margin-top:36px">
-        <p class="body-lg">One filmmaker who cares about your story, not a rotating crew. A storyteller’s eye, careful light, clean sound, and a calm presence on the day.</p>
-        <div class="actions" style="margin-top:28px"><a class="link-line" href="about.html">More about me {{arrow}}</a></div>
-      </div>
+      <h2 id="intro-title" class="lede" data-scrub>I’m a wedding filmmaker from the Ottawa Valley. I make warm, cinematic films for couples getting married close to home and wherever the day takes them, from church ceremonies to barns, backyards and ballrooms. One filmmaker who cares about your story, not a rotating crew.</h2>
+      <p class="signature reveal">— Jack</p>
+      <div class="actions reveal" style="margin-top:30px"><a class="btn btn--ghost magnetic" href="about.html">My story {{arrow}}</a>{{google_badge}}</div>
     </div>
   </div>
 </section>
 
-<section class="section section--night" aria-labelledby="featured-title">
-  <div class="container featured">
-    <div class="featured__head">
-      <div>
-        <p class="eyebrow reveal">The Featured Film</p>
-        <h2 id="featured-title" class="display-lg reveal" data-delay="1">Shelby <em class="accent">&amp;</em> Bobby</h2>
-      </div>
-      <p class="caps reveal" data-delay="2" style="color:var(--on-night-muted)">A Lakeside Wedding · Chapeau, Ottawa Valley</p>
-    </div>
-    <div class="reveal-img">{{filmauto:shelby-bobby}}</div>
-    <div class="featured__quote">
-      <div class="quote-mark reveal" aria-hidden="true">“</div>
-      <figure class="reveal" data-delay="1">
-        <blockquote><p>He captured our day perfectly and somehow fit so many of the emotions, little moments, and memories from our wedding into one beautiful video. Every time we watch it, it feels like we get to relive the day all over again.</p></blockquote>
-        <figcaption class="cite">Shelby &amp; Bobby · Google Review</figcaption>
-      </figure>
-    </div>
-  </div>
-</section>
+{{reel}}
 
-<section class="section" aria-labelledby="films-title">
-  <div class="container">
-    <div class="section-head">
-      <div><p class="eyebrow reveal">More Wedding Films</p><h2 id="films-title" class="display-md reveal" data-delay="1">A few of my <em>favourite days.</em></h2></div>
-      <div class="reveal" data-delay="2"><p class="body-lg">An autumn day at Golden Lake, a country celebration at The Farmstead, and a city wedding above the Toronto skyline. Hover to preview, tap to watch.</p><a class="link-line" href="films.html">View all films {{arrow}}</a></div>
-    </div>
-    <div class="film-cards">
-      <div class="reveal">{{film:bree-skyler}}</div>
-      <div class="reveal" data-delay="1">{{film:lyndon-paige}}</div>
-      <div class="reveal" data-delay="2">{{film:shaughn-vanessa}}</div>
-    </div>
-  </div>
-</section>
+{{marquee_words}}
 
-{{marquee_places}}
+{{hgallery}}
 
 <section class="section" aria-labelledby="approach-title">
   <div class="container">
     <div class="section-head">
-      <div><p class="eyebrow reveal">The Approach</p><h2 id="approach-title" class="display-md reveal" data-delay="1">Cinematic, documentary, and <em>quietly yours.</em></h2></div>
-      <p class="body-lg reveal" data-delay="2">My films are natural and emotional, led by light, with a heavy focus on clean audio. Never staged or generic, always built around how your day actually felt.</p>
+      <div><p class="eyebrow reveal">The Approach</p><h2 id="approach-title" class="display-lg" data-split>Cinematic, honest, <em class="accent">quietly yours.</em></h2></div>
+      <p class="body-lg reveal" data-delay="1">Natural and emotional, led by light, with a heavy focus on clean audio. Never staged or generic, always built around how your day actually felt.</p>
     </div>
-    <div class="pillars">
-      <article class="pillar reveal">
-        <div class="frame-img pillar__img reveal-img"><img src="assets/img/bride-window.jpg" alt="A bride in her veil holding white flowers beside a bright window" loading="lazy"></div>
-        <p class="pillar__num">i.</p>
-        <h3>Led by light</h3>
-        <p>A strong eye for light and how to shape it, so every scene feels soft, warm and true to the moment, whether it’s a church at noon or a lakeshore at dusk.</p>
-      </article>
-      <article class="pillar reveal" data-delay="1">
-        <div class="frame-img pillar__img reveal-img"><img src="assets/img/aisle-father.jpg" alt="A father walking his daughter down the aisle as guests look on" loading="lazy"></div>
-        <p class="pillar__num">ii.</p>
-        <h3>Obsessed with sound</h3>
-        <p>Your vows, your speeches, a parent’s laugh. Clean audio is the part of a film that brings the day rushing back, so I’m close to obsessive about it.</p>
-      </article>
-      <article class="pillar reveal" data-delay="2">
-        <div class="frame-img pillar__img reveal-img"><img src="assets/img/bree-skyler-laugh.jpg" alt="A groom laughing as he sees his bride by a tree in autumn" loading="lazy"></div>
-        <p class="pillar__num">iii.</p>
-        <h3>Mostly invisible</h3>
-        <p>Calm, professional and in the background, catching real moments as they happen, with light direction only when it helps. The day stays yours.</p>
-      </article>
-    </div>
+    {{scrolly}}
   </div>
 </section>
 
 <section class="section section--ivory" aria-labelledby="reviews-title">
   <div class="container">
     <div class="section-head section-head--center">
-      <p class="eyebrow reveal">Happy Couples</p>
-      <h2 id="reviews-title" class="display-md reveal" data-delay="1">In their <em>words.</em></h2>
+      <p class="eyebrow reveal">Kind Words</p>
+      <h2 id="reviews-title" class="display-lg" data-split>In their <em class="accent">words.</em></h2>
     </div>
-    <div class="reveal" data-delay="2">{{reviews}}</div>
-    <p class="center reveal" style="margin-top:40px"><a class="link-line" href="{{google}}" target="_blank" rel="noopener">Read more on Google {{arrow}}</a></p>
+    <div class="reveal">{{reviews}}</div>
+    <div class="center reveal" style="margin-top:44px">{{google_badge}}</div>
   </div>
 </section>
 
-<section class="section section--night" aria-labelledby="invest-title">
+<section class="section" aria-labelledby="numbers-title">
+  <div class="container">
+    <h2 id="numbers-title" class="sr-only">At a glance</h2>
+    <div class="facts reveal">
+      <div class="fact"><div class="fact__num"><span data-count="24">24</span><em>h</em></div><div class="fact__label">Usual reply time</div></div>
+      <div class="fact"><div class="fact__num"><span data-count="6">6</span>–<span data-count="8">8</span></div><div class="fact__label">Weeks to your film</div></div>
+      <div class="fact"><div class="fact__num"><em>4K</em></div><div class="fact__label">Private gallery, yours to keep</div></div>
+      <div class="fact"><div class="fact__num"><span data-count="5.0">5.0</span></div><div class="fact__label">Rated on Google</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--paper2" id="finder" aria-labelledby="finder-title">
   <div class="container">
     <div class="section-head">
-      <div><p class="eyebrow reveal">The Investment</p><h2 id="invest-title" class="display-md reveal" data-delay="1">Three collections, <em class="accent">one clear price.</em></h2></div>
-      <div class="reveal" data-delay="2"><p class="body-lg">Extra hours, raw footage and travel are quoted for your specific day, so you always know the full picture before you book.</p><a class="link-line" href="investment.html">See everything included {{arrow}}</a></div>
+      <div><p class="eyebrow reveal">Find Your Collection</p><h2 id="finder-title" class="display-lg" data-split>Three questions. <em class="accent">One perfect fit.</em></h2></div>
+      <div class="reveal" data-delay="1"><p class="body-lg">Not sure which collection is right? Answer three quick questions and I’ll point you to the one that fits your day. Collections start at $1,950.</p><a class="link-line" href="investment.html">See full pricing {{arrow}}</a></div>
+    </div>
+    <div class="reveal">{{quiz}}</div>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="invest-title">
+  <div class="container">
+    <div class="section-head">
+      <div><p class="eyebrow reveal">The Investment</p><h2 id="invest-title" class="display-lg" data-split>Clear pricing, <em class="accent">no surprises.</em></h2></div>
+      <div class="reveal" data-delay="1"><p class="body-lg">Extra hours, raw footage and travel are quoted for your specific day, so you always know the full picture before you book.</p><a class="link-line" href="investment.html">Compare collections {{arrow}}</a></div>
     </div>
     <div class="price-rows">
       <a class="price-row reveal" href="investment.html#sweet-simple">
-        <span class="price-row__num">i.</span>
-        <span class="price-row__name">Sweet &amp; Simple</span>
+        <span class="price-row__num">i.</span><span class="price-row__name">Sweet &amp; Simple</span>
         <span class="price-row__desc">6 hours of coverage and a 3 to 5 minute cinematic highlight film.</span>
         <span class="price-row__price"><small>From</small>$1,950</span>
       </a>
       <a class="price-row reveal" href="investment.html#classic-collection">
-        <span class="price-row__num">ii.</span>
-        <span class="price-row__name">Classic <em class="accent">Collection</em></span>
+        <span class="price-row__num">ii.</span><span class="price-row__name">Classic <em class="accent">Collection</em></span>
         <span class="price-row__desc">Most popular. 10 hours, a 5 to 10 minute film, a social teaser, drone and a letter-reading film.</span>
         <span class="price-row__price"><small>Investment</small>$2,750</span>
       </a>
       <a class="price-row reveal" href="investment.html#luxury-collection">
-        <span class="price-row__num">iii.</span>
-        <span class="price-row__name">Luxury Collection</span>
+        <span class="price-row__num">iii.</span><span class="price-row__name">Luxury Collection</span>
         <span class="price-row__desc">12+ hours, an 8 to 10 minute main film and all of your footage, raw and colour graded.</span>
         <span class="price-row__price"><small>From</small>$3,950</span>
       </a>
@@ -155,26 +124,23 @@ hero: dark
   </div>
 </section>
 
-<section class="section" aria-labelledby="process-title">
+<section class="section section--paper2" aria-labelledby="process-title">
   <div class="container">
     <div class="section-head">
-      <div><p class="eyebrow reveal">The Process</p><h2 id="process-title" class="display-md reveal" data-delay="1">From first hello <em>to final film.</em></h2></div>
-      <div class="reveal" data-delay="2"><p class="body-lg">A calm, considered experience shaped around the people and moments that matter most to you.</p><a class="link-line" href="experience.html">The full experience {{arrow}}</a></div>
+      <div><p class="eyebrow reveal">The Process</p><h2 id="process-title" class="display-lg" data-split>From first hello <em class="accent">to final film.</em></h2></div>
+      <div class="reveal" data-delay="1"><p class="body-lg">A calm, considered experience shaped around the people and moments that matter most to you.</p><a class="link-line" href="experience.html">The full experience {{arrow}}</a></div>
     </div>
-    <div class="facts reveal">
-      <div class="fact"><div class="fact__num">24<em>h</em></div><div class="fact__label">Usual reply time</div></div>
-      <div class="fact"><div class="fact__num">6–8</div><div class="fact__label">Weeks to your film</div></div>
-      <div class="fact"><div class="fact__num"><em>4K</em></div><div class="fact__label">Private gallery, yours to keep</div></div>
-      <div class="fact"><div class="fact__num">5.0</div><div class="fact__label">Rated on Google</div></div>
-    </div>
+    {{timeline}}
   </div>
 </section>
 
-<section class="section section--paper2" aria-labelledby="journal-title">
+{{marquee_places}}
+
+<section class="section" aria-labelledby="journal-title">
   <div class="container">
     <div class="section-head">
-      <div><p class="eyebrow reveal">The Journal</p><h2 id="journal-title" class="display-md reveal" data-delay="1">Honest guides for <em>planning your film.</em></h2></div>
-      <div class="reveal" data-delay="2"><p class="body-lg">What things cost, how to choose a videographer, and how to film a country wedding, from someone who does it every weekend.</p><a class="link-line" href="journal.html">Read the journal {{arrow}}</a></div>
+      <div><p class="eyebrow reveal">The Journal</p><h2 id="journal-title" class="display-lg" data-split>Honest guides <em class="accent">for planning.</em></h2></div>
+      <div class="reveal" data-delay="1"><p class="body-lg">What things cost, how to choose a videographer, and how to film a country wedding, from someone who does it every weekend.</p><a class="link-line" href="journal.html">Read the journal {{arrow}}</a></div>
     </div>
     <div class="posts">{{posts:3}}</div>
   </div>

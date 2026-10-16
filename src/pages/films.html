@@ -10,12 +10,22 @@ hero: dark
     <div class="page-hero__grid">
       <div>
         <p class="eyebrow fade-in">The Films</p>
-        <h1 class="display-xl page-hero__title"><span class="split-line"><span>Real days,</span></span><span class="split-line"><span><em>kept forever.</em></span></span></h1>
+        <h1 class="display-xl page-hero__title" data-split data-hero-split>Real days, <em class="gold-text">kept forever.</em></h1>
       </div>
       <div class="page-hero__aside fade-in">
         <p class="body-lg">The work speaks louder than I can. Watch a few recent films and get a feel for the look, the pacing, and the way real moments carry a story.</p>
       </div>
     </div>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="index-title">
+  <div class="container">
+    <div class="section-head">
+      <div><p class="eyebrow reveal">The Index</p><h2 id="index-title" class="display-lg" data-split>Four days, <em class="accent">four stories.</em></h2></div>
+      <p class="body-lg reveal" data-delay="1">Hover a title to preview, click to watch the full film.</p>
+    </div>
+    {{film_index}}
   </div>
 </section>
 

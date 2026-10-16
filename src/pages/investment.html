@@ -8,7 +8,7 @@ nav: investment
     <div class="page-hero__grid">
       <div>
         <p class="eyebrow fade-in">The Investment</p>
-        <h1 class="display-xl page-hero__title"><span class="split-line"><span>Three collections</span></span><span class="split-line"><span><em class="accent">to choose from.</em></span></span></h1>
+        <h1 class="display-xl page-hero__title" data-split data-hero-split>Three collections <em class="gold-text">to choose from.</em></h1>
       </div>
       <div class="page-hero__aside fade-in">
         <p class="body-lg">Clear, honest pricing. Extra hours, raw footage and travel are quoted for your specific day, so you always know the full picture before you book.</p>
@@ -20,7 +20,7 @@ nav: investment
 <section class="section" style="padding-top:0" aria-label="Collections">
   <div class="container">
     <div class="collections">
-      <article class="collection reveal" id="sweet-simple">
+      <article class="collection reveal" data-tilt id="sweet-simple">
         <p class="collection__num">i.</p>
         <h2 class="collection__name">Sweet &amp; Simple</h2>
         <p class="collection__desc">A shorter, simpler day, beautifully kept.</p>
@@ -33,7 +33,7 @@ nav: investment
         </ul>
         <a class="btn btn--ghost btn--block" href="contact.html?collection=sweet-simple">Choose this collection</a>
       </article>
-      <article class="collection collection--featured reveal" data-delay="1" id="classic-collection">
+      <article class="collection collection--featured reveal" data-tilt data-delay="1" id="classic-collection">
         <span class="collection__tag">Most popular</span>
         <p class="collection__num">ii.</p>
         <h2 class="collection__name">Classic Collection</h2>
@@ -47,9 +47,9 @@ nav: investment
           <li>Highlight moments of your ceremony, speeches, and first dance</li>
           <li>A private letter reading film, included</li>
         </ul>
-        <a class="btn btn--block" href="contact.html?collection=classic-collection">Choose this collection</a>
+        <a class="btn btn--gold btn--block" href="contact.html?collection=classic-collection">Choose this collection</a>
       </article>
-      <article class="collection reveal" data-delay="2" id="luxury-collection">
+      <article class="collection reveal" data-tilt data-delay="2" id="luxury-collection">
         <p class="collection__num">iii.</p>
         <h2 class="collection__name">Luxury Collection</h2>
         <p class="collection__desc">The whole day, kept in full.</p>
@@ -66,6 +66,43 @@ nav: investment
       </article>
     </div>
     <p class="note center reveal" style="margin-top:40px">Standard delivery is 6 to 8 weeks after your wedding. Extra hours, raw footage and travel are quoted for your specific day.</p>
+  </div>
+</section>
+
+
+<section class="section section--paper2" id="finder" aria-labelledby="finder-title">
+  <div class="container">
+    <div class="section-head">
+      <div><p class="eyebrow reveal">Find Your Collection</p><h2 id="finder-title" class="display-lg" data-split>Not sure? <em class="accent">Take the quiz.</em></h2></div>
+      <p class="body-lg reveal" data-delay="1">Three quick questions and you’ll know which collection fits your day best.</p>
+    </div>
+    <div class="reveal">{{quiz}}</div>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="compare-title">
+  <div class="container">
+    <div class="section-head">
+      <div><p class="eyebrow reveal">Side by Side</p><h2 id="compare-title" class="display-lg" data-split>Compare <em class="accent">collections.</em></h2></div>
+      <p class="body-lg reveal" data-delay="1">Everything included in each collection, at a glance.</p>
+    </div>
+    <div class="compare-wrap reveal">
+      <table class="compare">
+        <thead><tr><th scope="col"><span class="sr-only">Feature</span></th><th scope="col">Sweet &amp; Simple<small>From $1,950</small></th><th scope="col" class="hl">Classic<small>$2,750 · Most popular</small></th><th scope="col">Luxury<small>From $3,950</small></th></tr></thead>
+        <tbody>
+          <tr><td>Coverage</td><td>6 hours</td><td class="hl">10 hours</td><td>12+ hours</td></tr>
+          <tr><td>Cinematic film</td><td>3–5 min highlight</td><td class="hl">5–10 min film</td><td>8–10 min main film</td></tr>
+          <tr><td>Drone footage</td><td class="yes">✓</td><td class="hl yes">✓</td><td class="yes">Extended</td></tr>
+          <tr><td>Private 4K gallery</td><td class="yes">✓</td><td class="hl yes">✓</td><td class="yes">✓</td></tr>
+          <tr><td>Cinematic social teaser</td><td class="no">—</td><td class="hl yes">✓</td><td class="yes">Shorter version to share</td></tr>
+          <tr><td>Ceremony, speeches &amp; first dance highlights</td><td class="no">—</td><td class="hl yes">✓</td><td class="no">Ask Jack</td></tr>
+          <tr><td>Private letter-reading film</td><td class="no">—</td><td class="hl yes">✓</td><td class="no">Ask Jack</td></tr>
+          <tr><td>All footage, raw &amp; colour graded</td><td class="no">Quoted</td><td class="hl no">Quoted</td><td class="yes">✓</td></tr>
+          <tr><td>Expedited editing</td><td class="no">—</td><td class="hl no">—</td><td class="yes">Available</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note reveal" style="margin-top:22px">Lists reflect each collection as published. Extra hours, raw footage and travel are quoted for your day.</p>
   </div>
 </section>
 

@@ -57,6 +57,7 @@ IG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1
 YT = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23 7.2a3 3 0 0 0-2.1-2.1C19 4.6 12 4.6 12 4.6s-7 0-8.9.5A3 3 0 0 0 1 7.2 31 31 0 0 0 .5 12a31 31 0 0 0 .5 4.8 3 3 0 0 0 2.1 2.1c1.9.5 8.9.5 8.9.5s7 0 8.9-.5a3 3 0 0 0 2.1-2.1c.4-1.6.5-4.8.5-4.8s0-3.2-.5-4.8zM9.7 15V9l5.8 3-5.8 3z"/></svg>'
 PHONE = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M5 3h4l2 5-2.5 1.5a11 11 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A17 17 0 0 1 3 5a2 2 0 0 1 2-2z"/></svg>'
 MAIL = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="1"/><path d="M3 6l9 7 9-7"/></svg>'
+CHAT = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/></svg>'
 CLOSE = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M1 1l14 14M15 1L1 15"/></svg>'
 
 # ---------------------------------------------------------------- films
@@ -84,11 +85,11 @@ def film_tile(key, cls="", autoplay=False, img=None):
         vid = '<video muted loop playsinline preload="none"></video>'
         attrs = ""
         preview = f' data-preview="assets/video/{f["video"]}"'
-    return f'''<a href="https://www.youtube.com/watch?v={f["yt"]}" class="film{attrs} {cls}" data-yt="{f["yt"]}" data-title="{title} — {re.sub("&amp;", "&", f["place"])}"{preview} aria-label="Play the {title} wedding film">
+    return f'''<a href="https://www.youtube.com/watch?v={f["yt"]}" class="film{attrs} {cls}" data-cursor="Play" data-yt="{f["yt"]}" data-title="{title} — {re.sub("&amp;", "&", f["place"])}"{preview} aria-label="Play the {title} wedding film">
   <div class="film__media">
     <img src="assets/img/{poster}" alt="Still from {title}'s wedding film" loading="lazy" decoding="async">
     {vid}
-    <span class="film__play">{PLAY}</span>
+    <span class="film__play"><span class="play-ring">{PLAY}</span></span>
   </div>
   <div class="film__label">
     <div><div class="film__title">{f["couple"]}</div><div class="film__place">{f["place"]}</div></div>
@@ -141,19 +142,144 @@ def ig_band():
 </section>'''
 
 
-def cta_band(title="Let’s capture <em>yours.</em>", text="Tell me your date and venue and I’ll let you know if I’m free, usually within 24 hours.", img="band-flowers.jpg", video="band-flowers.mp4"):
-    return f'''<section class="cta-band" aria-labelledby="cta-title">
-  <div class="cta-band__bg"><video muted loop playsinline preload="none" data-loop data-src="assets/video/{video}" poster="assets/img/{img}"></video></div>
+def datecheck(src="site", label="Your date", button="Check my date"):
+    return f'''<form class="datecheck" data-datecheck="{src}" action="contact.html" novalidate>
+  <label for="dc-{src}">{label}</label>
+  <input id="dc-{src}" type="date" name="date" required aria-describedby="dcm-{src}">
+  <button class="btn btn--gold" type="submit">{button} {ARROW}</button>
+</form>
+<p class="datecheck__msg" id="dcm-{src}" aria-live="polite"></p>'''
+
+
+def cta_band(title="Let’s make <em class=\"gold-text\">your film.</em>", text="Pick your date and I’ll let you know if I’m free, usually within 24 hours. No pressure, just a friendly chat.", img="band-flowers.jpg", video="band-flowers.mp4", src="cta"):
+    return f'''<section class="cta-band" aria-labelledby="cta-title-{src}">
+  <div class="cta-band__bg" data-speed="-60"><video muted loop playsinline preload="none" data-loop data-src="assets/video/{video}" poster="assets/img/{img}"></video></div>
   <div class="container">
     <p class="eyebrow reveal">Your day, on film</p>
-    <h2 id="cta-title" class="display-lg reveal" data-delay="1" style="margin-bottom:28px">{title}</h2>
-    <p class="reveal" data-delay="2">{text}</p>
+    <h2 id="cta-title-{src}" class="display-xl" data-split style="margin-bottom:30px">{title}</h2>
+    <p class="reveal" data-delay="1">{text}</p>
+    <div class="reveal" data-delay="2" style="width:100%;display:grid;justify-items:center;gap:14px">{datecheck(src)}</div>
     <div class="cta-band__actions reveal" data-delay="3">
-      <a class="btn btn--light" href="contact.html">Check your date {ARROW}</a>
-      <a class="btn btn--ghost-light" href="{BRAND["calendly"]}" target="_blank" rel="noopener">Book a quick call</a>
+      <a class="btn btn--ghost-light magnetic" href="{BRAND["calendly"]}" target="_blank" rel="noopener">Book a 15-min call</a>
+      <a class="btn btn--ghost-light magnetic" href="sms:{BRAND["tel"]}">Text Jack</a>
     </div>
   </div>
 </section>'''
+
+
+def google_badge():
+    return f'''<a class="google-badge" href="{BRAND["google"]}" target="_blank" rel="noopener"><span class="g">G</span><strong>5.0</strong><span class="stars" aria-hidden="true">★★★★★</span><span>on Google</span></a>'''
+
+
+QUIZ = [
+    ("How much of the day do you want filmed?", [
+        ("sweet-simple", "The essentials", "About 6 hours, getting ready through portraits"),
+        ("classic-collection", "The full day", "About 10 hours, getting ready through the reception"),
+        ("luxury-collection", "Every moment", "12+ hours, early prep to the last dance")]),
+    ("What do you want to watch back?", [
+        ("sweet-simple", "A short, cinematic highlight", "3 to 5 minutes you’ll rewatch on every anniversary"),
+        ("classic-collection", "A full film and the big moments", "Ceremony, speeches and first dance, plus a letter-reading film"),
+        ("luxury-collection", "Everything, kept in full", "The film plus all of your footage, raw and colour graded")]),
+    ("Anything to share right away?", [
+        ("sweet-simple", "Not needed", "We’re happy to wait for the film"),
+        ("classic-collection", "A social teaser", "A short cinematic teaser to post"),
+        ("luxury-collection", "Yes, and faster delivery", "A shorter version to share, with expedited editing available")]),
+]
+
+
+def quiz():
+    steps = ""
+    for qi, (q, opts) in enumerate(QUIZ):
+        o = "".join(f'<button class="quiz__opt" type="button" data-v="{v}"><strong>{t}</strong><span>{d}</span></button>' for v, t, d in opts)
+        steps += f'<div class="quiz__step"><h3 class="quiz__q">{q}</h3><div class="quiz__opts">{o}</div></div>'
+    return f'''<div class="quiz" data-quiz>
+  <div class="quiz__top"><span data-quiz-count>Question 1 of 3</span><span class="quiz__bar"><span></span></span></div>
+  {steps}
+  <div class="quiz__result" aria-live="polite">
+    <div>
+      <p class="eyebrow">Your best match</p>
+      <h3 class="display-md" data-r-name>Classic Collection</h3>
+      <p class="quiz__price" data-r-price></p>
+      <p class="body-lg" data-r-why></p>
+    </div>
+    <div style="display:grid;gap:14px;justify-items:start">
+      <a class="btn btn--gold magnetic" data-r-cta href="contact.html">Check my date with this {ARROW}</a>
+      <a class="btn btn--ghost" href="{BRAND["calendly"]}" target="_blank" rel="noopener">Talk it through on a call</a>
+      <button class="quiz__restart" type="button">Start over</button>
+    </div>
+  </div>
+</div>'''
+
+
+def hgallery():
+    cards = ""
+    for i, k in enumerate(FILMS):
+        f = FILMS[k]
+        cards += f'''<article class="hcard">{film_tile(k, autoplay=True)}
+      <div class="hcard__info"><div><div class="hcard__num">0{i + 1} / 04</div><h3 class="hcard__title">{f["couple"]}</h3></div><div class="hcard__place">{f["place"]}</div></div></article>'''
+    return f'''<section class="hgallery" aria-labelledby="hg-title">
+  <div class="hgallery__pin">
+    <div class="container hgallery__head">
+      <div><p class="eyebrow">Selected Films</p><h2 id="hg-title" class="display-md" data-split>Real days, <em class="accent">kept forever.</em></h2></div>
+      <p class="hgallery__count"><b data-hg-current>1</b> / 04 · Scroll</p>
+    </div>
+    <div class="hgallery__track">{cards}
+      <div class="hcard hcard--end"><p class="eyebrow">There’s more</p><h3 class="display-sm" style="margin-bottom:24px">Every film is made for <em class="accent">one couple.</em> Yours is next.</h3><div class="actions"><a class="btn btn--gold magnetic" href="contact.html">Check your date {ARROW}</a><a class="link-line" href="films.html">All films {ARROW}</a></div></div>
+    </div>
+    <div class="hgallery__progress"><span></span></div>
+  </div>
+</section>'''
+
+
+def reel():
+    f = FILMS["shelby-bobby"]
+    return f'''<section class="reel" aria-label="Showreel">
+  <div class="reel__sticky">
+    <span class="reel__word reel__word--l" aria-hidden="true">The</span>
+    <button class="reel__frame" type="button" data-cursor="Play" data-yt="{f["yt"]}" data-title="Shelby &amp; Bobby — A Lakeside Wedding · Chapeau" aria-label="Play the featured film, Shelby and Bobby">
+      <video muted loop playsinline preload="none" data-loop data-src="assets/video/reel.mp4" poster="assets/img/reel-poster.jpg"></video>
+      <span class="reel__play"><span class="play-ring">{PLAY}</span><span class="caps">The featured film</span><span class="t">Shelby &amp; Bobby</span></span>
+      <span class="reel__meta"><span>A Lakeside Wedding</span><span>Chapeau · Ottawa Valley</span></span>
+    </button>
+    <span class="reel__word reel__word--r" aria-hidden="true">Reel</span>
+  </div>
+</section>'''
+
+
+SCROLLY = [
+    ("bride-window.jpg", "A bride in her veil by a bright window", "Led by <em>light.</em>", "A strong eye for light and how to shape it, so every scene feels soft, warm and true to the moment, whether it’s a church at noon or a lakeshore at dusk."),
+    ("aisle-father.jpg", "A father walking his daughter down the aisle", "Obsessed with <em>sound.</em>", "Your vows, your speeches, a parent’s laugh. Clean audio is what brings the day rushing back, so I’m close to obsessive about it."),
+    ("bree-skyler-laugh.jpg", "A groom laughing as he sees his bride", "Mostly <em>invisible.</em>", "Calm, professional and in the background, catching real moments as they happen, with light direction only when it helps. The day stays yours."),
+]
+
+
+def scrolly():
+    imgs = "".join(f'<div class="scrolly__img"><img src="assets/img/{i}" alt="{a}" loading="lazy"></div>' for i, a, _, _ in SCROLLY)
+    steps = "".join(f'<div class="scrolly__step{" is-active" if n == 0 else ""}"><div class="frame-img"><img src="assets/img/{i}" alt="" loading="lazy"></div><p class="num">0{n + 1} — The Approach</p><h3>{h}</h3><p>{t}</p></div>' for n, (i, a, h, t) in enumerate(SCROLLY))
+    return f'<div class="scrolly"><div class="scrolly__media">{imgs}<span class="scrolly__counter">01 / 03</span></div><div class="scrolly__steps">{steps}</div></div>'
+
+
+STEPS = [
+    ("Inquire", "Share your date, venue, and what matters most. You’ll get a quick text so you know it arrived, then a reply by email within 24 hours."),
+    ("Connect", "A relaxed conversation to make sure we’re the right fit. Tell me about the two of you, your people, and the moments you can’t imagine missing."),
+    ("Plan your story", "We shape the timeline and filming plan around your people and priorities, leaving buffer where it counts so nothing gets rushed."),
+    ("Your wedding day", "Calm direction when it helps, with space for the real moments to unfold. I stay professional and mostly invisible."),
+    ("Relive it", "Your finished film arrives in six to eight weeks, in a private 4K gallery that’s yours to download, keep and share."),
+]
+
+
+def timeline():
+    st = "".join(f'<div class="tl-step reveal"><h3 class="tl-step__title"><small>0{i + 1}</small>{t}</h3><p>{d}</p></div>' for i, (t, d) in enumerate(STEPS))
+    return f'<div class="timeline"><div class="timeline__line"><span></span></div>{st}</div>'
+
+
+def film_index():
+    rows = ""
+    for i, k in enumerate(FILMS):
+        f = FILMS[k]
+        title = f["couple"].replace("&amp;", "&")
+        rows += f'<button class="fi-row" type="button" data-cursor="Play" data-yt="{f["yt"]}" data-title="{title} — {f["place"]}" data-preview="assets/video/{f["video"]}"><span class="fi-row__num">0{i + 1}</span><span class="fi-row__title">{f["couple"]}</span><span class="fi-row__place">{f["place"]}</span><span class="fi-row__go">{PLAY}</span></button>'
+    return f'<div class="film-index reveal">{rows}</div>'
 
 
 SNIPPETS = {
@@ -164,8 +290,18 @@ SNIPPETS = {
     "reviews": reviews_block(),
     "ig_band": ig_band(),
     "cta_band": cta_band(),
+    "datecheck_hero": datecheck("hero", "Your wedding date", "Check my date"),
+    "datecheck_light": datecheck("page"),
+    "google_badge": google_badge(),
+    "quiz": quiz(),
+    "hgallery": hgallery(),
+    "reel": reel(),
+    "scrolly": scrolly(),
+    "timeline": timeline(),
+    "film_index": film_index(),
     "marquee_places": marquee(["Ottawa Valley", "Golden Lake", "Pembroke", "Ottawa", "Kingston", "Petawawa", "Renfrew", "Arnprior", "Chapeau"]),
     "marquee_moments": marquee(["The vows", "The first look", "The speeches", "The last dance", "The quiet moments"]),
+    "marquee_words": marquee(["Warm", "Cinematic", "Honest", "Timeless", "Yours"]),
 }
 for k in FILMS:
     SNIPPETS["film:" + k] = film_tile(k)
@@ -231,7 +367,7 @@ def head(title, description, path, extra=""):
 <title>{t}</title>
 <meta name="description" content="{d}">
 <link rel="canonical" href="{canonical}">
-<meta name="theme-color" content="#13110e">
+<meta name="theme-color" content="#0b0a09">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Jack Albert Weddings">
 <meta property="og:title" content="{t}">
@@ -245,7 +381,8 @@ def head(title, description, path, extra=""):
 <link rel="manifest" href="site.webmanifest">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Mono:wght@400&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script>document.documentElement.classList.add("js");try{{if(sessionStorage.getItem("jaw-intro")==="1")document.documentElement.classList.add("no-loader")}}catch(e){{}}</script>
 <link rel="stylesheet" href="assets/css/site.css?v={VERSION}">
 {extra}
 <script>
@@ -257,42 +394,51 @@ fbq('init','{BRAND["pixel"]}');fbq('track','PageView');
 
 def header(active, over_hero):
     links = "".join(
-        f'<a class="nav__link" href="{href}"{" aria-current=\"page\"" if key == active else ""}>{label}</a>'
+        f'<a class="nav__link" href="{href}"{" aria-current=\"page\"" if key == active else ""}><span>{label}</span><span aria-hidden="true">{label}</span></a>'
         for key, href, label in NAV)
     mlinks = "".join(
-        f'<li><a href="{href}"><small>0{i + 1}</small>{label}</a></li>'
+        f'<li><a href="{href}">{label}<small>0{i + 1}</small></a></li>'
         for i, (key, href, label) in enumerate(NAV + [("contact", "contact.html", "Contact")]))
     cls = "site-header is-over-hero" if over_hero else "site-header"
     return f'''<a class="skip-link" href="#main">Skip to content</a>
-<div class="curtain" aria-hidden="true"><div class="curtain__mark">Jack Albert<span>Wedding Films</span></div></div>
+<div class="loader" aria-hidden="true">
+  <div class="leader">
+    <div class="leader__sweep"></div>
+    <svg viewBox="0 0 200 200" fill="none" stroke="rgba(241,233,220,.55)" stroke-width=".6"><circle cx="100" cy="100" r="92"/><circle cx="100" cy="100" r="74"/><path d="M100 0v200M0 100h200"/></svg>
+    <div class="leader__num">3</div>
+  </div>
+  <div class="loader__brand">Jack Albert · Wedding Films</div>
+</div>
+<div class="curtain" aria-hidden="true"><div class="curtain__mark">Jack Albert</div></div>
+<div class="announce"><a href="contact.html?src=bar"><span class="dot"></span>Now booking 2027 &amp; 2028 weddings · Check your date {ARROW}</a></div>
 <header class="{cls}">
   <div class="container site-header__inner">
     <a class="logo" href="index.html" aria-label="Jack Albert Weddings, home">
       <span class="logo__name">Jack <em>Albert</em></span>
       <span class="logo__tag">Wedding Films</span>
     </a>
-    <nav class="nav" aria-label="Primary">{links}<a class="btn header-cta" href="contact.html">Check your date</a></nav>
+    <nav class="nav" aria-label="Primary">{links}<a class="btn btn--gold header-cta magnetic" href="contact.html">Check your date</a></nav>
     <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu"><span></span><span></span></button>
   </div>
 </header>
 <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
   <ul class="mobile-menu__links">{mlinks}</ul>
   <div class="mobile-menu__foot">
+    <a class="btn btn--gold btn--block" href="contact.html">Check your date {ARROW}</a>
     <div class="mobile-menu__contact">
-      <a href="tel:{BRAND["tel"]}">{BRAND["phone"]}</a>
-      <a href="mailto:{BRAND["email"]}">{BRAND["email"]}</a>
+      <a class="btn btn--ghost-light" href="sms:{BRAND["tel"]}">Text Jack</a>
+      <a class="btn btn--ghost-light" href="tel:{BRAND["tel"]}">Call {BRAND["phone"]}</a>
     </div>
-    <a class="btn btn--light btn--block" href="contact.html">Check your date {ARROW}</a>
-    <div class="socials"><a href="{BRAND["instagram"]}" target="_blank" rel="noopener" aria-label="Instagram">{IG}</a><a href="{BRAND["youtube"]}" target="_blank" rel="noopener" aria-label="YouTube">{YT}</a></div>
+    <div class="socials"><a href="{BRAND["instagram"]}" target="_blank" rel="noopener" aria-label="Instagram">{IG}</a><a href="{BRAND["youtube"]}" target="_blank" rel="noopener" aria-label="YouTube">{YT}</a><a href="mailto:{BRAND["email"]}" aria-label="Email">{MAIL}</a></div>
   </div>
 </div>'''
 
 
 def footer(show_cta=True):
     cta = f'''<div class="footer-cta">
-      <h2 class="display-lg reveal">A film you’ll <em class="accent">watch forever.</em></h2>
+      <h2 class="display-lg" data-split>A film you’ll <em class="gold-text">watch forever.</em></h2>
       <div class="reveal" data-delay="1"><p>Dates for the coming seasons are booking now. Share a few details and I’ll reply within 24 hours.</p>
-      <div class="actions"><a class="btn" href="contact.html">Check your date {ARROW}</a></div></div>
+      <div class="actions"><a class="btn btn--gold magnetic" href="contact.html">Check your date {ARROW}</a><a class="btn btn--ghost-light magnetic" href="{BRAND["calendly"]}" target="_blank" rel="noopener">Book a call</a></div></div>
     </div>''' if show_cta else ""
     return f'''<footer class="site-footer">
   <div class="container">
@@ -309,6 +455,7 @@ def footer(show_cta=True):
           <li><a class="big" href="tel:{BRAND["tel"]}">{BRAND["phone"]}</a></li>
           <li><a href="mailto:{BRAND["email"]}">{BRAND["email"]}</a></li>
           <li><a href="{BRAND["calendly"]}" target="_blank" rel="noopener">Book a call</a></li>
+          <li><a href="sms:{BRAND["tel"]}">Text Jack</a></li>
           <li><a href="{BRAND["instagram"]}" target="_blank" rel="noopener">@jackalbertweddings</a></li>
         </ul>
       </div>
@@ -340,15 +487,36 @@ def footer(show_cta=True):
     </div>
   </div>
 </footer>
+<a class="float-cta" href="contact.html?src=float" aria-label="Check your date">
+  <span class="float-cta__bg"></span>
+  <svg class="ring" viewBox="0 0 110 110" aria-hidden="true"><defs><path id="fc" d="M55 55m-42 0a42 42 0 1 1 84 0a42 42 0 1 1-84 0"/></defs><text><textPath href="#fc">Check your date · Check your date · </textPath></text></svg>
+  {ARROW}
+</a>
 <div class="mobile-cta" aria-label="Quick contact">
-  <a class="btn" href="contact.html">Check your date</a>
+  <a class="btn btn--gold" href="contact.html?src=mobile-bar">Check your date</a>
+  <a class="btn btn--icon" href="sms:{BRAND["tel"]}" aria-label="Text Jack">{CHAT}</a>
   <a class="btn btn--icon" href="tel:{BRAND["tel"]}" aria-label="Call Jack">{PHONE}</a>
 </div>
 <div class="modal" id="film-modal" role="dialog" aria-modal="true" aria-label="Wedding film" aria-hidden="true">
   <span class="modal__title"></span>
   <button class="modal__close" type="button" aria-label="Close film">{CLOSE}</button>
   <div class="modal__frame"></div>
+  <div class="modal__after"><a class="btn btn--gold btn--sm" href="contact.html?src=film">Want a film like this? Check your date {ARROW}</a></div>
 </div>
+<div class="exit" id="exit-modal" role="dialog" aria-modal="true" aria-labelledby="exit-title" aria-hidden="true">
+  <div class="exit__card">
+    <button class="exit__close" type="button" aria-label="Close">{CLOSE}</button>
+    <div class="exit__img"><img src="assets/img/reel-poster.jpg" alt="" loading="lazy"></div>
+    <div class="exit__body">
+      <p class="eyebrow" style="margin:0">Before you go</p>
+      <h3 id="exit-title">Is your date <em style="color:#e2c393">still open?</em></h3>
+      <p>Pop it in and I’ll personally confirm within 24 hours. No obligation.</p>
+      {datecheck("exit", "Wedding date", "Check")}
+      <p class="exit__alt">Rather talk? <a href="sms:{BRAND["tel"]}">Text Jack</a> or <a href="{BRAND["calendly"]}" target="_blank" rel="noopener">book a 15-min call</a>.</p>
+    </div>
+  </div>
+</div>
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js" defer></script>
 <script src="assets/js/site.js?v={VERSION}" defer></script>
 </body>
 </html>'''
@@ -396,11 +564,12 @@ def render(path, meta, body, posts):
     if path == "index.html":
         extra += '\n<script type="application/ld+json">' + json.dumps(SCHEMA) + "</script>"
     out = head(meta["title"], meta["description"], path, extra)
-    out += "\n<body>\n" + header(meta.get("nav", ""), meta.get("hero") == "dark")
+    out += f'\n<body data-cal-url="{BRAND["calendly"]}">\n' + header(meta.get("nav", ""), meta.get("hero") == "dark")
     out += '\n<main id="main">\n' + expand(body, posts) + "\n</main>\n"
     # pages ending in the full-bleed CTA band don't need the footer CTA as well
     show_cta = meta.get("footer_cta", "yes") != "no" and "{{cta_band}}" not in body
     out += footer(show_cta)
+    out = out.replace(f'href="{BRAND["calendly"]}"', f'href="{BRAND["calendly"]}" data-calendly')
     (OUT / path).write_text(out)
 
 
@@ -414,11 +583,12 @@ def article(p, posts):
         "image": f'{DOMAIN}/assets/img/{p["img"]}', "mainEntityOfPage": f'{DOMAIN}/{p["slug"]}.html',
         "publisher": {"@type": "Organization", "name": "Jack Albert Weddings"},
     }
-    body = f'''<article>
+    body = f'''<div class="read-progress" aria-hidden="true"></div>
+<article>
   <header class="article-hero">
     <div class="container container--narrow">
       <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="journal.html">Journal</a><span>/</span>{html.escape(p["eyebrow"])}</nav>
-      <h1 class="display-md fade-in">{html.escape(p["title"])}</h1>
+      <h1 class="display-md" data-split data-hero-split>{html.escape(p["title"])}</h1>
       <p class="article-meta">{html.escape(p["meta"])}</p>
     </div>
   </header>
@@ -427,9 +597,10 @@ def article(p, posts):
     <div class="container container--text">
       <div class="prose">{p["body"]}</div>
       <aside class="article-cta">
+        <p class="eyebrow">Your day, on film</p>
         <h3>Thinking about a film for your day?</h3>
-        <p>Tell me your date and venue and I’ll get back to you within 24 hours. No pressure, just a friendly chat.</p>
-        <a class="btn" href="contact.html">Check your date {ARROW}</a>
+        <p>Pop in your date and I’ll let you know if I’m free within 24 hours. No pressure, just a friendly chat.</p>
+        {datecheck("article")}
       </aside>
       <div class="article-author">
         <img src="assets/img/about-jack.jpg" alt="Jack Albert filming with a gimbal" loading="lazy">
