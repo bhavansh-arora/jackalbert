@@ -1,0 +1,78 @@
+---
+title: Contact | Check Your Date | Jack Albert Weddings
+description: Check your wedding date with Ottawa Valley wedding videographer Jack Albert. Send an inquiry, book a quick call, or call (613) 621-0458. Replies within 24 hours.
+nav: contact
+footer_cta: no
+---
+<section class="page-hero">
+  <div class="container">
+    <div class="page-hero__grid">
+      <div>
+        <p class="eyebrow fade-in">Let’s Talk</p>
+        <h1 class="display-xl page-hero__title"><span class="split-line"><span>Tell me about</span></span><span class="split-line"><span><em class="accent">your day.</em></span></span></h1>
+      </div>
+      <div class="page-hero__aside fade-in">
+        <p class="body-lg">Share a few details and I’ll let you know if your date is open, usually with a reply within 24 hours.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="padding-top:0" aria-label="Inquiry">
+  <div class="container contact-grid">
+    <aside class="contact-aside reveal">
+      <div class="frame-img reveal-img" style="aspect-ratio:16/11"><img src="assets/img/pembroke-kiss.jpg" alt="A couple sharing a kiss in a field of tall grass" loading="lazy"></div>
+      <ul class="contact-list">
+        <li><span class="caps">Call / text</span><a href="tel:{{tel}}">{{phone}}</a></li>
+        <li><span class="caps">Email</span><a href="mailto:{{email}}">{{email}}</a></li>
+        <li><span class="caps">Instagram</span><a href="{{instagram}}" target="_blank" rel="noopener">@jackalbertweddings</a></li>
+        <li><span class="caps">Based in</span><span class="lede" style="font-size:22px">Ottawa Valley, Ontario</span></li>
+      </ul>
+      <div class="call-card">
+        <h3>Rather just talk?</h3>
+        <p>Skip the form and grab a time that works for you. It’s a relaxed, friendly call to see if we’re the right fit for your day.</p>
+        <a class="btn" href="{{calendly}}" target="_blank" rel="noopener">Book a quick call {{arrow}}</a>
+      </div>
+    </aside>
+
+    <div class="form-wrap reveal" data-delay="1">
+      <form class="form" id="inquiry-form" action="{{formspree}}" method="POST" novalidate>
+        <input type="hidden" name="_subject" value="New wedding inquiry — jackalbertweddings.ca">
+        <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="display:none" aria-hidden="true">
+        <div class="field"><label for="name">Your name(s)</label><input class="input" id="name" name="name" type="text" autocomplete="name" placeholder="Sam &amp; Alex" required></div>
+        <div class="field"><label for="email">Email</label><input class="input" id="email" name="email" type="email" autocomplete="email" placeholder="you@email.com" required></div>
+        <div class="field"><label for="date">Wedding date</label><input class="input" id="date" name="wedding_date" type="date" required></div>
+        <div class="field"><label for="phone">Phone <span class="opt">(for a quick text)</span></label><input class="input" id="phone" name="phone" type="tel" autocomplete="tel" placeholder="(613) 555-0123"></div>
+        <div class="field field--full"><label for="venue">Venue or location</label><input class="input" id="venue" name="venue" type="text" placeholder="The Farmstead, Pembroke"></div>
+        <fieldset class="field field--full choice-group">
+          <legend>Which collection feels right?</legend>
+          <div class="choices">
+            <label class="choice"><input type="radio" name="collection" value="not-sure" checked><span>Not sure yet</span></label>
+            <label class="choice"><input type="radio" name="collection" value="sweet-simple"><span>Sweet &amp; Simple <small>from $1,950</small></span></label>
+            <label class="choice"><input type="radio" name="collection" value="classic-collection"><span>Classic Collection <small>$2,750</small></span></label>
+            <label class="choice"><input type="radio" name="collection" value="luxury-collection"><span>Luxury Collection <small>from $3,950</small></span></label>
+          </div>
+        </fieldset>
+        <div class="field field--full"><label for="message">Message</label><textarea class="textarea" id="message" name="message" placeholder="Tell me a little about the two of you and your plans…"></textarea></div>
+        <div class="field field--full"><label for="source">How did you find me?</label>
+          <select class="select input" id="source" name="source">
+            <option value="">Choose one</option>
+            <option>Instagram</option><option>Google</option><option>YouTube</option><option>Facebook</option>
+            <option>A friend or family member</option><option>My venue or another vendor</option><option>Other</option>
+          </select>
+        </div>
+        <p class="form__status" role="alert"></p>
+        <div class="form__foot">
+          <p class="form__note">I’ll send you a quick text so you know your inquiry arrived, then reply by email within 24 hours.</p>
+          <button class="btn" type="submit"><span class="label">Send inquiry</span> {{arrow}}</button>
+        </div>
+      </form>
+      <div class="form-success" role="status">
+        <p class="eyebrow">Received</p>
+        <h3>Thank <em class="accent">you.</em></h3>
+        <p class="body-lg">Your inquiry is on its way. I’ll reply within 24 hours, usually with a couple of questions and a quick call to see if we’re the right fit for your day.</p>
+        <div class="actions" style="margin-top:24px"><a class="btn" href="films.html">Watch a film while you wait {{arrow}}</a></div>
+      </div>
+    </div>
+  </div>
+</section>
