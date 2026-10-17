@@ -19,8 +19,13 @@
   };
   var clamp = function (v, a, b) { return Math.min(b, Math.max(a, v)); };
 
+  var today = new Date();
+  document.querySelectorAll("[data-today]").forEach(function (el) {
+    el.textContent = String(today.getDate()).padStart(2, "0") + "." + String(today.getMonth() + 1).padStart(2, "0") + "." + String(today.getFullYear()).slice(2);
+  });
+
   /* ======================================================================
-     Intro: film-leader countdown (first visit) / curtain (page changes)
+     Intro: film slate (first visit) / curtain (page changes)
      ====================================================================== */
   var loader = document.querySelector(".loader");
   var curtain = document.querySelector(".curtain");
@@ -36,19 +41,8 @@
     } else { requestAnimationFrame(loaded); }
   } else {
     store.set("jaw-intro", "1");
-    var num = loader.querySelector(".leader__num");
-    var sweep = loader.querySelector(".leader__sweep");
-    var start = null, dur = 1800;
-    var tick = function (t) {
-      if (!start) start = t;
-      var e = t - start;
-      var n = Math.max(1, 3 - Math.floor(e / (dur / 3)));
-      if (num.textContent !== String(n)) num.textContent = n;
-      sweep.style.setProperty("--p", ((e % (dur / 3)) / (dur / 3) * 360) + "deg");
-      if (e < dur) requestAnimationFrame(tick);
-      else { loader.classList.add("is-done"); window.setTimeout(loaded, 250); window.setTimeout(function () { loader.remove(); }, 1300); }
-    };
-    requestAnimationFrame(tick);
+    // the slate claps (CSS, ~1s), then the board lifts away
+    window.setTimeout(function () { loader.classList.add("is-done"); window.setTimeout(loaded, 250); window.setTimeout(function () { loader.remove(); }, 1300); }, 1500);
   }
 
   // page-to-page wipe
@@ -130,8 +124,14 @@
   var mobileCta = document.querySelector(".mobile-cta");
   var floatCta = document.querySelector(".float-cta");
   var lastY = window.scrollY;
+  var M = { heroH: 0, docH: 0, vh: window.innerHeight };
+  function measure() { M.heroH = hero ? hero.offsetHeight : 0; M.docH = document.documentElement.scrollHeight; M.vh = window.innerHeight; }
+  measure();
+  window.addEventListener("load", measure);
+  window.addEventListener("resize", measure);
+  if ("ResizeObserver" in window) new ResizeObserver(function () { measure(); }).observe(document.body);
   function onHeader(y) {
-    var heroH = hero ? hero.offsetHeight - 100 : 0;
+    var heroH = M.heroH - 100;
     body.classList.toggle("bar-hidden", y > 60);
     if (header) {
       header.classList.toggle("is-over-hero", !!hero && y < heroH);
@@ -139,8 +139,8 @@
       header.classList.toggle("is-hidden", y > 500 && y > lastY + 2 && !body.classList.contains("menu-open"));
       if (y < lastY - 2) header.classList.remove("is-hidden");
     }
-    var show = y > window.innerHeight * 0.7;
-    var nearEnd = y + window.innerHeight > document.documentElement.scrollHeight - 700;
+    var show = y > M.vh * 0.7;
+    var nearEnd = y + M.vh > M.docH - 700;
     if (mobileCta) mobileCta.classList.toggle("is-visible", show);
     if (floatCta) floatCta.classList.toggle("is-visible", show && !nearEnd);
     lastY = y;
@@ -238,7 +238,10 @@
   if (tc) {
     var t0 = performance.now() - 83000;
     var pad = function (n) { return (n < 10 ? "0" : "") + n; };
+    var tcOn = true;
+    if ("IntersectionObserver" in window) new IntersectionObserver(function (en) { tcOn = en[0].isIntersecting; }).observe(tc);
     window.setInterval(function () {
+      if (!tcOn || document.hidden) return;
       var f = Math.floor((performance.now() - t0) / (1000 / 24));
       var fr = f % 24, s = Math.floor(f / 24);
       tc.textContent = pad(Math.floor(s / 3600)) + ":" + pad(Math.floor(s / 60) % 60) + ":" + pad(s % 60) + ":" + pad(fr);
@@ -265,7 +268,7 @@
     var y = window.scrollY, vh = window.innerHeight;
     // ---- reads (no style writes until every measurement is taken)
     var reelR = reel && !small && !reduce ? reelFrame.parentElement.getBoundingClientRect() : null;
-    var paraR = small || reduce ? [] : paras.map(function (el) { return el.parentElement.getBoundingClientRect(); });
+    var paraR = small || reduce || !fine ? [] : paras.map(function (el) { return el.parentElement.getBoundingClientRect(); });
     var scrubR = scrubs.map(function (sc) { return sc.el.getBoundingClientRect(); });
     var tlR = timeline ? timeline.getBoundingClientRect() : null;
     var stepTops = Array.prototype.map.call(tlSteps, function (st) { return st.getBoundingClientRect().top; });
@@ -273,7 +276,7 @@
 
     // ---- writes
     onHeader(y);
-    if (!reduce && heroMedia && y < vh * 1.2) {
+    if (!reduce && !small && heroMedia && y < vh * 1.2) {
       var hp = y / vh;
       heroMedia.style.transform = "translate3d(0," + (y * 0.35).toFixed(1) + "px,0) scale(" + (1 + hp * 0.1).toFixed(4) + ")";
       if (heroContent) { heroContent.style.transform = "translate3d(0," + (y * -0.12).toFixed(1) + "px,0)"; heroContent.style.opacity = String(clamp(1 - hp * 1.4, 0, 1)); }
@@ -701,6 +704,35 @@
     var a = e.target.closest('a[href^="tel:"], a[href^="sms:"], a[href^="mailto:"]');
     if (a) track("Contact", { method: a.getAttribute("href").split(":")[0] });
   });
+  // act rail: appears after the hero, tracks the current act
+  var rail = document.querySelector(".actrail");
+  if (rail && "IntersectionObserver" in window) {
+    var acts = Array.prototype.slice.call(document.querySelectorAll("[data-act]"));
+    var links = rail.querySelectorAll("[data-act-link]");
+    var railBar = rail.querySelector(".actrail__bar span");
+    var ao = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        var id = en.target.getAttribute("data-act");
+        links.forEach(function (l) { l.classList.toggle("is-active", l.getAttribute("data-act-link") === id); });
+        railBar.style.setProperty("--p", ((acts.indexOf(en.target) + 1) / acts.length).toFixed(3));
+      });
+    }, { rootMargin: "-45% 0px -50% 0px" });
+    acts.forEach(function (el) { ao.observe(el); });
+    var heroEl = document.querySelector("[data-hero]");
+    var railMq = window.matchMedia("(min-width: 1280px)");
+    var railVis = function () { if (!railMq.matches) return; var y = window.scrollY; rail.classList.toggle("is-on", y > M.heroH * 0.75 && y + M.vh < M.docH - 900); };
+    window.addEventListener("scroll", railVis, { passive: true }); railVis();
+  }
+
+  // pause decorative loops while they are off-screen
+  if ("IntersectionObserver" in window) {
+    var lo = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { en.target.classList.toggle("is-offscreen", !en.isIntersecting); });
+    }, { rootMargin: "100px 0px" });
+    document.querySelectorAll(".marquee, .badge-spin, .float-cta").forEach(function (el) { lo.observe(el); });
+  }
+
   // article sidebar: highlight the section being read
   var toc = document.querySelectorAll(".toc a");
   if (toc.length && "IntersectionObserver" in window) {

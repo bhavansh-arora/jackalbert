@@ -3,7 +3,9 @@ title: Jack Albert Weddings | Ottawa Valley Wedding Videographer
 description: Warm, cinematic wedding films by Jack Albert, an Ottawa Valley wedding videographer filming across Renfrew County, Pembroke, Ottawa, Kingston and beyond.
 hero: dark
 ---
-<section class="hero" data-hero aria-label="Introduction">
+{{actrail}}
+
+<section class="hero hero--home" data-hero aria-label="Introduction">
   <div class="hero__media">
     <img src="assets/img/hero-poster.jpg" alt="" fetchpriority="high">
     <video muted loop playsinline autoplay preload="auto" poster="assets/img/hero-poster.jpg" data-src-desktop="assets/video/hero-1920.mp4" data-src-mobile="assets/video/hero-mobile.mp4" aria-hidden="true"></video>
@@ -11,16 +13,17 @@ hero: dark
   <div class="hero__scrim"></div>
   <div class="letterbox letterbox--top"></div>
   <div class="letterbox letterbox--bottom"></div>
+  {{filmedges}}
   <div class="viewfinder" aria-hidden="true">
     <span class="vf-corner vf-corner--tl"></span><span class="vf-corner vf-corner--tr"></span>
     <span class="vf-corner vf-corner--bl"></span><span class="vf-corner vf-corner--br"></span>
     <div class="vf-tl"><span class="vf-rec">REC</span><span data-timecode>00:01:23:00</span></div>
-    <div class="vf-tr"><span class="vf-hide-sm">4K</span><span>24 FPS</span><span class="vf-batt"></span></div>
+    <div class="vf-tr"><span class="vf-hide-sm">Scene 01 · Take 01</span><span>24 FPS</span><span class="vf-batt"></span></div>
   </div>
   <div class="hero__content">
-    <p class="eyebrow hero__eyebrow">Ottawa Valley · Ottawa · Kingston · Beyond</p>
-    <h1 class="display-xl hero__title" data-split data-hero-split data-delay="350">Films that feel like the day <em class="gold-text">felt.</em></h1>
-    <p class="hero__sub">Warm, cinematic wedding films that capture how your day felt, not just how it looked.</p>
+    <p class="hero__kicker">A wedding film by <span>Jack Albert</span></p>
+    <h1 class="display-xl hero__title" data-split data-hero-split data-delay="350">Films that feel like the day {{swash:felt}}</h1>
+    <p class="hero__sub">Warm, cinematic wedding films from the Ottawa Valley, for couples close to home and wherever the day takes you.</p>
     <div class="hero__cta">
       {{datecheck_hero}}
       <div class="hero__trust">
@@ -32,19 +35,27 @@ hero: dark
   </div>
 </section>
 
-<section class="section" aria-labelledby="intro-title">
-  <div class="container statement">
-    <div class="statement__media">
-      <div class="frame-img reveal-img"><img src="assets/img/about-jack.jpg" alt="Jack Albert filming a wedding with a gimbal camera" loading="lazy" data-speed="40"></div>
-      <div class="badge-spin" aria-hidden="true">
-        <svg viewBox="0 0 120 120"><defs><path id="circ" d="M60 60m-46 0a46 46 0 1 1 92 0a46 46 0 1 1-92 0"/></defs><text><textPath href="#circ">Jack Albert · Wedding Films · Ottawa Valley ·</textPath></text><circle class="dot" cx="60" cy="60" r="4"/></svg>
+<section class="section feeling" id="act-1" data-act="act-1" aria-labelledby="intro-title">
+  <div class="container">
+    {{act:act-1}}
+    <div class="feeling__grid">
+      <div class="feeling__media">
+        <div class="arch arch--tall reveal-img"><img src="assets/img/about-jack.jpg" alt="Jack Albert filming a wedding with a gimbal camera" loading="lazy"></div>
+        <div class="arch-dot reveal-img"><img src="assets/img/bree-portrait.jpg" alt="" loading="lazy"></div>
+        <div class="badge-spin" aria-hidden="true">
+          <span class="spin"><svg viewBox="0 0 120 120"><defs><path id="circ" d="M60 60m-46 0a46 46 0 1 1 92 0a46 46 0 1 1-92 0"/></defs><text><textPath href="#circ">Jack Albert · Wedding Films · Ottawa Valley ·</textPath></text><circle class="dot" cx="60" cy="60" r="4"/></svg></span>
+        </div>
+        <p class="feeling__caption">Fig. 01 — Jack, mid-take, somewhere in the Valley.</p>
       </div>
-    </div>
-    <div>
-      <p class="eyebrow reveal">Hello, I’m Jack</p>
-      <h2 id="intro-title" class="lede" data-scrub>I’m a wedding filmmaker from the Ottawa Valley. I make warm, cinematic films for couples getting married close to home and wherever the day takes them, from church ceremonies to barns, backyards and ballrooms. One filmmaker who cares about your story, not a rotating crew.</h2>
-      <p class="signature reveal">— Jack</p>
-      <div class="actions reveal" style="margin-top:30px"><a class="btn btn--ghost magnetic" href="about.html">My story {{arrow}}</a>{{google_badge}}</div>
+      <div class="feeling__text">
+        <h2 id="intro-title" class="lede feeling__lede" data-scrub>Hello, I’m Jack. I make warm, cinematic films for couples getting married close to home and wherever the day takes them, from church ceremonies to barns, backyards and ballrooms.</h2>
+        <div class="feeling__notes">
+          <div class="note-card reveal"><span class="note-card__n">01</span><strong>One filmmaker</strong><span>Not a rotating crew. The person you meet is the person behind the camera.</span></div>
+          <div class="note-card reveal" data-delay="1"><span class="note-card__n">02</span><strong>Led by light &amp; sound</strong><span>Careful light and near-obsessive audio, so your vows sound as good as they look.</span></div>
+        </div>
+        <p class="signature-script reveal">Jack Albert</p>
+        <div class="actions reveal" style="margin-top:26px"><a class="btn btn--ghost magnetic" href="about.html">My story {{arrow}}</a>{{google_badge}}</div>
+      </div>
     </div>
   </div>
 </section>
@@ -53,30 +64,44 @@ hero: dark
 
 {{marquee_words}}
 
+<div id="act-2" data-act="act-2">
 {{hgallery}}
 
-<section class="section" aria-labelledby="approach-title">
+<section class="section sheet-section" aria-labelledby="sheet-title">
   <div class="container">
     <div class="section-head">
-      <div><p class="eyebrow reveal">The Approach</p><h2 id="approach-title" class="display-lg" data-split>Cinematic, honest, <em class="accent">quietly yours.</em></h2></div>
+      <div><p class="eyebrow reveal">From the Cutting Room</p><h2 id="sheet-title" class="display-lg" data-split>The contact <em class="accent">sheet.</em></h2></div>
+      <p class="body-lg reveal" data-delay="1">Every film starts here: thousands of frames, a grease pencil, and the moments that made someone catch their breath. A few of my selects.</p>
+    </div>
+    {{contact_sheet}}
+  </div>
+</section>
+</div>
+
+<section class="section" id="act-3" data-act="act-3" aria-labelledby="approach-title">
+  <div class="container">
+    {{act:act-3}}
+    <div class="section-head">
+      <div><h2 id="approach-title" class="display-lg" data-split>Cinematic, honest, <em class="accent">quietly yours.</em></h2></div>
       <p class="body-lg reveal" data-delay="1">Natural and emotional, led by light, with a heavy focus on clean audio. Never staged or generic, always built around how your day actually felt.</p>
     </div>
     {{scrolly}}
   </div>
 </section>
 
-<section class="section section--ivory" aria-labelledby="reviews-title">
+<section class="section section--ivory letters" aria-labelledby="reviews-title">
   <div class="container">
     <div class="section-head section-head--center">
-      <p class="eyebrow reveal">Kind Words</p>
+      <p class="eyebrow reveal">Letters From Couples</p>
       <h2 id="reviews-title" class="display-lg" data-split>In their <em class="accent">words.</em></h2>
+      {{ornament}}
     </div>
     <div class="reveal">{{reviews}}</div>
     <div class="center reveal" style="margin-top:44px">{{google_badge}}</div>
   </div>
 </section>
 
-<section class="section" aria-labelledby="numbers-title">
+<section class="section section--tight" aria-labelledby="numbers-title">
   <div class="container">
     <h2 id="numbers-title" class="sr-only">At a glance</h2>
     <div class="facts reveal">
@@ -88,10 +113,12 @@ hero: dark
   </div>
 </section>
 
+<div id="act-4" data-act="act-4">
 <section class="section section--paper2" id="finder" aria-labelledby="finder-title">
   <div class="container">
+    {{act:act-4}}
     <div class="section-head">
-      <div><p class="eyebrow reveal">Find Your Collection</p><h2 id="finder-title" class="display-lg" data-split>Three questions. <em class="accent">One perfect fit.</em></h2></div>
+      <div><h2 id="finder-title" class="display-lg" data-split>Three questions. <em class="accent">One perfect fit.</em></h2></div>
       <div class="reveal" data-delay="1"><p class="body-lg">Not sure which collection is right? Answer three quick questions and I’ll point you to the one that fits your day. Collections start at $1,950.</p><a class="link-line" href="investment.html">See full pricing {{arrow}}</a></div>
     </div>
     <div class="reveal">{{quiz}}</div>
@@ -101,24 +128,24 @@ hero: dark
 <section class="section" aria-labelledby="invest-title">
   <div class="container">
     <div class="section-head">
-      <div><p class="eyebrow reveal">The Investment</p><h2 id="invest-title" class="display-lg" data-split>Clear pricing, <em class="accent">no surprises.</em></h2></div>
+      <div><p class="eyebrow reveal">The Investment</p><h2 id="invest-title" class="display-lg" data-split>Three ways <em class="accent">to tell it.</em></h2></div>
       <div class="reveal" data-delay="1"><p class="body-lg">Extra hours, raw footage and travel are quoted for your specific day, so you always know the full picture before you book.</p><a class="link-line" href="investment.html">Compare collections {{arrow}}</a></div>
     </div>
-    <div class="price-rows">
-      <a class="price-row reveal" href="investment.html#sweet-simple">
-        <span class="price-row__num">i.</span><span class="price-row__name">Sweet &amp; Simple</span>
-        <span class="price-row__desc">6 hours of coverage and a 3 to 5 minute cinematic highlight film.</span>
-        <span class="price-row__price"><small>From</small>$1,950</span>
+    <div class="tickets">
+      <a class="ticket reveal" href="investment.html#sweet-simple">
+        <span class="ticket__stub"><span>Admit</span><b>Two</b><span>No. 01</span></span>
+        <span class="ticket__body"><span class="ticket__kicker">The short film</span><span class="ticket__name">Sweet &amp; Simple</span><span class="ticket__desc">6 hours · a 3–5 minute cinematic highlight film · drone · 4K gallery</span></span>
+        <span class="ticket__price"><small>From</small>$1,950</span>
       </a>
-      <a class="price-row reveal" href="investment.html#classic-collection">
-        <span class="price-row__num">ii.</span><span class="price-row__name">Classic <em class="accent">Collection</em></span>
-        <span class="price-row__desc">Most popular. 10 hours, a 5 to 10 minute film, a social teaser, drone and a letter-reading film.</span>
-        <span class="price-row__price"><small>Investment</small>$2,750</span>
+      <a class="ticket ticket--feature reveal" data-delay="1" href="investment.html#classic-collection">
+        <span class="ticket__stub"><span>Admit</span><b>Two</b><span>No. 02</span></span>
+        <span class="ticket__body"><span class="ticket__kicker">The feature · most popular</span><span class="ticket__name">Classic Collection</span><span class="ticket__desc">10 hours · a 5–10 minute film · social teaser · drone · letter-reading film</span></span>
+        <span class="ticket__price"><small>Investment</small>$2,750</span>
       </a>
-      <a class="price-row reveal" href="investment.html#luxury-collection">
-        <span class="price-row__num">iii.</span><span class="price-row__name">Luxury Collection</span>
-        <span class="price-row__desc">12+ hours, an 8 to 10 minute main film and all of your footage, raw and colour graded.</span>
-        <span class="price-row__price"><small>From</small>$3,950</span>
+      <a class="ticket reveal" data-delay="2" href="investment.html#luxury-collection">
+        <span class="ticket__stub"><span>Admit</span><b>Two</b><span>No. 03</span></span>
+        <span class="ticket__body"><span class="ticket__kicker">The director’s cut</span><span class="ticket__name">Luxury Collection</span><span class="ticket__desc">12+ hours · an 8–10 minute main film · all footage, raw &amp; colour graded</span></span>
+        <span class="ticket__price"><small>From</small>$3,950</span>
       </a>
     </div>
   </div>
@@ -133,6 +160,7 @@ hero: dark
     {{timeline}}
   </div>
 </section>
+</div>
 
 {{marquee_places}}
 

@@ -151,17 +151,21 @@ def datecheck(src="site", label="Your date", button="Check my date"):
 <p class="datecheck__msg" id="dcm-{src}" aria-live="polite"></p>'''
 
 
-def cta_band(title="Let’s make <em class=\"gold-text\">your film.</em>", text="Pick your date and I’ll let you know if I’m free, usually within 24 hours. No pressure, just a friendly chat.", img="band-flowers.jpg", video="band-flowers.mp4", src="cta"):
-    return f'''<section class="cta-band" aria-labelledby="cta-title-{src}">
+def cta_band(title="", text="", img="band-flowers.jpg", video="band-flowers.mp4", src="cta"):
+    return f'''<section class="cta-band invite-band" id="act-5" data-act="act-5" aria-labelledby="cta-title-{src}">
   <div class="cta-band__bg" data-speed="-60"><video muted loop playsinline preload="none" data-loop data-src="assets/video/{video}" poster="assets/img/{img}"></video></div>
   <div class="container">
-    <p class="eyebrow reveal">Your day, on film</p>
-    <h2 id="cta-title-{src}" class="display-xl" data-split style="margin-bottom:30px">{title}</h2>
-    <p class="reveal" data-delay="1">{text}</p>
-    <div class="reveal" data-delay="2" style="width:100%;display:grid;justify-items:center;gap:14px">{datecheck(src)}</div>
-    <div class="cta-band__actions reveal" data-delay="3">
-      <a class="btn btn--ghost-light magnetic" href="{BRAND["calendly"]}" target="_blank" rel="noopener">Book a 15-min call</a>
-      <a class="btn btn--ghost-light magnetic" href="sms:{BRAND["tel"]}">Text Jack</a>
+    <div class="invite reveal">
+      <div class="invite__seal">{mono("seal-" + src, "mono mono--seal")}</div>
+      <div class="invite__inner">
+        <p class="invite__kicker">Together with Jack Albert Wedding Films</p>
+        <p class="invite__small">you are cordially invited</p>
+        <h2 id="cta-title-{src}" class="invite__script">to check your date</h2>
+        {ORNAMENT}
+        <p class="invite__body">Share the day you’re planning and Jack will personally reply within twenty-four hours. No pressure, just a friendly hello.</p>
+        <div class="invite__form light">{datecheck(src, "Your date", "Check my date")}</div>
+        <p class="invite__rsvp">Kindly reply · <a href="sms:{BRAND["tel"]}">text {BRAND["phone"]}</a> · or <a href="{BRAND["calendly"]}" target="_blank" rel="noopener">book a 15-minute call</a></p>
+      </div>
     </div>
   </div>
 </section>'''
@@ -282,6 +286,76 @@ def film_index():
     return f'<div class="film-index reveal">{rows}</div>'
 
 
+
+# ---------------------------------------------------------------- concept: "The Wedding Film"
+def mono(uid, cls="mono"):
+    """JA monogram seal."""
+    return (f'<svg class="{cls}" viewBox="0 0 100 100" aria-hidden="true">'
+            f'<defs><path id="mt-{uid}" d="M50 50m-37 0a37 37 0 1 1 74 0a37 37 0 1 1-74 0"/></defs>'
+            '<circle cx="50" cy="50" r="48" fill="none" stroke="currentColor" stroke-width=".7"/>'
+            '<circle cx="50" cy="50" r="44.5" fill="none" stroke="currentColor" stroke-width=".35" stroke-dasharray=".6 1.6"/>'
+            f'<text class="mono__ring"><textPath href="#mt-{uid}" startOffset="0">WEDDING FILMS · OTTAWA VALLEY · EST. JA ·</textPath></text>'
+            '<text class="mono__j" x="41" y="62">J</text><text class="mono__a" x="51" y="62">A</text>'
+            '<path d="M33 69h34" stroke="currentColor" stroke-width=".5"/></svg>')
+
+
+def swash(word, kind="under"):
+    """Hand-drawn gold stroke that draws on when its heading reveals."""
+    if kind == "circle":
+        path = '<path pathLength="1" d="M8 34C6 14 52 3 104 6s96 14 92 30-58 26-110 22S6 52 12 30"/>'
+        vb = "0 0 210 60"
+    else:
+        path = '<path pathLength="1" d="M4 14C40 6 96 4 150 8c22 2 34 5 42 9M60 17c30-4 70-3 96 2"/>'
+        vb = "0 0 200 24"
+    return f'<span class="swash swash--{kind}">{word}<svg viewBox="{vb}" preserveAspectRatio="none" aria-hidden="true">{path}</svg></span>'
+
+
+def filmedge(side, code="JA 5219"):
+    marks = " · ".join(f"{code}  {n}{'A' if n % 2 else ''} ▸" for n in range(11, 23))
+    return f'<div class="filmedge filmedge--{side}" aria-hidden="true"><span class="filmedge__holes"></span><span class="filmedge__code">{marks}</span></div>'
+
+
+def act(n, title):
+    return f'<p class="act reveal"><span class="act__n">Act {n}</span><span class="act__line"></span><span class="act__t">{title}</span></p>'
+
+
+ACTS = [("I", "The Feeling", "act-1"), ("II", "The Films", "act-2"), ("III", "The Approach", "act-3"), ("IV", "Your Day", "act-4"), ("V", "The Invitation", "act-5")]
+
+
+def actrail():
+    items = "".join(f'<li><a href="#{a}" data-act-link="{a}"><span class="n">{n}</span><span class="t">{t}</span></a></li>' for n, t, a in ACTS)
+    return f'<nav class="actrail" aria-label="Chapters"><ol>{items}</ol><span class="actrail__bar"><span></span></span></nav>'
+
+
+SHEET = [
+    ("bree-portrait.jpg", "circle"), ("bree-skyler-laugh.jpg", ""), ("cake-detail.jpg", ""), ("champagne.jpg", "star"),
+    ("aisle-father.jpg", ""), ("bride-window.jpg", "circle"), ("skyline-dance.jpg", ""), ("pembroke-aisle.jpg", "x"),
+    ("preview-lyndon-paige.jpg", ""), ("s8-fs.jpg", ""), ("pembroke-kiss.jpg", "circle"), ("reel-poster.jpg", ""),
+]
+MARKS = {
+    "circle": '<svg class="grease" viewBox="0 0 100 70" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M10 38C4 16 40 4 62 5s36 12 33 30-30 30-55 28S4 52 14 26"/></svg>',
+    "x": '<svg class="grease" viewBox="0 0 100 70" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M14 10L86 60M84 12L18 58"/></svg>',
+    "star": '<svg class="grease grease--star" viewBox="0 0 40 40" aria-hidden="true"><path pathLength="1" d="M20 4l4 11 12 1-9 8 3 12-10-7-10 7 3-12-9-8 12-1z"/></svg>',
+}
+
+
+def contact_sheet(caption="Selects · Real weddings, real moments"):
+    frames = ""
+    for i, (img, mark) in enumerate(SHEET):
+        n = 14 + i
+        frames += (f'<figure class="cs__frame{" cs__frame--select" if mark == "circle" else ""}">'
+                   f'<div class="cs__img"><img src="assets/img/{img}" alt="" loading="lazy" decoding="async"></div>'
+                   f'<figcaption><span>{n}</span><span class="cs__arrow">▸</span><span>{n}A</span></figcaption>{MARKS.get(mark, "")}</figure>')
+    return f'''<div class="cs reveal">
+  <div class="cs__edge"><span>JA 5219</span><span>KODAK-STYLE PROOF · ROLL 07</span><span>◀ 24 ▸</span></div>
+  <div class="cs__grid">{frames}</div>
+  <div class="cs__edge cs__edge--b"><span>{caption}</span><span>JACK ALBERT WEDDING FILMS</span></div>
+</div>'''
+
+
+ORNAMENT = '<div class="ornament" aria-hidden="true"><span></span><svg viewBox="0 0 40 20"><path d="M20 2c2 5 6 8 12 8-6 0-10 3-12 8-2-5-6-8-12-8 6 0 10-3 12-8z"/></svg><span></span></div>'
+
+
 HEROES = {
     # key: (scene label, eyebrow, title, sub, poster, video or None, buttons html, size)
     "films": ("Scene 02 · The Films", "The Films", 'Real days, <em class="gold-text">kept forever.</em>',
@@ -332,6 +406,7 @@ def page_hero(scene, eyebrow, title, sub, poster, video, buttons, size="", crumb
   <div class="hero__scrim"></div>
   <div class="letterbox letterbox--top"></div>
   <div class="letterbox letterbox--bottom"></div>
+  {filmedge("l")}{filmedge("r", "JA 2027")}
   <div class="viewfinder" aria-hidden="true">
     <span class="vf-corner vf-corner--tl"></span><span class="vf-corner vf-corner--tr"></span>
     <span class="vf-corner vf-corner--bl"></span><span class="vf-corner vf-corner--br"></span>
@@ -411,6 +486,14 @@ SNIPPETS = {
     "marquee_words": marquee(["Warm", "Cinematic", "Honest", "Timeless", "Yours"]),
 }
 SNIPPETS["mosaic"] = mosaic()
+SNIPPETS["contact_sheet"] = contact_sheet()
+SNIPPETS["actrail"] = actrail()
+SNIPPETS["ornament"] = ORNAMENT
+SNIPPETS["mono"] = mono("page")
+for _n, _t, _a in ACTS:
+    SNIPPETS["act:" + _a] = act(_n, _t)
+SNIPPETS["swash:felt"] = swash('<em class="gold-text">felt.</em>')
+SNIPPETS["filmedges"] = filmedge("l") + filmedge("r", "JA 2027")
 SNIPPETS["includes"] = includes()
 SNIPPETS["quote:shelby"] = quote_band("preview-shelby-bobby.jpg", "Every time we watch it, it feels like we get to relive the day all over again.", "Shelby &amp; Bobby", "preview-shelby-bobby.mp4")
 SNIPPETS["quote:theresa"] = quote_band("skyline-dance.jpg", "Watching the footage feels like reliving it, and the highlight film blew us away.", "Theresa")
@@ -496,7 +579,7 @@ def head(title, description, path, extra=""):
 <link rel="manifest" href="site.webmanifest">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Mono:wght@400&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Mono:wght@400&family=Pinyon+Script&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script>document.documentElement.classList.add("js");try{{if(sessionStorage.getItem("jaw-intro")==="1")document.documentElement.classList.add("no-loader")}}catch(e){{}}</script>
 <link rel="stylesheet" href="assets/css/site.css?v={VERSION}">
 {extra}
@@ -517,20 +600,23 @@ def header(active, over_hero):
     cls = "site-header is-over-hero" if over_hero else "site-header"
     return f'''<a class="skip-link" href="#main">Skip to content</a>
 <div class="loader" aria-hidden="true">
-  <div class="leader">
-    <div class="leader__sweep"></div>
-    <svg viewBox="0 0 200 200" fill="none" stroke="rgba(241,233,220,.55)" stroke-width=".6"><circle cx="100" cy="100" r="92"/><circle cx="100" cy="100" r="74"/><path d="M100 0v200M0 100h200"/></svg>
-    <div class="leader__num">3</div>
+  <div class="slate">
+    <div class="slate__clap"><span class="slate__stick slate__stick--top"></span><span class="slate__stick"></span></div>
+    <div class="slate__board">
+      <div class="slate__row slate__row--big"><span>Production</span><b>Your Wedding Film</b></div>
+      <div class="slate__grid"><div><span>Director</span><b>Jack Albert</b></div><div><span>Scene</span><b>01</b></div><div><span>Take</span><b>01</b></div></div>
+      <div class="slate__grid slate__grid--2"><div><span>Roll</span><b>A001</b></div><div><span>Location</span><b>Ottawa Valley</b></div><div><span>Date</span><b data-today>—</b></div></div>
+    </div>
   </div>
-  <div class="loader__brand">Jack Albert · Wedding Films</div>
 </div>
 <div class="curtain" aria-hidden="true"><div class="curtain__mark">Jack Albert</div></div>
 <div class="announce"><a href="contact.html?src=bar"><span class="dot"></span>Now booking 2027 &amp; 2028 weddings · Check your date {ARROW}</a></div>
 <header class="{cls}">
   <div class="container site-header__inner">
-    <a class="logo" href="index.html" aria-label="Jack Albert Weddings, home">
-      <span class="logo__name">Jack <em>Albert</em></span>
-      <span class="logo__tag">Wedding Films</span>
+    <a class="logo logo--seal" href="index.html" aria-label="Jack Albert Weddings, home">
+      {mono("hdr", "mono mono--hdr")}
+      <span class="logo__words"><span class="logo__name">Jack <em>Albert</em></span>
+      <span class="logo__tag">Wedding Films</span></span>
     </a>
     <nav class="nav" aria-label="Primary">{links}<a class="btn btn--gold header-cta magnetic" href="contact.html">Check your date</a></nav>
     <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu"><span></span><span></span></button>
@@ -550,10 +636,16 @@ def header(active, over_hero):
 
 
 def footer(show_cta=True):
-    cta = f'''<div class="footer-cta">
-      <h2 class="display-lg" data-split>A film you’ll <em class="gold-text">watch forever.</em></h2>
-      <div class="reveal" data-delay="1"><p>Dates for the coming seasons are booking now. Share a few details and I’ll reply within 24 hours.</p>
-      <div class="actions"><a class="btn btn--gold magnetic" href="contact.html">Check your date {ARROW}</a><a class="btn btn--ghost-light magnetic" href="{BRAND["calendly"]}" target="_blank" rel="noopener">Book a call</a></div></div>
+    cta = f'''<div class="credits">
+      <p class="credits__label">— End Credits —</p>
+      <dl class="credits__list">
+        <div class="reveal"><dt>Starring</dt><dd>You &amp; your people</dd></div>
+        <div class="reveal"><dt>Directed, filmed &amp; edited by</dt><dd>Jack Albert</dd></div>
+        <div class="reveal"><dt>Filmed on location in</dt><dd>The Ottawa Valley, Pembroke, Ottawa, Kingston &amp; beyond</dd></div>
+        <div class="reveal"><dt>Original score</dt><dd>Your vows, your speeches, your first dance</dd></div>
+        <div class="reveal"><dt>Running time</dt><dd>Forever · delivered in 6–8 weeks</dd></div>
+      </dl>
+      <div class="actions credits__cta reveal"><a class="btn btn--gold magnetic" href="contact.html?src=credits">Check your date {ARROW}</a><a class="btn btn--ghost-light magnetic" href="{BRAND["calendly"]}" target="_blank" rel="noopener">Book a call</a></div>
     </div>''' if show_cta else ""
     return f'''<footer class="site-footer">
   <div class="container">
@@ -595,7 +687,7 @@ def footer(show_cta=True):
         </ul>
       </div>
     </div>
-    <div class="footer-word" aria-hidden="true">Jack Albert</div>
+    <div class="footer-fin" aria-hidden="true"><span class="footer-fin__word">Fin.</span>{mono("ftr", "mono mono--ftr")}</div>
     <div class="footer-bottom">
       <span>© <span data-year>{date.today().year}</span> Jack Albert Weddings · Ottawa Valley, Ontario</span>
       <span><a href="privacy.html">Privacy</a></span>
@@ -604,7 +696,7 @@ def footer(show_cta=True):
 </footer>
 <a class="float-cta" href="contact.html?src=float" aria-label="Check your date">
   <span class="float-cta__bg"></span>
-  <svg class="ring" viewBox="0 0 110 110" aria-hidden="true"><defs><path id="fc" d="M55 55m-42 0a42 42 0 1 1 84 0a42 42 0 1 1-84 0"/></defs><text><textPath href="#fc">Check your date · Check your date · </textPath></text></svg>
+  <span class="spin"><svg class="ring" viewBox="0 0 110 110" aria-hidden="true"><defs><path id="fc" d="M55 55m-42 0a42 42 0 1 1 84 0a42 42 0 1 1-84 0"/></defs><text><textPath href="#fc">Check your date · Check your date · </textPath></text></svg></span>
   {ARROW}
 </a>
 <div class="mobile-cta" aria-label="Quick contact">
@@ -681,7 +773,7 @@ def render(path, meta, body, posts):
     out += f'\n<body data-cal-url="{BRAND["calendly"]}">\n' + header(meta.get("nav", ""), meta.get("hero") == "dark")
     out += '\n<main id="main">\n' + expand(body, posts) + "\n</main>\n"
     # pages ending in the full-bleed CTA band don't need the footer CTA as well
-    show_cta = meta.get("footer_cta", "yes") != "no" and "{{cta_band}}" not in body
+    show_cta = meta.get("footer_cta", "yes") != "no"
     out += footer(show_cta)
     out = out.replace(f'href="{BRAND["calendly"]}"', f'href="{BRAND["calendly"]}" data-calendly')
     (OUT / path).write_text(out)
