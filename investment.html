@@ -22,7 +22,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Mono:wght@400&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script>document.documentElement.classList.add("js");try{if(sessionStorage.getItem("jaw-intro")==="1")document.documentElement.classList.add("no-loader")}catch(e){}</script>
-<link rel="stylesheet" href="assets/css/site.css?v=1792211785">
+<link rel="stylesheet" href="assets/css/site.css?v=1792213077">
 
 <script>
 !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
@@ -41,7 +41,7 @@ fbq('init','2142663756311688');fbq('track','PageView');
 </div>
 <div class="curtain" aria-hidden="true"><div class="curtain__mark">Jack Albert</div></div>
 <div class="announce"><a href="contact.html?src=bar"><span class="dot"></span>Now booking 2027 &amp; 2028 weddings · Check your date <svg class="arrow" viewBox="0 0 18 10" fill="none" stroke="currentColor" stroke-width="1.1" aria-hidden="true"><path d="M0 5h17M13 1l4 4-4 4"/></svg></a></div>
-<header class="site-header">
+<header class="site-header is-over-hero">
   <div class="container site-header__inner">
     <a class="logo" href="index.html" aria-label="Jack Albert Weddings, home">
       <span class="logo__name">Jack <em>Albert</em></span>
@@ -63,22 +63,30 @@ fbq('init','2142663756311688');fbq('track','PageView');
   </div>
 </div>
 <main id="main">
-<section class="page-hero">
-  <div class="container">
-    <div class="page-hero__grid">
-      <div>
-        <p class="eyebrow fade-in">The Investment</p>
-        <h1 class="display-xl page-hero__title" data-split data-hero-split>Three collections <em class="gold-text">to choose from.</em></h1>
-      </div>
-      <div class="page-hero__aside fade-in">
-        <p class="body-lg">Clear, honest pricing. Extra hours, raw footage and travel are quoted for your specific day, so you always know the full picture before you book.</p>
-      </div>
-    </div>
+<section class="hero hero--page" data-hero aria-label="Introduction">
+  <div class="hero__media"><img src="assets/img/band-flowers.jpg" alt="" fetchpriority="high"><video muted loop playsinline autoplay preload="auto" poster="assets/img/band-flowers.jpg" data-src-desktop="assets/video/band-flowers.mp4" data-src-mobile="assets/video/band-flowers.mp4" aria-hidden="true"></video></div>
+  <div class="hero__scrim"></div>
+  <div class="letterbox letterbox--top"></div>
+  <div class="letterbox letterbox--bottom"></div>
+  <div class="viewfinder" aria-hidden="true">
+    <span class="vf-corner vf-corner--tl"></span><span class="vf-corner vf-corner--tr"></span>
+    <span class="vf-corner vf-corner--bl"></span><span class="vf-corner vf-corner--br"></span>
+    <div class="vf-tl"><span class="vf-rec">REC</span><span data-timecode>00:01:23:00</span></div>
+    <div class="vf-tr"><span class="vf-hide-sm">Scene 04 · The Investment</span><span class="vf-batt"></span></div>
   </div>
+  <div class="hero__content hero__content--page">
+    <p class="eyebrow hero__eyebrow">The Investment</p>
+    <h1 class="display-xl hero__title" data-split data-hero-split data-delay="300">Three collections, <em class="gold-text">one clear price.</em></h1>
+    <p class="hero__sub">Clear, honest pricing from $1,950. Extra hours, raw footage and travel are quoted for your day, so there are never surprises.</p>
+    <div class="hero__cta"><div class="actions"><a class="btn btn--gold magnetic" href="#finder">Find my collection <svg class="arrow" viewBox="0 0 18 10" fill="none" stroke="currentColor" stroke-width="1.1" aria-hidden="true"><path d="M0 5h17M13 1l4 4-4 4"/></svg></a><a class="btn btn--ghost-light magnetic" href="#collections">See the collections</a></div></div>
+  </div>
+  <div class="scroll-cue" aria-hidden="true"><span class="scroll-cue__line"></span>Scroll</div>
 </section>
 
-<section class="section" style="padding-top:0" aria-label="Collections">
+<section class="section" id="collections" aria-labelledby="coll-title">
+  <span class="bg-word" aria-hidden="true" data-speed="-80">Collections</span>
   <div class="container">
+    <div class="section-head section-head--center"><p class="eyebrow reveal">The Collections</p><h2 id="coll-title" class="display-lg" data-split>Choose the way <em class="accent">you remember it.</em></h2></div>
     <div class="collections">
       <article class="collection reveal" data-tilt id="sweet-simple">
         <p class="collection__num">i.</p>
@@ -182,12 +190,28 @@ fbq('init','2142663756311688');fbq('track','PageView');
   </div>
 </section>
 
+<section class="section section--paper2" aria-labelledby="inc-title">
+  <div class="container">
+    <div class="section-head section-head--center"><p class="eyebrow reveal">In Every Collection</p><h2 id="inc-title" class="display-lg" data-split>The essentials, <em class="accent">always included.</em></h2></div>
+    <ul class="includes"><li class="includes__item reveal" data-delay="0"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M3 7h18v12H3zM8 7l2-3h4l2 3"/></svg><strong>A cinematic film</strong><span>Shaped around how your day felt</span></li><li class="includes__item reveal" data-delay="1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M12 3v4M5 9l3 2M19 9l-3 2M4 14h16M7 14l-1 6M17 14l1 6"/></svg><strong>Drone footage</strong><span>Weather permitting, in every collection</span></li><li class="includes__item reveal" data-delay="2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M4 5h16v14H4zM4 15l5-4 4 3 3-2 4 3"/></svg><strong>Private 4K gallery</strong><span>Yours to download, keep and share</span></li><li class="includes__item reveal" data-delay="3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM12 7v5l3 2"/></svg><strong>6–8 week delivery</strong><span>Expedited editing available</span></li><li class="includes__item reveal" data-delay="4"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21c1-4 4-6 8-6s7 2 8 6"/></svg><strong>One filmmaker</strong><span>Jack, start to finish</span></li></ul>
+  </div>
+</section>
+
+<section class="quote-band" aria-label="Review">
+  <div class="quote-band__bg" data-speed="-70"><img src="assets/img/bride-window.jpg" alt="" loading="lazy"></div>
+  <div class="container container--narrow">
+    <div class="quote-band__mark" aria-hidden="true">“</div>
+    <blockquote><p data-split>He knew exactly how to make our wedding video feel special. We got it back within weeks!</p></blockquote>
+    <p class="cite reveal">★★★★★ &nbsp; Ramona · Google Review</p>
+  </div>
+</section>
+
 <section class="section section--night" aria-labelledby="good-title">
   <div class="container split">
     <div class="split__media"><div class="frame-img reveal-img"><img src="assets/img/preview-bree-skyler.jpg" alt="A bride and groom holding hands, her ring catching the light" loading="lazy"></div></div>
     <div>
       <p class="eyebrow reveal">Good to Know</p>
-      <h2 id="good-title" class="display-md reveal" data-delay="1">No surprises, <em class="accent">ever.</em></h2>
+      <h2 id="good-title" class="display-md" data-split>No surprises, <em class="accent">ever.</em></h2>
       <ul class="tick-list body-lg reveal" data-delay="2" style="margin-top:32px">
         <li>Standard delivery is six to eight weeks after your wedding.</li>
         <li>Need more time on the day? Extra hours are quoted simply for your schedule.</li>
@@ -203,7 +227,7 @@ fbq('init','2142663756311688');fbq('track','PageView');
 <section class="section" aria-labelledby="faq-title">
   <div class="container">
     <div class="section-head">
-      <div><p class="eyebrow reveal">Common Questions</p><h2 id="faq-title" class="display-md reveal" data-delay="1">Answered <em>honestly.</em></h2></div>
+      <div><p class="eyebrow reveal">Common Questions</p><h2 id="faq-title" class="display-md" data-split>Answered <em class="accent">honestly.</em></h2></div>
       <div class="reveal" data-delay="2"><p class="body-lg">Can’t find what you’re looking for? Text or call <a class="text-link" href="tel:+16136210458">(613) 621-0458</a> or browse the planning guides in the journal.</p><a class="link-line" href="journal.html">Read the journal <svg class="arrow" viewBox="0 0 18 10" fill="none" stroke="currentColor" stroke-width="1.1" aria-hidden="true"><path d="M0 5h17M13 1l4 4-4 4"/></svg></a></div>
     </div>
     <div class="faq reveal">
@@ -319,6 +343,6 @@ fbq('init','2142663756311688');fbq('track','PageView');
     </div>
   </div>
 </div>
-<script src="assets/js/site.js?v=1792211785" defer></script>
+<script src="assets/js/site.js?v=1792213077" defer></script>
 </body>
 </html>

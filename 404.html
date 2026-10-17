@@ -22,7 +22,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Mono:wght@400&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script>document.documentElement.classList.add("js");try{if(sessionStorage.getItem("jaw-intro")==="1")document.documentElement.classList.add("no-loader")}catch(e){}</script>
-<link rel="stylesheet" href="assets/css/site.css?v=1792211785">
+<link rel="stylesheet" href="assets/css/site.css?v=1792213077">
 
 <script>
 !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
@@ -41,7 +41,7 @@ fbq('init','2142663756311688');fbq('track','PageView');
 </div>
 <div class="curtain" aria-hidden="true"><div class="curtain__mark">Jack Albert</div></div>
 <div class="announce"><a href="contact.html?src=bar"><span class="dot"></span>Now booking 2027 &amp; 2028 weddings · Check your date <svg class="arrow" viewBox="0 0 18 10" fill="none" stroke="currentColor" stroke-width="1.1" aria-hidden="true"><path d="M0 5h17M13 1l4 4-4 4"/></svg></a></div>
-<header class="site-header">
+<header class="site-header is-over-hero">
   <div class="container site-header__inner">
     <a class="logo" href="index.html" aria-label="Jack Albert Weddings, home">
       <span class="logo__name">Jack <em>Albert</em></span>
@@ -63,13 +63,24 @@ fbq('init','2142663756311688');fbq('track','PageView');
   </div>
 </div>
 <main id="main">
-<section class="not-found">
-  <div>
-    <p class="eyebrow eyebrow--plain">404</p>
-    <h1 class="display-lg" style="margin-bottom:24px">This scene <em class="accent">didn’t make the cut.</em></h1>
-    <p class="body-lg" style="max-width:460px;margin:0 auto 36px">The page you’re looking for has moved or no longer exists.</p>
-    <div class="actions" style="justify-content:center"><a class="btn" href="index.html">Back home <svg class="arrow" viewBox="0 0 18 10" fill="none" stroke="currentColor" stroke-width="1.1" aria-hidden="true"><path d="M0 5h17M13 1l4 4-4 4"/></svg></a><a class="link-line" href="films.html">Watch the films <svg class="arrow" viewBox="0 0 18 10" fill="none" stroke="currentColor" stroke-width="1.1" aria-hidden="true"><path d="M0 5h17M13 1l4 4-4 4"/></svg></a></div>
+<section class="hero hero--page hero--short" data-hero aria-label="Introduction">
+  <div class="hero__media"><img src="assets/img/band-flowers.jpg" alt="" fetchpriority="high"><video muted loop playsinline autoplay preload="auto" poster="assets/img/band-flowers.jpg" data-src-desktop="assets/video/band-flowers.mp4" data-src-mobile="assets/video/band-flowers.mp4" aria-hidden="true"></video></div>
+  <div class="hero__scrim"></div>
+  <div class="letterbox letterbox--top"></div>
+  <div class="letterbox letterbox--bottom"></div>
+  <div class="viewfinder" aria-hidden="true">
+    <span class="vf-corner vf-corner--tl"></span><span class="vf-corner vf-corner--tr"></span>
+    <span class="vf-corner vf-corner--bl"></span><span class="vf-corner vf-corner--br"></span>
+    <div class="vf-tl"><span class="vf-rec">REC</span><span data-timecode>00:01:23:00</span></div>
+    <div class="vf-tr"><span class="vf-hide-sm">Scene 404 · Cut</span><span class="vf-batt"></span></div>
   </div>
+  <div class="hero__content hero__content--page">
+    <p class="eyebrow hero__eyebrow">404</p>
+    <h1 class="display-xl hero__title" data-split data-hero-split data-delay="300">This scene <em class="gold-text">didn’t make the cut.</em></h1>
+    <p class="hero__sub">The page you’re looking for has moved or no longer exists.</p>
+    <div class="hero__cta"><div class="actions"><a class="btn btn--gold magnetic" href="index.html">Back home <svg class="arrow" viewBox="0 0 18 10" fill="none" stroke="currentColor" stroke-width="1.1" aria-hidden="true"><path d="M0 5h17M13 1l4 4-4 4"/></svg></a><a class="btn btn--ghost-light magnetic" href="films.html">Watch the films</a></div></div>
+  </div>
+  <div class="scroll-cue" aria-hidden="true"><span class="scroll-cue__line"></span>Scroll</div>
 </section>
 
 </main>
@@ -154,6 +165,6 @@ fbq('init','2142663756311688');fbq('track','PageView');
     </div>
   </div>
 </div>
-<script src="assets/js/site.js?v=1792211785" defer></script>
+<script src="assets/js/site.js?v=1792213077" defer></script>
 </body>
 </html>

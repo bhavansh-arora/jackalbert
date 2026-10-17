@@ -701,5 +701,16 @@
     var a = e.target.closest('a[href^="tel:"], a[href^="sms:"], a[href^="mailto:"]');
     if (a) track("Contact", { method: a.getAttribute("href").split(":")[0] });
   });
+  // article sidebar: highlight the section being read
+  var toc = document.querySelectorAll(".toc a");
+  if (toc.length && "IntersectionObserver" in window) {
+    var to = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        toc.forEach(function (a) { a.classList.toggle("is-active", a.getAttribute("href") === "#" + en.target.id); });
+      });
+    }, { rootMargin: "-20% 0px -70% 0px" });
+    toc.forEach(function (a) { var h = document.querySelector(a.getAttribute("href")); if (h) to.observe(h); });
+  }
   document.querySelectorAll("[data-year]").forEach(function (el) { el.textContent = new Date().getFullYear(); });
 })();

@@ -282,6 +282,113 @@ def film_index():
     return f'<div class="film-index reveal">{rows}</div>'
 
 
+HEROES = {
+    # key: (scene label, eyebrow, title, sub, poster, video or None, buttons html, size)
+    "films": ("Scene 02 · The Films", "The Films", 'Real days, <em class="gold-text">kept forever.</em>',
+              "The work speaks louder than I can. Four weddings, four stories, each one made for one couple.",
+              "reel-poster.jpg", "reel.mp4",
+              f'<button class="btn btn--gold magnetic" type="button" data-yt="GLoy1N3UaAU" data-title="Shelby &amp; Bobby — A Lakeside Wedding · Chapeau">Play the featured film {PLAY}</button><a class="btn btn--ghost-light magnetic" href="#index-title">Browse all films</a>', ""),
+    "experience": ("Scene 03 · The Experience", "The Experience", 'Calm, considered, <em class="gold-text">all about you.</em>',
+                   "A relaxed, personal experience shaped around the people and moments that matter most to you, from first hello to the night you press play.",
+                   "pembroke-aisle.jpg", "pembroke-aisle.mp4",
+                   f'<a class="btn btn--gold magnetic" href="contact.html?src=experience">Check your date {ARROW}</a><a class="btn btn--ghost-light magnetic" href="#steps-title">How it works</a>', ""),
+    "investment": ("Scene 04 · The Investment", "The Investment", 'Three collections, <em class="gold-text">one clear price.</em>',
+                   "Clear, honest pricing from $1,950. Extra hours, raw footage and travel are quoted for your day, so there are never surprises.",
+                   "band-flowers.jpg", "band-flowers.mp4",
+                   f'<a class="btn btn--gold magnetic" href="#finder">Find my collection {ARROW}</a><a class="btn btn--ghost-light magnetic" href="#collections">See the collections</a>', ""),
+    "about": ("Scene 05 · The Filmmaker", "About Me", 'Hi, I’m <em class="gold-text">Jack.</em>',
+              "Wedding filmmaker, Ottawa Valley local, and the one person behind the camera at every wedding I film.",
+              "bree-skyler-laugh.jpg", "preview-bree-skyler.mp4",
+              f'<a class="btn btn--gold magnetic" href="contact.html?src=about">Check your date {ARROW}</a><a class="btn btn--ghost-light magnetic" href="#story-title">My story</a>', ""),
+    "journal": ("Scene 06 · The Journal", "The Journal", 'Planning your <em class="gold-text">wedding film.</em>',
+                "Honest guides for couples getting married in the Ottawa Valley, from what things cost to choosing a videographer and filming a country wedding.",
+                "aisle-father.jpg", None,
+                f'<a class="btn btn--gold magnetic" href="#articles">Read the guides {ARROW}</a>', ""),
+    "contact": ("Scene 07 · Let’s Talk", "Let’s Talk", 'Tell me about <em class="gold-text">your day.</em>',
+                "Four quick steps and I’ll let you know if your date is open, usually within 24 hours.",
+                "pembroke-kiss.jpg", "pembroke-kiss.mp4",
+                f'<a class="btn btn--gold magnetic" href="#inquiry">Start my inquiry {ARROW}</a><a class="btn btn--ghost-light magnetic" href="sms:{BRAND["tel"]}">Text Jack</a>', "short"),
+    "ottawa": ("Ottawa · Ottawa Valley · Renfrew County", "Ottawa · Ottawa Valley", 'Ottawa wedding <em class="gold-text">videographer.</em>',
+               "Cinematic, documentary-style wedding films for couples getting married in Ottawa and across the Valley.",
+               "s8-fs.jpg", "s8-fs.mp4",
+               f'<a class="btn btn--gold magnetic" href="contact.html?src=ottawa">Check your Ottawa date {ARROW}</a>', ""),
+    "pembroke": ("Pembroke · Renfrew County", "Pembroke · Renfrew County", 'Pembroke wedding <em class="gold-text">videographer.</em>',
+                 "Cinematic wedding films for couples getting married in Pembroke and across Renfrew County, from a filmmaker who’s from here.",
+                 "pembroke-venue.jpg", "pembroke-venue.mp4",
+                 f'<a class="btn btn--gold magnetic" href="contact.html?src=pembroke">Check your Pembroke date {ARROW}</a>', ""),
+    "notfound": ("Scene 404 · Cut", "404", 'This scene <em class="gold-text">didn’t make the cut.</em>',
+                 "The page you’re looking for has moved or no longer exists.",
+                 "band-flowers.jpg", "band-flowers.mp4",
+                 f'<a class="btn btn--gold magnetic" href="index.html">Back home {ARROW}</a><a class="btn btn--ghost-light magnetic" href="films.html">Watch the films</a>', "short"),
+}
+
+
+def page_hero(scene, eyebrow, title, sub, poster, video, buttons, size="", crumbs=""):
+    vid = (f'<video muted loop playsinline autoplay preload="auto" poster="assets/img/{poster}" data-src-desktop="assets/video/{video}" data-src-mobile="assets/video/{video}" aria-hidden="true"></video>'
+           if video else "")
+    cls = "hero hero--page" + (" hero--short" if size == "short" else "")
+    return f'''<section class="{cls}" data-hero aria-label="Introduction">
+  <div class="hero__media"><img src="assets/img/{poster}" alt="" fetchpriority="high">{vid}</div>
+  <div class="hero__scrim"></div>
+  <div class="letterbox letterbox--top"></div>
+  <div class="letterbox letterbox--bottom"></div>
+  <div class="viewfinder" aria-hidden="true">
+    <span class="vf-corner vf-corner--tl"></span><span class="vf-corner vf-corner--tr"></span>
+    <span class="vf-corner vf-corner--bl"></span><span class="vf-corner vf-corner--br"></span>
+    <div class="vf-tl"><span class="vf-rec">REC</span><span data-timecode>00:01:23:00</span></div>
+    <div class="vf-tr"><span class="vf-hide-sm">{scene}</span><span class="vf-batt"></span></div>
+  </div>
+  <div class="hero__content hero__content--page">
+    {crumbs}<p class="eyebrow hero__eyebrow">{eyebrow}</p>
+    <h1 class="display-xl hero__title" data-split data-hero-split data-delay="300">{title}</h1>
+    <p class="hero__sub">{sub}</p>
+    <div class="hero__cta"><div class="actions">{buttons}</div></div>
+  </div>
+  <div class="scroll-cue" aria-hidden="true"><span class="scroll-cue__line"></span>Scroll</div>
+</section>'''
+
+
+MOSAIC = [
+    ("skyline-dance.jpg", "A couple dancing in front of a city skyline", "tall", 50),
+    ("cake-detail.jpg", "A couple cutting a cake decorated with butterflies", "", -30),
+    ("bree-portrait.jpg", "A bride in a flower crown smiling softly", "", 70),
+    ("champagne.jpg", "Guests lifting coupes from a champagne tower", "wide", -50),
+    ("pembroke-aisle.jpg", "Flower girls walking down a garden aisle", "", 30),
+    ("bride-window.jpg", "A bride in her veil by a bright window", "tall", -60),
+]
+
+
+def mosaic():
+    tiles = "".join(f'<figure class="mosaic__item mosaic__item--{c or "std"} reveal-img"><img src="assets/img/{i}" alt="{a}" loading="lazy" data-speed="{sp}"></figure>' for i, a, c, sp in MOSAIC)
+    return f'<div class="mosaic">{tiles}</div>'
+
+
+INCLUDES = [
+    ("M3 7h18v12H3zM8 7l2-3h4l2 3", "A cinematic film", "Shaped around how your day felt"),
+    ("M12 3v4M5 9l3 2M19 9l-3 2M4 14h16M7 14l-1 6M17 14l1 6", "Drone footage", "Weather permitting, in every collection"),
+    ("M4 5h16v14H4zM4 15l5-4 4 3 3-2 4 3", "Private 4K gallery", "Yours to download, keep and share"),
+    ("M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM12 7v5l3 2", "6–8 week delivery", "Expedited editing available"),
+    ("M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21c1-4 4-6 8-6s7 2 8 6", "One filmmaker", "Jack, start to finish"),
+]
+
+
+def includes():
+    items = "".join(f'<li class="includes__item reveal" data-delay="{n}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="{d}"/></svg><strong>{t}</strong><span>{x}</span></li>' for n, (d, t, x) in enumerate(INCLUDES))
+    return f'<ul class="includes">{items}</ul>'
+
+
+def quote_band(img, quote, who, video=None):
+    vid = f'<video muted loop playsinline preload="none" data-loop data-src="assets/video/{video}" poster="assets/img/{img}"></video>' if video else f'<img src="assets/img/{img}" alt="" loading="lazy">'
+    return f'''<section class="quote-band" aria-label="Review">
+  <div class="quote-band__bg" data-speed="-70">{vid}</div>
+  <div class="container container--narrow">
+    <div class="quote-band__mark" aria-hidden="true">“</div>
+    <blockquote><p data-split>{quote}</p></blockquote>
+    <p class="cite reveal">★★★★★ &nbsp; {who} · Google Review</p>
+  </div>
+</section>'''
+
+
 SNIPPETS = {
     "arrow": ARROW, "play": PLAY, "star": STAR, "ig": IG, "yt": YT,
     "phone": BRAND["phone"], "tel": BRAND["tel"], "email": BRAND["email"],
@@ -303,6 +410,14 @@ SNIPPETS = {
     "marquee_moments": marquee(["The vows", "The first look", "The speeches", "The last dance", "The quiet moments"]),
     "marquee_words": marquee(["Warm", "Cinematic", "Honest", "Timeless", "Yours"]),
 }
+SNIPPETS["mosaic"] = mosaic()
+SNIPPETS["includes"] = includes()
+SNIPPETS["quote:shelby"] = quote_band("preview-shelby-bobby.jpg", "Every time we watch it, it feels like we get to relive the day all over again.", "Shelby &amp; Bobby", "preview-shelby-bobby.mp4")
+SNIPPETS["quote:theresa"] = quote_band("skyline-dance.jpg", "Watching the footage feels like reliving it, and the highlight film blew us away.", "Theresa")
+SNIPPETS["quote:madison"] = quote_band("aisle-father.jpg", "He captured our favourite moments from the Wilno Church to our reception, and we couldn’t be happier.", "Madison")
+SNIPPETS["quote:ramona"] = quote_band("bride-window.jpg", "He knew exactly how to make our wedding video feel special. We got it back within weeks!", "Ramona")
+for k, v in HEROES.items():
+    SNIPPETS["hero:" + k] = page_hero(*v)
 for k in FILMS:
     SNIPPETS["film:" + k] = film_tile(k)
     SNIPPETS["filmauto:" + k] = film_tile(k, autoplay=True)
@@ -582,35 +697,57 @@ def article(p, posts):
         "image": f'{DOMAIN}/assets/img/{p["img"]}', "mainEntityOfPage": f'{DOMAIN}/{p["slug"]}.html',
         "publisher": {"@type": "Organization", "name": "Jack Albert Weddings"},
     }
+    # give each h2 an id so the sidebar can list it
+    toc, n = [], [0]
+    def _id(m):
+        n[0] += 1
+        hid = "s" + str(n[0])
+        toc.append((hid, re.sub(r"<[^>]+>", "", m.group(1))))
+        return f'<h2 id="{hid}">{m.group(1)}</h2>'
+    prose = re.sub(r"<h2>(.*?)</h2>", _id, p["body"])
+    toc_html = "".join(f'<li><a href="#{i}">{t}</a></li>' for i, t in toc)
+    crumbs = f'<nav class="breadcrumbs hero__crumbs" aria-label="Breadcrumb"><a href="journal.html">Journal</a><span>/</span>{html.escape(p["eyebrow"])}</nav>'
+    hero = page_hero("The Journal · " + html.escape(p["eyebrow"]), html.escape(p["meta"]), html.escape(p["title"]),
+                     "", p["img"], None,
+                     f'<a class="btn btn--gold magnetic" href="#read">Read the guide {ARROW}</a>', "short", crumbs)
+    hero = hero.replace('class="display-xl hero__title"', 'class="display-lg hero__title"')
     body = f'''<div class="read-progress" aria-hidden="true"></div>
 <article>
-  <header class="article-hero">
-    <div class="container container--narrow">
-      <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="journal.html">Journal</a><span>/</span>{html.escape(p["eyebrow"])}</nav>
-      <h1 class="display-md" data-split data-hero-split>{html.escape(p["title"])}</h1>
-      <p class="article-meta">{html.escape(p["meta"])}</p>
-    </div>
-  </header>
-  <div class="container"><div class="frame-img article-cover reveal-img"><img src="assets/img/{p["img"]}" alt="" decoding="async"></div></div>
-  <div class="section" style="padding-top:clamp(56px,7vw,96px)">
-    <div class="container container--text">
-      <div class="prose">{p["body"]}</div>
-      <aside class="article-cta">
-        <p class="eyebrow">Your day, on film</p>
-        <h3>Thinking about a film for your day?</h3>
-        <p>Pop in your date and I’ll let you know if I’m free within 24 hours. No pressure, just a friendly chat.</p>
-        {datecheck("article")}
-      </aside>
-      <div class="article-author">
-        <img src="assets/img/about-jack.jpg" alt="Jack Albert filming with a gimbal" loading="lazy">
-        <div><strong>Jack Albert</strong><span>Wedding filmmaker based in the Ottawa Valley</span></div>
+  {hero}
+  <div class="section" id="read" style="padding-top:clamp(64px,8vw,110px)">
+    <div class="container article-layout">
+      <div class="article-main">
+        <div class="prose">{prose}</div>
+        <aside class="article-cta">
+          <p class="eyebrow">Your day, on film</p>
+          <h3>Thinking about a film for your day?</h3>
+          <p>Pop in your date and I’ll let you know if I’m free within 24 hours. No pressure, just a friendly chat.</p>
+          {datecheck("article")}
+        </aside>
+        <div class="article-author">
+          <img src="assets/img/about-jack.jpg" alt="Jack Albert filming with a gimbal" loading="lazy">
+          <div><strong>Jack Albert</strong><span>Wedding filmmaker based in the Ottawa Valley</span></div>
+        </div>
       </div>
+      <aside class="article-side" aria-label="On this page">
+        <div class="article-side__inner">
+          {"<p class='caps muted'>On this page</p><ol class='toc'>" + toc_html + "</ol>" if toc else ""}
+          <div class="side-card">
+            <div class="side-card__img"><img src="assets/img/reel-poster.jpg" alt="" loading="lazy"></div>
+            <div class="side-card__body">
+              <p class="caps" style="color:#e2c393;margin:0 0 8px">Is your date open?</p>
+              <p class="side-card__t">Films from $1,950. Replies within 24 hours.</p>
+              <a class="btn btn--gold btn--sm btn--block" href="contact.html?src=article-side">Check your date {ARROW}</a>
+            </div>
+          </div>
+        </div>
+      </aside>
     </div>
   </div>
 </article>
 <section class="section section--paper2">
   <div class="container">
-    <div class="section-head"><div><p class="eyebrow">Keep reading</p><h2 class="display-md">More from the <em>journal.</em></h2></div>
+    <div class="section-head"><div><p class="eyebrow">Keep reading</p><h2 class="display-md" data-split>More from <em class="accent">the journal.</em></h2></div>
     <div><a class="link-line" href="journal.html">All guides {ARROW}</a></div></div>
     <div class="posts">{"".join(post_card(r) for r in related)}</div>
   </div>
@@ -619,6 +756,7 @@ def article(p, posts):
         "title": p["seo_title"] or f'{p["title"]} | Jack Albert Weddings',
         "description": p["description"],
         "nav": "journal",
+        "hero": "dark",
         "extra": '<script type="application/ld+json">' + json.dumps(schema) + "</script>",
     }
     render(p["slug"] + ".html", meta, body, posts)

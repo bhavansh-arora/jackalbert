@@ -22,7 +22,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Mono:wght@400&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script>document.documentElement.classList.add("js");try{if(sessionStorage.getItem("jaw-intro")==="1")document.documentElement.classList.add("no-loader")}catch(e){}</script>
-<link rel="stylesheet" href="assets/css/site.css?v=1792211785">
+<link rel="stylesheet" href="assets/css/site.css?v=1792213077">
 
 <script>
 !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
@@ -63,21 +63,31 @@ fbq('init','2142663756311688');fbq('track','PageView');
   </div>
 </div>
 <main id="main">
-<section class="page-hero page-hero--media" data-hero>
-  <div class="page-hero__bg"><video muted loop playsinline preload="none" data-loop data-src="assets/video/s8-fs.mp4" poster="assets/img/s8-fs.jpg" aria-hidden="true"></video></div>
-  <div class="container">
-    <nav class="breadcrumbs fade-in" aria-label="Breadcrumb" style="color:rgba(251,248,243,.7)"><a href="index.html">Home</a><span>/</span>Ottawa</nav>
-    <p class="eyebrow fade-in">Ottawa · Ottawa Valley · Renfrew County</p>
-    <h1 class="display-xl page-hero__title" data-split data-hero-split>Ottawa wedding <em class="gold-text">videographer.</em></h1>
-    <p class="body-lg fade-in" style="max-width:520px;margin-top:24px">Cinematic, documentary-style wedding films for couples getting married in Ottawa and across the Valley.</p>
+<section class="hero hero--page" data-hero aria-label="Introduction">
+  <div class="hero__media"><img src="assets/img/s8-fs.jpg" alt="" fetchpriority="high"><video muted loop playsinline autoplay preload="auto" poster="assets/img/s8-fs.jpg" data-src-desktop="assets/video/s8-fs.mp4" data-src-mobile="assets/video/s8-fs.mp4" aria-hidden="true"></video></div>
+  <div class="hero__scrim"></div>
+  <div class="letterbox letterbox--top"></div>
+  <div class="letterbox letterbox--bottom"></div>
+  <div class="viewfinder" aria-hidden="true">
+    <span class="vf-corner vf-corner--tl"></span><span class="vf-corner vf-corner--tr"></span>
+    <span class="vf-corner vf-corner--bl"></span><span class="vf-corner vf-corner--br"></span>
+    <div class="vf-tl"><span class="vf-rec">REC</span><span data-timecode>00:01:23:00</span></div>
+    <div class="vf-tr"><span class="vf-hide-sm">Ottawa · Ottawa Valley · Renfrew County</span><span class="vf-batt"></span></div>
   </div>
+  <div class="hero__content hero__content--page">
+    <p class="eyebrow hero__eyebrow">Ottawa · Ottawa Valley</p>
+    <h1 class="display-xl hero__title" data-split data-hero-split data-delay="300">Ottawa wedding <em class="gold-text">videographer.</em></h1>
+    <p class="hero__sub">Cinematic, documentary-style wedding films for couples getting married in Ottawa and across the Valley.</p>
+    <div class="hero__cta"><div class="actions"><a class="btn btn--gold magnetic" href="contact.html?src=ottawa">Check your Ottawa date <svg class="arrow" viewBox="0 0 18 10" fill="none" stroke="currentColor" stroke-width="1.1" aria-hidden="true"><path d="M0 5h17M13 1l4 4-4 4"/></svg></a></div></div>
+  </div>
+  <div class="scroll-cue" aria-hidden="true"><span class="scroll-cue__line"></span>Scroll</div>
 </section>
 
 <section class="section" aria-labelledby="o1">
   <div class="container split">
     <div>
       <p class="eyebrow reveal">Films that capture the feeling</p>
-      <h2 id="o1" class="display-md reveal" data-delay="1">Not just <em class="accent">the footage.</em></h2>
+      <h2 id="o1" class="display-md" data-split>Not just <em class="accent">the footage.</em></h2>
       <div class="reveal" data-delay="2" style="margin-top:28px">
         <p class="body-lg">I’m Jack Albert, a wedding videographer based in the Ottawa Valley, and I love filming in Ottawa. Whether your wedding is downtown or at an estate just outside the city, I’ll travel to you. My films are cinematic and documentary in feel, warm, natural, and built around how your day actually felt, not staged or generic.</p>
         <p class="body-lg">I have a strong eye for light and how to shape it, and I’m close to obsessive about clean audio, because your vows and speeches deserve to sound as good as they look. On the day I stay professional and mostly invisible.</p>
@@ -90,7 +100,7 @@ fbq('init','2142663756311688');fbq('track','PageView');
 <section class="section section--night" aria-labelledby="o2">
   <div class="container">
     <div class="section-head">
-      <div><p class="eyebrow reveal">From downtown to a country estate</p><h2 id="o2" class="display-md reveal" data-delay="1">Ottawa &amp; area <em class="accent">venues.</em></h2></div>
+      <div><p class="eyebrow reveal">From downtown to a country estate</p><h2 id="o2" class="display-md" data-split>Ottawa &amp; area <em class="accent">venues.</em></h2></div>
       <p class="body-lg reveal" data-delay="2">Downtown, a garden estate just outside the city, or a barn out in the Valley, I shoot it the same way: led by light, obsessed with sound, and quietly in the background so the day stays yours.</p>
     </div>
     <ul class="areas reveal">
@@ -109,10 +119,19 @@ fbq('init','2142663756311688');fbq('track','PageView');
   </div>
 </section>
 
+<section class="quote-band" aria-label="Review">
+  <div class="quote-band__bg" data-speed="-70"><img src="assets/img/skyline-dance.jpg" alt="" loading="lazy"></div>
+  <div class="container container--narrow">
+    <div class="quote-band__mark" aria-hidden="true">“</div>
+    <blockquote><p data-split>Watching the footage feels like reliving it, and the highlight film blew us away.</p></blockquote>
+    <p class="cite reveal">★★★★★ &nbsp; Theresa · Google Review</p>
+  </div>
+</section>
+
 <section class="section" aria-labelledby="o3">
   <div class="container">
     <div class="section-head">
-      <div><p class="eyebrow reveal">See the films</p><h2 id="o3" class="display-md reveal" data-delay="1">The work speaks <em>louder than I can.</em></h2></div>
+      <div><p class="eyebrow reveal">See the films</p><h2 id="o3" class="display-md" data-split>The work speaks <em class="accent">louder than I can.</em></h2></div>
       <div class="reveal" data-delay="2"><p class="body-lg">Films start at $1,950. Most couples choose the Classic Collection at $2,750. Travel to Ottawa is quoted for your specific day.</p><a class="link-line" href="investment.html">See full pricing <svg class="arrow" viewBox="0 0 18 10" fill="none" stroke="currentColor" stroke-width="1.1" aria-hidden="true"><path d="M0 5h17M13 1l4 4-4 4"/></svg></a></div>
     </div>
     <div class="film-cards">
@@ -155,7 +174,7 @@ fbq('init','2142663756311688');fbq('track','PageView');
 
 <section class="section section--paper2" aria-labelledby="o4">
   <div class="container container--narrow">
-    <div class="section-head section-head--center"><p class="eyebrow reveal">Common questions</p><h2 id="o4" class="display-md reveal" data-delay="1">Ottawa weddings, <em>answered.</em></h2></div>
+    <div class="section-head section-head--center"><p class="eyebrow reveal">Common questions</p><h2 id="o4" class="display-md" data-split>Ottawa weddings, <em class="accent">answered.</em></h2></div>
     <div class="faq reveal">
       <details><summary>How much does a wedding videographer cost in Ottawa? <span class="faq__icon"></span></summary><div class="faq__body"><p>Films start at $1,950. Most couples choose the Classic Collection at $2,750 (10 hours, feature film and social teaser). Travel to Ottawa is quoted per day.</p></div></details>
       <details><summary>Do you travel to Ottawa? <span class="faq__icon"></span></summary><div class="faq__body"><p>Yes, I’m based in the Ottawa Valley and film in Ottawa and across the region regularly.</p></div></details>
@@ -266,6 +285,6 @@ fbq('init','2142663756311688');fbq('track','PageView');
     </div>
   </div>
 </div>
-<script src="assets/js/site.js?v=1792211785" defer></script>
+<script src="assets/js/site.js?v=1792213077" defer></script>
 </body>
 </html>

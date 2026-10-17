@@ -22,7 +22,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Mono:wght@400&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script>document.documentElement.classList.add("js");try{if(sessionStorage.getItem("jaw-intro")==="1")document.documentElement.classList.add("no-loader")}catch(e){}</script>
-<link rel="stylesheet" href="assets/css/site.css?v=1792211785">
+<link rel="stylesheet" href="assets/css/site.css?v=1792213077">
 
 <script>
 !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
@@ -63,38 +63,42 @@ fbq('init','2142663756311688');fbq('track','PageView');
   </div>
 </div>
 <main id="main">
-<section class="page-hero page-hero--media" data-hero>
-  <div class="page-hero__bg"><video muted loop playsinline preload="none" data-loop data-src="assets/video/reel.mp4" poster="assets/img/reel-poster.jpg" aria-hidden="true"></video></div>
-  <div class="container">
-    <div class="page-hero__grid">
-      <div>
-        <p class="eyebrow fade-in">The Films</p>
-        <h1 class="display-xl page-hero__title" data-split data-hero-split>Real days, <em class="gold-text">kept forever.</em></h1>
-      </div>
-      <div class="page-hero__aside fade-in">
-        <p class="body-lg">The work speaks louder than I can. Watch a few recent films and get a feel for the look, the pacing, and the way real moments carry a story.</p>
-      </div>
-    </div>
+<section class="hero hero--page" data-hero aria-label="Introduction">
+  <div class="hero__media"><img src="assets/img/reel-poster.jpg" alt="" fetchpriority="high"><video muted loop playsinline autoplay preload="auto" poster="assets/img/reel-poster.jpg" data-src-desktop="assets/video/reel.mp4" data-src-mobile="assets/video/reel.mp4" aria-hidden="true"></video></div>
+  <div class="hero__scrim"></div>
+  <div class="letterbox letterbox--top"></div>
+  <div class="letterbox letterbox--bottom"></div>
+  <div class="viewfinder" aria-hidden="true">
+    <span class="vf-corner vf-corner--tl"></span><span class="vf-corner vf-corner--tr"></span>
+    <span class="vf-corner vf-corner--bl"></span><span class="vf-corner vf-corner--br"></span>
+    <div class="vf-tl"><span class="vf-rec">REC</span><span data-timecode>00:01:23:00</span></div>
+    <div class="vf-tr"><span class="vf-hide-sm">Scene 02 · The Films</span><span class="vf-batt"></span></div>
   </div>
+  <div class="hero__content hero__content--page">
+    <p class="eyebrow hero__eyebrow">The Films</p>
+    <h1 class="display-xl hero__title" data-split data-hero-split data-delay="300">Real days, <em class="gold-text">kept forever.</em></h1>
+    <p class="hero__sub">The work speaks louder than I can. Four weddings, four stories, each one made for one couple.</p>
+    <div class="hero__cta"><div class="actions"><button class="btn btn--gold magnetic" type="button" data-yt="GLoy1N3UaAU" data-title="Shelby &amp; Bobby — A Lakeside Wedding · Chapeau">Play the featured film <svg viewBox="0 0 18 18" fill="currentColor" aria-hidden="true"><path d="M3 1.5v15L16 9z"/></svg></button><a class="btn btn--ghost-light magnetic" href="#index-title">Browse all films</a></div></div>
+  </div>
+  <div class="scroll-cue" aria-hidden="true"><span class="scroll-cue__line"></span>Scroll</div>
 </section>
 
 <section class="section" aria-labelledby="index-title">
+  <span class="bg-word" aria-hidden="true" data-speed="-80">Films</span>
   <div class="container">
     <div class="section-head">
       <div><p class="eyebrow reveal">The Index</p><h2 id="index-title" class="display-lg" data-split>Four days, <em class="accent">four stories.</em></h2></div>
-      <p class="body-lg reveal" data-delay="1">Hover a title to preview, click to watch the full film.</p>
+      <p class="body-lg reveal" data-delay="1">Hover a title to preview it, click to watch the full film.</p>
     </div>
     <div class="film-index reveal"><button class="fi-row" type="button" data-cursor="Play" data-yt="GLoy1N3UaAU" data-title="Shelby & Bobby — A Lakeside Wedding · Chapeau" data-preview="assets/video/preview-shelby-bobby.mp4"><span class="fi-row__num">01</span><span class="fi-row__title">Shelby &amp; Bobby</span><span class="fi-row__place">A Lakeside Wedding · Chapeau</span><span class="fi-row__go"><svg viewBox="0 0 18 18" fill="currentColor" aria-hidden="true"><path d="M3 1.5v15L16 9z"/></svg></span></button><button class="fi-row" type="button" data-cursor="Play" data-yt="Lep5cu_MWEo" data-title="Bree & Skyler — An Autumn Wedding · Golden Lake" data-preview="assets/video/preview-bree-skyler.mp4"><span class="fi-row__num">02</span><span class="fi-row__title">Bree &amp; Skyler</span><span class="fi-row__place">An Autumn Wedding · Golden Lake</span><span class="fi-row__go"><svg viewBox="0 0 18 18" fill="currentColor" aria-hidden="true"><path d="M3 1.5v15L16 9z"/></svg></span></button><button class="fi-row" type="button" data-cursor="Play" data-yt="O0WLQU6qA5U" data-title="Lyndon & Paige — The Farmstead · Pembroke" data-preview="assets/video/preview-lyndon-paige.mp4"><span class="fi-row__num">03</span><span class="fi-row__title">Lyndon &amp; Paige</span><span class="fi-row__place">The Farmstead · Pembroke</span><span class="fi-row__go"><svg viewBox="0 0 18 18" fill="currentColor" aria-hidden="true"><path d="M3 1.5v15L16 9z"/></svg></span></button><button class="fi-row" type="button" data-cursor="Play" data-yt="KNO_ScRbNDs" data-title="Shaughn & Vanessa — Toronto · Ontario" data-preview="assets/video/preview-shaughn-vanessa.mp4"><span class="fi-row__num">04</span><span class="fi-row__title">Shaughn &amp; Vanessa</span><span class="fi-row__place">Toronto · Ontario</span><span class="fi-row__go"><svg viewBox="0 0 18 18" fill="currentColor" aria-hidden="true"><path d="M3 1.5v15L16 9z"/></svg></span></button></div>
   </div>
 </section>
 
-<section class="section section--night" aria-labelledby="f1">
-  <div class="container featured">
-    <div class="featured__head">
-      <div><p class="eyebrow reveal">01 · Featured</p><h2 id="f1" class="display-lg reveal" data-delay="1">Shelby <em class="accent">&amp;</em> Bobby</h2></div>
-      <p class="caps reveal" style="color:var(--on-night-muted)">A Lakeside Wedding · Chapeau, Ottawa Valley</p>
-    </div>
-    <div class="reveal-img"><a href="https://www.youtube.com/watch?v=GLoy1N3UaAU" class="film film--autoplay " data-cursor="Play" data-yt="GLoy1N3UaAU" data-title="Shelby & Bobby — A Lakeside Wedding · Chapeau" aria-label="Play the Shelby & Bobby wedding film">
+<section class="section section--night chapter" aria-labelledby="f1">
+  <span class="chapter__num" aria-hidden="true" data-speed="-60">01</span>
+  <div class="container">
+    <div class="chapter__grid">
+      <div class="chapter__media reveal-img"><a href="https://www.youtube.com/watch?v=GLoy1N3UaAU" class="film film--autoplay " data-cursor="Play" data-yt="GLoy1N3UaAU" data-title="Shelby & Bobby — A Lakeside Wedding · Chapeau" aria-label="Play the Shelby & Bobby wedding film">
   <div class="film__media">
     <img src="assets/img/preview-shelby-bobby.jpg" alt="Still from Shelby & Bobby's wedding film" loading="lazy" decoding="async">
     <video muted loop playsinline preload="none" data-loop data-src="assets/video/preview-shelby-bobby.mp4" poster="assets/img/preview-shelby-bobby.jpg"></video>
@@ -105,19 +109,22 @@ fbq('init','2142663756311688');fbq('track','PageView');
     <span class="film__time">Watch film</span>
   </div>
 </a></div>
-    <div class="featured__quote">
-      <div class="quote-mark reveal" aria-hidden="true">“</div>
-      <figure class="reveal" data-delay="1">
-        <blockquote><p>Every time we watch it, it feels like we get to relive the day all over again.</p></blockquote>
-        <figcaption class="cite">Shelby &amp; Bobby · Google Review</figcaption>
-      </figure>
+      <div class="chapter__text">
+        <p class="eyebrow reveal">Chapter 01 · Featured</p>
+        <h2 id="f1" class="display-md" data-split>Shelby <em class="accent">&amp;</em> Bobby</h2>
+        <p class="chapter__meta reveal">A Lakeside Wedding · Chapeau, Ottawa Valley</p>
+        <p class="lede reveal" data-delay="1">A lakeside celebration that ran from golden hour to string lights over the water.</p>
+        <div class="actions reveal" data-delay="2"><button class="btn btn--gold magnetic" type="button" data-yt="GLoy1N3UaAU" data-title="Shelby &amp; Bobby — A Lakeside Wedding · Chapeau">Watch the film <svg viewBox="0 0 18 18" fill="currentColor" aria-hidden="true"><path d="M3 1.5v15L16 9z"/></svg></button></div>
+      </div>
     </div>
   </div>
 </section>
 
-<section class="section" aria-labelledby="f2">
-  <div class="container split">
-    <div class="split__media reveal-img"><a href="https://www.youtube.com/watch?v=Lep5cu_MWEo" class="film film--autoplay " data-cursor="Play" data-yt="Lep5cu_MWEo" data-title="Bree & Skyler — An Autumn Wedding · Golden Lake" aria-label="Play the Bree & Skyler wedding film">
+<section class="section chapter chapter--rev" aria-labelledby="f2">
+  <span class="chapter__num" aria-hidden="true" data-speed="-60">02</span>
+  <div class="container">
+    <div class="chapter__grid">
+      <div class="chapter__media reveal-img"><a href="https://www.youtube.com/watch?v=Lep5cu_MWEo" class="film film--autoplay " data-cursor="Play" data-yt="Lep5cu_MWEo" data-title="Bree & Skyler — An Autumn Wedding · Golden Lake" aria-label="Play the Bree & Skyler wedding film">
   <div class="film__media">
     <img src="assets/img/preview-bree-skyler.jpg" alt="Still from Bree & Skyler's wedding film" loading="lazy" decoding="async">
     <video muted loop playsinline preload="none" data-loop data-src="assets/video/preview-bree-skyler.mp4" poster="assets/img/preview-bree-skyler.jpg"></video>
@@ -128,19 +135,31 @@ fbq('init','2142663756311688');fbq('track','PageView');
     <span class="film__time">Watch film</span>
   </div>
 </a></div>
-    <div>
-      <p class="eyebrow reveal">02 · Golden Lake</p>
-      <h2 id="f2" class="display-md reveal" data-delay="1">Bree <em class="accent">&amp;</em> Skyler</h2>
-      <p class="lede reveal" data-delay="2" style="margin:24px 0">An autumn wedding at Golden Lake, all flower crowns, tweed and golden leaves.</p>
-      <p class="body-lg reveal" data-delay="2">A first look under the trees, a laugh that couldn’t be held back, and the warm, unhurried feel of an Ottawa Valley fall.</p>
-      <div class="actions reveal" data-delay="3"><button class="btn" type="button" data-yt="Lep5cu_MWEo" data-title="Bree &amp; Skyler — An Autumn Wedding · Golden Lake">Watch the film <svg viewBox="0 0 18 18" fill="currentColor" aria-hidden="true"><path d="M3 1.5v15L16 9z"/></svg></button></div>
+      <div class="chapter__text">
+        <p class="eyebrow reveal">Chapter 02 · Golden Lake</p>
+        <h2 id="f2" class="display-md" data-split>Bree <em class="accent">&amp;</em> Skyler</h2>
+        <p class="chapter__meta reveal">An Autumn Wedding · Golden Lake</p>
+        <p class="lede reveal" data-delay="1">Flower crowns, tweed and golden leaves. A first look under the trees and a laugh that couldn’t be held back.</p>
+        <div class="actions reveal" data-delay="2"><button class="btn btn--gold magnetic" type="button" data-yt="Lep5cu_MWEo" data-title="Bree &amp; Skyler — An Autumn Wedding · Golden Lake">Watch the film <svg viewBox="0 0 18 18" fill="currentColor" aria-hidden="true"><path d="M3 1.5v15L16 9z"/></svg></button></div>
+      </div>
     </div>
   </div>
 </section>
 
-<section class="section section--paper2" aria-labelledby="f3">
-  <div class="container split split--reverse">
-    <div class="split__media reveal-img"><a href="https://www.youtube.com/watch?v=O0WLQU6qA5U" class="film film--autoplay " data-cursor="Play" data-yt="O0WLQU6qA5U" data-title="Lyndon & Paige — The Farmstead · Pembroke" aria-label="Play the Lyndon & Paige wedding film">
+<section class="quote-band" aria-label="Review">
+  <div class="quote-band__bg" data-speed="-70"><video muted loop playsinline preload="none" data-loop data-src="assets/video/preview-shelby-bobby.mp4" poster="assets/img/preview-shelby-bobby.jpg"></video></div>
+  <div class="container container--narrow">
+    <div class="quote-band__mark" aria-hidden="true">“</div>
+    <blockquote><p data-split>Every time we watch it, it feels like we get to relive the day all over again.</p></blockquote>
+    <p class="cite reveal">★★★★★ &nbsp; Shelby &amp; Bobby · Google Review</p>
+  </div>
+</section>
+
+<section class="section chapter" aria-labelledby="f3">
+  <span class="chapter__num" aria-hidden="true" data-speed="-60">03</span>
+  <div class="container">
+    <div class="chapter__grid">
+      <div class="chapter__media reveal-img"><a href="https://www.youtube.com/watch?v=O0WLQU6qA5U" class="film film--autoplay " data-cursor="Play" data-yt="O0WLQU6qA5U" data-title="Lyndon & Paige — The Farmstead · Pembroke" aria-label="Play the Lyndon & Paige wedding film">
   <div class="film__media">
     <img src="assets/img/preview-lyndon-paige.jpg" alt="Still from Lyndon & Paige's wedding film" loading="lazy" decoding="async">
     <video muted loop playsinline preload="none" data-loop data-src="assets/video/preview-lyndon-paige.mp4" poster="assets/img/preview-lyndon-paige.jpg"></video>
@@ -151,19 +170,22 @@ fbq('init','2142663756311688');fbq('track','PageView');
     <span class="film__time">Watch film</span>
   </div>
 </a></div>
-    <div>
-      <p class="eyebrow reveal">03 · Pembroke</p>
-      <h2 id="f3" class="display-md reveal" data-delay="1">Lyndon <em class="accent">&amp;</em> Paige</h2>
-      <p class="lede reveal" data-delay="2" style="margin:24px 0">A warm country celebration at The Farmstead, Pembroke.</p>
-      <p class="body-lg reveal" data-delay="2">Full of real moments, exactly the kind of wedding this corner of the Valley does so well: tall grass, a garden ceremony, and family everywhere you look.</p>
-      <div class="actions reveal" data-delay="3"><button class="btn" type="button" data-yt="O0WLQU6qA5U" data-title="Lyndon &amp; Paige — The Farmstead · Pembroke">Watch the film <svg viewBox="0 0 18 18" fill="currentColor" aria-hidden="true"><path d="M3 1.5v15L16 9z"/></svg></button></div>
+      <div class="chapter__text">
+        <p class="eyebrow reveal">Chapter 03 · Pembroke</p>
+        <h2 id="f3" class="display-md" data-split>Lyndon <em class="accent">&amp;</em> Paige</h2>
+        <p class="chapter__meta reveal">The Farmstead · Pembroke</p>
+        <p class="lede reveal" data-delay="1">A warm country celebration: tall grass, a garden ceremony, and family everywhere you look.</p>
+        <div class="actions reveal" data-delay="2"><button class="btn btn--gold magnetic" type="button" data-yt="O0WLQU6qA5U" data-title="Lyndon &amp; Paige — The Farmstead · Pembroke">Watch the film <svg viewBox="0 0 18 18" fill="currentColor" aria-hidden="true"><path d="M3 1.5v15L16 9z"/></svg></button></div>
+      </div>
     </div>
   </div>
 </section>
 
-<section class="section" aria-labelledby="f4">
-  <div class="container split">
-    <div class="split__media reveal-img"><a href="https://www.youtube.com/watch?v=KNO_ScRbNDs" class="film film--autoplay " data-cursor="Play" data-yt="KNO_ScRbNDs" data-title="Shaughn & Vanessa — Toronto · Ontario" aria-label="Play the Shaughn & Vanessa wedding film">
+<section class="section section--paper2 chapter chapter--rev" aria-labelledby="f4">
+  <span class="chapter__num" aria-hidden="true" data-speed="-60">04</span>
+  <div class="container">
+    <div class="chapter__grid">
+      <div class="chapter__media reveal-img"><a href="https://www.youtube.com/watch?v=KNO_ScRbNDs" class="film film--autoplay " data-cursor="Play" data-yt="KNO_ScRbNDs" data-title="Shaughn & Vanessa — Toronto · Ontario" aria-label="Play the Shaughn & Vanessa wedding film">
   <div class="film__media">
     <img src="assets/img/preview-shaughn-vanessa.jpg" alt="Still from Shaughn & Vanessa's wedding film" loading="lazy" decoding="async">
     <video muted loop playsinline preload="none" data-loop data-src="assets/video/preview-shaughn-vanessa.mp4" poster="assets/img/preview-shaughn-vanessa.jpg"></video>
@@ -174,19 +196,30 @@ fbq('init','2142663756311688');fbq('track','PageView');
     <span class="film__time">Watch film</span>
   </div>
 </a></div>
-    <div>
-      <p class="eyebrow reveal">04 · Toronto</p>
-      <h2 id="f4" class="display-md reveal" data-delay="1">Shaughn <em class="accent">&amp;</em> Vanessa</h2>
-      <p class="lede reveal" data-delay="2" style="margin:24px 0">A city wedding above the Toronto skyline.</p>
-      <p class="body-lg reveal" data-delay="2">Proof that home is where I’m based, not where I stop. Floor-to-ceiling windows, a first dance in the light, and a room full of joy.</p>
-      <div class="actions reveal" data-delay="3"><button class="btn" type="button" data-yt="KNO_ScRbNDs" data-title="Shaughn &amp; Vanessa — Toronto · Ontario">Watch the film <svg viewBox="0 0 18 18" fill="currentColor" aria-hidden="true"><path d="M3 1.5v15L16 9z"/></svg></button></div>
+      <div class="chapter__text">
+        <p class="eyebrow reveal">Chapter 04 · Toronto</p>
+        <h2 id="f4" class="display-md" data-split>Shaughn <em class="accent">&amp;</em> Vanessa</h2>
+        <p class="chapter__meta reveal">Toronto · Ontario</p>
+        <p class="lede reveal" data-delay="1">A city wedding above the skyline. Proof that home is where I’m based, not where I stop.</p>
+        <div class="actions reveal" data-delay="2"><button class="btn btn--gold magnetic" type="button" data-yt="KNO_ScRbNDs" data-title="Shaughn &amp; Vanessa — Toronto · Ontario">Watch the film <svg viewBox="0 0 18 18" fill="currentColor" aria-hidden="true"><path d="M3 1.5v15L16 9z"/></svg></button></div>
+      </div>
     </div>
   </div>
 </section>
 
 <div class="marquee" aria-hidden="true"><div class="marquee__track"><span class="marquee__item">The vows<svg class="marquee__star" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M10 0c.6 5.6 4.4 9.4 10 10-5.6.6-9.4 4.4-10 10-.6-5.6-4.4-9.4-10-10C5.6 9.4 9.4 5.6 10 0z"/></svg></span><span class="marquee__item">The first look<svg class="marquee__star" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M10 0c.6 5.6 4.4 9.4 10 10-5.6.6-9.4 4.4-10 10-.6-5.6-4.4-9.4-10-10C5.6 9.4 9.4 5.6 10 0z"/></svg></span><span class="marquee__item">The speeches<svg class="marquee__star" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M10 0c.6 5.6 4.4 9.4 10 10-5.6.6-9.4 4.4-10 10-.6-5.6-4.4-9.4-10-10C5.6 9.4 9.4 5.6 10 0z"/></svg></span><span class="marquee__item">The last dance<svg class="marquee__star" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M10 0c.6 5.6 4.4 9.4 10 10-5.6.6-9.4 4.4-10 10-.6-5.6-4.4-9.4-10-10C5.6 9.4 9.4 5.6 10 0z"/></svg></span><span class="marquee__item">The quiet moments<svg class="marquee__star" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M10 0c.6 5.6 4.4 9.4 10 10-5.6.6-9.4 4.4-10 10-.6-5.6-4.4-9.4-10-10C5.6 9.4 9.4 5.6 10 0z"/></svg></span><span class="marquee__item">The vows<svg class="marquee__star" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M10 0c.6 5.6 4.4 9.4 10 10-5.6.6-9.4 4.4-10 10-.6-5.6-4.4-9.4-10-10C5.6 9.4 9.4 5.6 10 0z"/></svg></span><span class="marquee__item">The first look<svg class="marquee__star" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M10 0c.6 5.6 4.4 9.4 10 10-5.6.6-9.4 4.4-10 10-.6-5.6-4.4-9.4-10-10C5.6 9.4 9.4 5.6 10 0z"/></svg></span><span class="marquee__item">The speeches<svg class="marquee__star" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M10 0c.6 5.6 4.4 9.4 10 10-5.6.6-9.4 4.4-10 10-.6-5.6-4.4-9.4-10-10C5.6 9.4 9.4 5.6 10 0z"/></svg></span><span class="marquee__item">The last dance<svg class="marquee__star" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M10 0c.6 5.6 4.4 9.4 10 10-5.6.6-9.4 4.4-10 10-.6-5.6-4.4-9.4-10-10C5.6 9.4 9.4 5.6 10 0z"/></svg></span><span class="marquee__item">The quiet moments<svg class="marquee__star" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M10 0c.6 5.6 4.4 9.4 10 10-5.6.6-9.4 4.4-10 10-.6-5.6-4.4-9.4-10-10C5.6 9.4 9.4 5.6 10 0z"/></svg></span></div></div>
 
-<section class="section" aria-labelledby="yt-title">
+<section class="section" aria-labelledby="moments-title">
+  <div class="container">
+    <div class="section-head">
+      <div><p class="eyebrow reveal">Moments</p><h2 id="moments-title" class="display-lg" data-split>Frames from <em class="accent">real days.</em></h2></div>
+      <p class="body-lg reveal" data-delay="1">Stills pulled straight from the films. No posing, no staging, just the day as it happened.</p>
+    </div>
+    <div class="mosaic"><figure class="mosaic__item mosaic__item--tall reveal-img"><img src="assets/img/skyline-dance.jpg" alt="A couple dancing in front of a city skyline" loading="lazy" data-speed="50"></figure><figure class="mosaic__item mosaic__item--std reveal-img"><img src="assets/img/cake-detail.jpg" alt="A couple cutting a cake decorated with butterflies" loading="lazy" data-speed="-30"></figure><figure class="mosaic__item mosaic__item--std reveal-img"><img src="assets/img/bree-portrait.jpg" alt="A bride in a flower crown smiling softly" loading="lazy" data-speed="70"></figure><figure class="mosaic__item mosaic__item--wide reveal-img"><img src="assets/img/champagne.jpg" alt="Guests lifting coupes from a champagne tower" loading="lazy" data-speed="-50"></figure><figure class="mosaic__item mosaic__item--std reveal-img"><img src="assets/img/pembroke-aisle.jpg" alt="Flower girls walking down a garden aisle" loading="lazy" data-speed="30"></figure><figure class="mosaic__item mosaic__item--tall reveal-img"><img src="assets/img/bride-window.jpg" alt="A bride in her veil by a bright window" loading="lazy" data-speed="-60"></figure></div>
+  </div>
+</section>
+
+<section class="section section--ivory" aria-labelledby="yt-title">
   <div class="container split">
     <div class="split__media-stack">
       <div class="frame-img reveal-img"><img src="assets/img/cake-detail.jpg" alt="A couple cutting a cake decorated with butterflies" loading="lazy"></div>
@@ -194,10 +227,10 @@ fbq('init','2142663756311688');fbq('track','PageView');
     </div>
     <div>
       <p class="eyebrow reveal">More on YouTube</p>
-      <h2 id="yt-title" class="display-md reveal" data-delay="1">The full library lives on <em>YouTube.</em></h2>
-      <p class="body-lg reveal" data-delay="2" style="margin-top:24px">New films are added through the season. Subscribe to see them first, or follow along on Instagram for behind-the-scenes moments.</p>
-      <div class="actions reveal" data-delay="3">
-        <a class="btn" href="https://www.youtube.com/@JackAlbertWeddings" target="_blank" rel="noopener">Visit YouTube <svg class="arrow" viewBox="0 0 18 10" fill="none" stroke="currentColor" stroke-width="1.1" aria-hidden="true"><path d="M0 5h17M13 1l4 4-4 4"/></svg></a>
+      <h2 id="yt-title" class="display-md" data-split>The full library lives <em class="accent">on YouTube.</em></h2>
+      <p class="body-lg reveal" data-delay="1" style="margin-top:24px">New films are added through the season. Subscribe to see them first, or follow along on Instagram for behind-the-scenes moments.</p>
+      <div class="actions reveal" data-delay="2">
+        <a class="btn magnetic" href="https://www.youtube.com/@JackAlbertWeddings" target="_blank" rel="noopener">Visit YouTube <svg class="arrow" viewBox="0 0 18 10" fill="none" stroke="currentColor" stroke-width="1.1" aria-hidden="true"><path d="M0 5h17M13 1l4 4-4 4"/></svg></a>
         <a class="link-line" href="https://www.instagram.com/jackalbertweddings/" target="_blank" rel="noopener">Instagram <svg class="arrow" viewBox="0 0 18 10" fill="none" stroke="currentColor" stroke-width="1.1" aria-hidden="true"><path d="M0 5h17M13 1l4 4-4 4"/></svg></a>
       </div>
     </div>
@@ -305,6 +338,6 @@ fbq('init','2142663756311688');fbq('track','PageView');
     </div>
   </div>
 </div>
-<script src="assets/js/site.js?v=1792211785" defer></script>
+<script src="assets/js/site.js?v=1792213077" defer></script>
 </body>
 </html>

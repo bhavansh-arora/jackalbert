@@ -4,90 +4,98 @@ description: Watch cinematic wedding films by Jack Albert, from lakeside and aut
 nav: films
 hero: dark
 ---
-<section class="page-hero page-hero--media" data-hero>
-  <div class="page-hero__bg"><video muted loop playsinline preload="none" data-loop data-src="assets/video/reel.mp4" poster="assets/img/reel-poster.jpg" aria-hidden="true"></video></div>
-  <div class="container">
-    <div class="page-hero__grid">
-      <div>
-        <p class="eyebrow fade-in">The Films</p>
-        <h1 class="display-xl page-hero__title" data-split data-hero-split>Real days, <em class="gold-text">kept forever.</em></h1>
-      </div>
-      <div class="page-hero__aside fade-in">
-        <p class="body-lg">The work speaks louder than I can. Watch a few recent films and get a feel for the look, the pacing, and the way real moments carry a story.</p>
-      </div>
-    </div>
-  </div>
-</section>
+{{hero:films}}
 
 <section class="section" aria-labelledby="index-title">
+  <span class="bg-word" aria-hidden="true" data-speed="-80">Films</span>
   <div class="container">
     <div class="section-head">
       <div><p class="eyebrow reveal">The Index</p><h2 id="index-title" class="display-lg" data-split>Four days, <em class="accent">four stories.</em></h2></div>
-      <p class="body-lg reveal" data-delay="1">Hover a title to preview, click to watch the full film.</p>
+      <p class="body-lg reveal" data-delay="1">Hover a title to preview it, click to watch the full film.</p>
     </div>
     {{film_index}}
   </div>
 </section>
 
-<section class="section section--night" aria-labelledby="f1">
-  <div class="container featured">
-    <div class="featured__head">
-      <div><p class="eyebrow reveal">01 · Featured</p><h2 id="f1" class="display-lg reveal" data-delay="1">Shelby <em class="accent">&amp;</em> Bobby</h2></div>
-      <p class="caps reveal" style="color:var(--on-night-muted)">A Lakeside Wedding · Chapeau, Ottawa Valley</p>
-    </div>
-    <div class="reveal-img">{{filmauto:shelby-bobby}}</div>
-    <div class="featured__quote">
-      <div class="quote-mark reveal" aria-hidden="true">“</div>
-      <figure class="reveal" data-delay="1">
-        <blockquote><p>Every time we watch it, it feels like we get to relive the day all over again.</p></blockquote>
-        <figcaption class="cite">Shelby &amp; Bobby · Google Review</figcaption>
-      </figure>
-    </div>
-  </div>
-</section>
-
-<section class="section" aria-labelledby="f2">
-  <div class="container split">
-    <div class="split__media reveal-img">{{filmauto:bree-skyler}}</div>
-    <div>
-      <p class="eyebrow reveal">02 · Golden Lake</p>
-      <h2 id="f2" class="display-md reveal" data-delay="1">Bree <em class="accent">&amp;</em> Skyler</h2>
-      <p class="lede reveal" data-delay="2" style="margin:24px 0">An autumn wedding at Golden Lake, all flower crowns, tweed and golden leaves.</p>
-      <p class="body-lg reveal" data-delay="2">A first look under the trees, a laugh that couldn’t be held back, and the warm, unhurried feel of an Ottawa Valley fall.</p>
-      <div class="actions reveal" data-delay="3"><button class="btn" type="button" data-yt="Lep5cu_MWEo" data-title="Bree &amp; Skyler — An Autumn Wedding · Golden Lake">Watch the film {{play}}</button></div>
+<section class="section section--night chapter" aria-labelledby="f1">
+  <span class="chapter__num" aria-hidden="true" data-speed="-60">01</span>
+  <div class="container">
+    <div class="chapter__grid">
+      <div class="chapter__media reveal-img">{{filmauto:shelby-bobby}}</div>
+      <div class="chapter__text">
+        <p class="eyebrow reveal">Chapter 01 · Featured</p>
+        <h2 id="f1" class="display-md" data-split>Shelby <em class="accent">&amp;</em> Bobby</h2>
+        <p class="chapter__meta reveal">A Lakeside Wedding · Chapeau, Ottawa Valley</p>
+        <p class="lede reveal" data-delay="1">A lakeside celebration that ran from golden hour to string lights over the water.</p>
+        <div class="actions reveal" data-delay="2"><button class="btn btn--gold magnetic" type="button" data-yt="GLoy1N3UaAU" data-title="Shelby &amp; Bobby — A Lakeside Wedding · Chapeau">Watch the film {{play}}</button></div>
+      </div>
     </div>
   </div>
 </section>
 
-<section class="section section--paper2" aria-labelledby="f3">
-  <div class="container split split--reverse">
-    <div class="split__media reveal-img">{{filmauto:lyndon-paige}}</div>
-    <div>
-      <p class="eyebrow reveal">03 · Pembroke</p>
-      <h2 id="f3" class="display-md reveal" data-delay="1">Lyndon <em class="accent">&amp;</em> Paige</h2>
-      <p class="lede reveal" data-delay="2" style="margin:24px 0">A warm country celebration at The Farmstead, Pembroke.</p>
-      <p class="body-lg reveal" data-delay="2">Full of real moments, exactly the kind of wedding this corner of the Valley does so well: tall grass, a garden ceremony, and family everywhere you look.</p>
-      <div class="actions reveal" data-delay="3"><button class="btn" type="button" data-yt="O0WLQU6qA5U" data-title="Lyndon &amp; Paige — The Farmstead · Pembroke">Watch the film {{play}}</button></div>
+<section class="section chapter chapter--rev" aria-labelledby="f2">
+  <span class="chapter__num" aria-hidden="true" data-speed="-60">02</span>
+  <div class="container">
+    <div class="chapter__grid">
+      <div class="chapter__media reveal-img">{{filmauto:bree-skyler}}</div>
+      <div class="chapter__text">
+        <p class="eyebrow reveal">Chapter 02 · Golden Lake</p>
+        <h2 id="f2" class="display-md" data-split>Bree <em class="accent">&amp;</em> Skyler</h2>
+        <p class="chapter__meta reveal">An Autumn Wedding · Golden Lake</p>
+        <p class="lede reveal" data-delay="1">Flower crowns, tweed and golden leaves. A first look under the trees and a laugh that couldn’t be held back.</p>
+        <div class="actions reveal" data-delay="2"><button class="btn btn--gold magnetic" type="button" data-yt="Lep5cu_MWEo" data-title="Bree &amp; Skyler — An Autumn Wedding · Golden Lake">Watch the film {{play}}</button></div>
+      </div>
     </div>
   </div>
 </section>
 
-<section class="section" aria-labelledby="f4">
-  <div class="container split">
-    <div class="split__media reveal-img">{{filmauto:shaughn-vanessa}}</div>
-    <div>
-      <p class="eyebrow reveal">04 · Toronto</p>
-      <h2 id="f4" class="display-md reveal" data-delay="1">Shaughn <em class="accent">&amp;</em> Vanessa</h2>
-      <p class="lede reveal" data-delay="2" style="margin:24px 0">A city wedding above the Toronto skyline.</p>
-      <p class="body-lg reveal" data-delay="2">Proof that home is where I’m based, not where I stop. Floor-to-ceiling windows, a first dance in the light, and a room full of joy.</p>
-      <div class="actions reveal" data-delay="3"><button class="btn" type="button" data-yt="KNO_ScRbNDs" data-title="Shaughn &amp; Vanessa — Toronto · Ontario">Watch the film {{play}}</button></div>
+{{quote:shelby}}
+
+<section class="section chapter" aria-labelledby="f3">
+  <span class="chapter__num" aria-hidden="true" data-speed="-60">03</span>
+  <div class="container">
+    <div class="chapter__grid">
+      <div class="chapter__media reveal-img">{{filmauto:lyndon-paige}}</div>
+      <div class="chapter__text">
+        <p class="eyebrow reveal">Chapter 03 · Pembroke</p>
+        <h2 id="f3" class="display-md" data-split>Lyndon <em class="accent">&amp;</em> Paige</h2>
+        <p class="chapter__meta reveal">The Farmstead · Pembroke</p>
+        <p class="lede reveal" data-delay="1">A warm country celebration: tall grass, a garden ceremony, and family everywhere you look.</p>
+        <div class="actions reveal" data-delay="2"><button class="btn btn--gold magnetic" type="button" data-yt="O0WLQU6qA5U" data-title="Lyndon &amp; Paige — The Farmstead · Pembroke">Watch the film {{play}}</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--paper2 chapter chapter--rev" aria-labelledby="f4">
+  <span class="chapter__num" aria-hidden="true" data-speed="-60">04</span>
+  <div class="container">
+    <div class="chapter__grid">
+      <div class="chapter__media reveal-img">{{filmauto:shaughn-vanessa}}</div>
+      <div class="chapter__text">
+        <p class="eyebrow reveal">Chapter 04 · Toronto</p>
+        <h2 id="f4" class="display-md" data-split>Shaughn <em class="accent">&amp;</em> Vanessa</h2>
+        <p class="chapter__meta reveal">Toronto · Ontario</p>
+        <p class="lede reveal" data-delay="1">A city wedding above the skyline. Proof that home is where I’m based, not where I stop.</p>
+        <div class="actions reveal" data-delay="2"><button class="btn btn--gold magnetic" type="button" data-yt="KNO_ScRbNDs" data-title="Shaughn &amp; Vanessa — Toronto · Ontario">Watch the film {{play}}</button></div>
+      </div>
     </div>
   </div>
 </section>
 
 {{marquee_moments}}
 
-<section class="section" aria-labelledby="yt-title">
+<section class="section" aria-labelledby="moments-title">
+  <div class="container">
+    <div class="section-head">
+      <div><p class="eyebrow reveal">Moments</p><h2 id="moments-title" class="display-lg" data-split>Frames from <em class="accent">real days.</em></h2></div>
+      <p class="body-lg reveal" data-delay="1">Stills pulled straight from the films. No posing, no staging, just the day as it happened.</p>
+    </div>
+    {{mosaic}}
+  </div>
+</section>
+
+<section class="section section--ivory" aria-labelledby="yt-title">
   <div class="container split">
     <div class="split__media-stack">
       <div class="frame-img reveal-img"><img src="assets/img/cake-detail.jpg" alt="A couple cutting a cake decorated with butterflies" loading="lazy"></div>
@@ -95,10 +103,10 @@ hero: dark
     </div>
     <div>
       <p class="eyebrow reveal">More on YouTube</p>
-      <h2 id="yt-title" class="display-md reveal" data-delay="1">The full library lives on <em>YouTube.</em></h2>
-      <p class="body-lg reveal" data-delay="2" style="margin-top:24px">New films are added through the season. Subscribe to see them first, or follow along on Instagram for behind-the-scenes moments.</p>
-      <div class="actions reveal" data-delay="3">
-        <a class="btn" href="{{youtube}}" target="_blank" rel="noopener">Visit YouTube {{arrow}}</a>
+      <h2 id="yt-title" class="display-md" data-split>The full library lives <em class="accent">on YouTube.</em></h2>
+      <p class="body-lg reveal" data-delay="1" style="margin-top:24px">New films are added through the season. Subscribe to see them first, or follow along on Instagram for behind-the-scenes moments.</p>
+      <div class="actions reveal" data-delay="2">
+        <a class="btn magnetic" href="{{youtube}}" target="_blank" rel="noopener">Visit YouTube {{arrow}}</a>
         <a class="link-line" href="{{instagram}}" target="_blank" rel="noopener">Instagram {{arrow}}</a>
       </div>
     </div>

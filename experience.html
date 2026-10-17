@@ -22,7 +22,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Mono:wght@400&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script>document.documentElement.classList.add("js");try{if(sessionStorage.getItem("jaw-intro")==="1")document.documentElement.classList.add("no-loader")}catch(e){}</script>
-<link rel="stylesheet" href="assets/css/site.css?v=1792211785">
+<link rel="stylesheet" href="assets/css/site.css?v=1792213077">
 
 <script>
 !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
@@ -41,7 +41,7 @@ fbq('init','2142663756311688');fbq('track','PageView');
 </div>
 <div class="curtain" aria-hidden="true"><div class="curtain__mark">Jack Albert</div></div>
 <div class="announce"><a href="contact.html?src=bar"><span class="dot"></span>Now booking 2027 &amp; 2028 weddings · Check your date <svg class="arrow" viewBox="0 0 18 10" fill="none" stroke="currentColor" stroke-width="1.1" aria-hidden="true"><path d="M0 5h17M13 1l4 4-4 4"/></svg></a></div>
-<header class="site-header">
+<header class="site-header is-over-hero">
   <div class="container site-header__inner">
     <a class="logo" href="index.html" aria-label="Jack Albert Weddings, home">
       <span class="logo__name">Jack <em>Albert</em></span>
@@ -63,26 +63,31 @@ fbq('init','2142663756311688');fbq('track','PageView');
   </div>
 </div>
 <main id="main">
-<section class="page-hero">
-  <div class="container">
-    <div class="page-hero__grid">
-      <div>
-        <p class="eyebrow fade-in">The Experience</p>
-        <h1 class="display-xl page-hero__title" data-split data-hero-split>Calm, considered, <em class="gold-text">and all about you.</em></h1>
-      </div>
-      <div class="page-hero__aside fade-in">
-        <p class="body-lg">A calm, considered experience shaped around the people and moments that matter most to you, from the first message to the night you press play.</p>
-      </div>
-    </div>
+<section class="hero hero--page" data-hero aria-label="Introduction">
+  <div class="hero__media"><img src="assets/img/pembroke-aisle.jpg" alt="" fetchpriority="high"><video muted loop playsinline autoplay preload="auto" poster="assets/img/pembroke-aisle.jpg" data-src-desktop="assets/video/pembroke-aisle.mp4" data-src-mobile="assets/video/pembroke-aisle.mp4" aria-hidden="true"></video></div>
+  <div class="hero__scrim"></div>
+  <div class="letterbox letterbox--top"></div>
+  <div class="letterbox letterbox--bottom"></div>
+  <div class="viewfinder" aria-hidden="true">
+    <span class="vf-corner vf-corner--tl"></span><span class="vf-corner vf-corner--tr"></span>
+    <span class="vf-corner vf-corner--bl"></span><span class="vf-corner vf-corner--br"></span>
+    <div class="vf-tl"><span class="vf-rec">REC</span><span data-timecode>00:01:23:00</span></div>
+    <div class="vf-tr"><span class="vf-hide-sm">Scene 03 · The Experience</span><span class="vf-batt"></span></div>
   </div>
+  <div class="hero__content hero__content--page">
+    <p class="eyebrow hero__eyebrow">The Experience</p>
+    <h1 class="display-xl hero__title" data-split data-hero-split data-delay="300">Calm, considered, <em class="gold-text">all about you.</em></h1>
+    <p class="hero__sub">A relaxed, personal experience shaped around the people and moments that matter most to you, from first hello to the night you press play.</p>
+    <div class="hero__cta"><div class="actions"><a class="btn btn--gold magnetic" href="contact.html?src=experience">Check your date <svg class="arrow" viewBox="0 0 18 10" fill="none" stroke="currentColor" stroke-width="1.1" aria-hidden="true"><path d="M0 5h17M13 1l4 4-4 4"/></svg></a><a class="btn btn--ghost-light magnetic" href="#steps-title">How it works</a></div></div>
+  </div>
+  <div class="scroll-cue" aria-hidden="true"><span class="scroll-cue__line"></span>Scroll</div>
 </section>
 
-<div class="container"><div class="frame-img reveal-img" style="aspect-ratio:21/9"><img src="assets/img/pembroke-aisle.jpg" alt="Two flower girls walking down a garden aisle toward the ceremony arch" data-parallax="50" style="transform:scale(1.12)"></div></div>
-
 <section class="section" aria-labelledby="steps-title">
+  <span class="bg-word" aria-hidden="true" data-speed="-80">Process</span>
   <div class="container">
     <div class="section-head">
-      <div><p class="eyebrow reveal">The Process</p><h2 id="steps-title" class="display-md reveal" data-delay="1">From first hello <em>to final film.</em></h2></div>
+      <div><p class="eyebrow reveal">The Process</p><h2 id="steps-title" class="display-md" data-split>From first hello <em class="accent">to final film.</em></h2></div>
       <p class="body-lg reveal" data-delay="2">Five simple steps. No pressure, no guesswork, and a real person on the other end the whole way through.</p>
     </div>
     <div class="timeline"><div class="timeline__line"><span></span></div><div class="tl-step reveal"><h3 class="tl-step__title"><small>01</small>Inquire</h3><p>Share your date, venue, and what matters most. You’ll get a quick text so you know it arrived, then a reply by email within 24 hours.</p></div><div class="tl-step reveal"><h3 class="tl-step__title"><small>02</small>Connect</h3><p>A relaxed conversation to make sure we’re the right fit. Tell me about the two of you, your people, and the moments you can’t imagine missing.</p></div><div class="tl-step reveal"><h3 class="tl-step__title"><small>03</small>Plan your story</h3><p>We shape the timeline and filming plan around your people and priorities, leaving buffer where it counts so nothing gets rushed.</p></div><div class="tl-step reveal"><h3 class="tl-step__title"><small>04</small>Your wedding day</h3><p>Calm direction when it helps, with space for the real moments to unfold. I stay professional and mostly invisible.</p></div><div class="tl-step reveal"><h3 class="tl-step__title"><small>05</small>Relive it</h3><p>Your finished film arrives in six to eight weeks, in a private 4K gallery that’s yours to download, keep and share.</p></div></div>
@@ -94,7 +99,7 @@ fbq('init','2142663756311688');fbq('track','PageView');
     <div class="split__media"><div class="frame-img reveal-img"><img src="assets/img/skyline-dance.jpg" alt="A couple sharing their first dance in front of a city skyline" loading="lazy"></div></div>
     <div>
       <p class="eyebrow reveal">On the Day</p>
-      <h2 id="day-title" class="display-md reveal" data-delay="1">Present, never <em class="accent">in the way.</em></h2>
+      <h2 id="day-title" class="display-md" data-split>Present, never <em class="accent">in the way.</em></h2>
       <div class="reveal" data-delay="2" style="margin-top:28px">
         <p class="body-lg">I’ve been telling stories on film since I was eighteen, and I bring that to every wedding. My style is cinematic and documentary: natural, emotional, led by light.</p>
         <p class="body-lg">Your vows and speeches deserve to sound as good as they look, so audio gets as much care as the picture. And because it’s just me, you get one familiar face all day, not a rotating crew.</p>
@@ -103,10 +108,19 @@ fbq('init','2142663756311688');fbq('track','PageView');
   </div>
 </section>
 
+<section class="quote-band" aria-label="Review">
+  <div class="quote-band__bg" data-speed="-70"><img src="assets/img/aisle-father.jpg" alt="" loading="lazy"></div>
+  <div class="container container--narrow">
+    <div class="quote-band__mark" aria-hidden="true">“</div>
+    <blockquote><p data-split>He captured our favourite moments from the Wilno Church to our reception, and we couldn’t be happier.</p></blockquote>
+    <p class="cite reveal">★★★★★ &nbsp; Madison · Google Review</p>
+  </div>
+</section>
+
 <section class="section" aria-labelledby="receive-title">
   <div class="container">
     <div class="section-head">
-      <div><p class="eyebrow reveal">What You Receive</p><h2 id="receive-title" class="display-md reveal" data-delay="1">Films made to be <em>watched again and again.</em></h2></div>
+      <div><p class="eyebrow reveal">What You Receive</p><h2 id="receive-title" class="display-md" data-split>Films made to be <em class="accent">watched again and again.</em></h2></div>
       <p class="body-lg reveal" data-delay="2">Every collection is built around a cinematic film. Depending on the collection you choose, you can also receive:</p>
     </div>
     <div class="pillars">
@@ -133,9 +147,16 @@ fbq('init','2142663756311688');fbq('track','PageView');
   </div>
 </section>
 
+<section class="section section--paper2" aria-labelledby="inc-title">
+  <div class="container">
+    <div class="section-head section-head--center"><p class="eyebrow reveal">In Every Collection</p><h2 id="inc-title" class="display-lg" data-split>The essentials, <em class="accent">always included.</em></h2></div>
+    <ul class="includes"><li class="includes__item reveal" data-delay="0"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M3 7h18v12H3zM8 7l2-3h4l2 3"/></svg><strong>A cinematic film</strong><span>Shaped around how your day felt</span></li><li class="includes__item reveal" data-delay="1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M12 3v4M5 9l3 2M19 9l-3 2M4 14h16M7 14l-1 6M17 14l1 6"/></svg><strong>Drone footage</strong><span>Weather permitting, in every collection</span></li><li class="includes__item reveal" data-delay="2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M4 5h16v14H4zM4 15l5-4 4 3 3-2 4 3"/></svg><strong>Private 4K gallery</strong><span>Yours to download, keep and share</span></li><li class="includes__item reveal" data-delay="3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM12 7v5l3 2"/></svg><strong>6–8 week delivery</strong><span>Expedited editing available</span></li><li class="includes__item reveal" data-delay="4"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21c1-4 4-6 8-6s7 2 8 6"/></svg><strong>One filmmaker</strong><span>Jack, start to finish</span></li></ul>
+  </div>
+</section>
+
 <section class="section section--ivory" aria-labelledby="reviews-title">
   <div class="container">
-    <div class="section-head section-head--center"><p class="eyebrow reveal">Kind Words</p><h2 id="reviews-title" class="display-md reveal" data-delay="1">How it <em>felt</em> for them.</h2></div>
+    <div class="section-head section-head--center"><p class="eyebrow reveal">Kind Words</p><h2 id="reviews-title" class="display-md" data-split>How it <em class="accent">felt</em> for them.</h2></div>
     <div class="reviews" data-reviews>
   <div class="reviews__track" aria-live="polite"><figure class="review is-active"><div class="stars" aria-label="Five stars">★★★★★</div><blockquote><p>“He captured our day perfectly and somehow fit so many of the emotions, little moments, and memories from our wedding into one beautiful video. Every time we watch it, it feels like we get to relive the day all over again.”</p></blockquote><figcaption class="caps muted">Shelby &amp; Bobby · Google Review</figcaption></figure>
 <figure class="review"><div class="stars" aria-label="Five stars">★★★★★</div><blockquote><p>“Jack captured our whole day with so much care and talent. Watching the footage feels like reliving it, and the highlight film blew us away. 10/10 recommend.”</p></blockquote><figcaption class="caps muted">Theresa · Google Review</figcaption></figure>
@@ -251,6 +272,6 @@ fbq('init','2142663756311688');fbq('track','PageView');
     </div>
   </div>
 </div>
-<script src="assets/js/site.js?v=1792211785" defer></script>
+<script src="assets/js/site.js?v=1792213077" defer></script>
 </body>
 </html>

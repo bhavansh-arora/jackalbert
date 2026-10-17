@@ -22,7 +22,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Mono:wght@400&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script>document.documentElement.classList.add("js");try{if(sessionStorage.getItem("jaw-intro")==="1")document.documentElement.classList.add("no-loader")}catch(e){}</script>
-<link rel="stylesheet" href="assets/css/site.css?v=1792211785">
+<link rel="stylesheet" href="assets/css/site.css?v=1792213077">
 
 <script>
 !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
@@ -63,21 +63,31 @@ fbq('init','2142663756311688');fbq('track','PageView');
   </div>
 </div>
 <main id="main">
-<section class="page-hero page-hero--media" data-hero>
-  <div class="page-hero__bg"><video muted loop playsinline preload="none" data-loop data-src="assets/video/pembroke-venue.mp4" poster="assets/img/pembroke-venue.jpg" aria-hidden="true"></video></div>
-  <div class="container">
-    <nav class="breadcrumbs fade-in" aria-label="Breadcrumb" style="color:rgba(251,248,243,.7)"><a href="index.html">Home</a><span>/</span>Pembroke</nav>
-    <p class="eyebrow fade-in">Pembroke · Renfrew County · Ottawa Valley</p>
-    <h1 class="display-xl page-hero__title" data-split data-hero-split>Pembroke wedding <em class="gold-text">videographer.</em></h1>
-    <p class="body-lg fade-in" style="max-width:520px;margin-top:24px">Cinematic wedding films for couples getting married in Pembroke and across Renfrew County.</p>
+<section class="hero hero--page" data-hero aria-label="Introduction">
+  <div class="hero__media"><img src="assets/img/pembroke-venue.jpg" alt="" fetchpriority="high"><video muted loop playsinline autoplay preload="auto" poster="assets/img/pembroke-venue.jpg" data-src-desktop="assets/video/pembroke-venue.mp4" data-src-mobile="assets/video/pembroke-venue.mp4" aria-hidden="true"></video></div>
+  <div class="hero__scrim"></div>
+  <div class="letterbox letterbox--top"></div>
+  <div class="letterbox letterbox--bottom"></div>
+  <div class="viewfinder" aria-hidden="true">
+    <span class="vf-corner vf-corner--tl"></span><span class="vf-corner vf-corner--tr"></span>
+    <span class="vf-corner vf-corner--bl"></span><span class="vf-corner vf-corner--br"></span>
+    <div class="vf-tl"><span class="vf-rec">REC</span><span data-timecode>00:01:23:00</span></div>
+    <div class="vf-tr"><span class="vf-hide-sm">Pembroke · Renfrew County</span><span class="vf-batt"></span></div>
   </div>
+  <div class="hero__content hero__content--page">
+    <p class="eyebrow hero__eyebrow">Pembroke · Renfrew County</p>
+    <h1 class="display-xl hero__title" data-split data-hero-split data-delay="300">Pembroke wedding <em class="gold-text">videographer.</em></h1>
+    <p class="hero__sub">Cinematic wedding films for couples getting married in Pembroke and across Renfrew County, from a filmmaker who’s from here.</p>
+    <div class="hero__cta"><div class="actions"><a class="btn btn--gold magnetic" href="contact.html?src=pembroke">Check your Pembroke date <svg class="arrow" viewBox="0 0 18 10" fill="none" stroke="currentColor" stroke-width="1.1" aria-hidden="true"><path d="M0 5h17M13 1l4 4-4 4"/></svg></a></div></div>
+  </div>
+  <div class="scroll-cue" aria-hidden="true"><span class="scroll-cue__line"></span>Scroll</div>
 </section>
 
 <section class="section" aria-labelledby="p1">
   <div class="container split">
     <div>
       <p class="eyebrow reveal">A filmmaker who’s from here</p>
-      <h2 id="p1" class="display-md reveal" data-delay="1">Renfrew County is <em class="accent">home.</em></h2>
+      <h2 id="p1" class="display-md" data-split>Renfrew County is <em class="accent">home.</em></h2>
       <div class="reveal" data-delay="2" style="margin-top:28px">
         <p class="body-lg">I’m Jack Albert, a wedding videographer based in the Ottawa Valley, just up the road from Pembroke. I film weddings across Pembroke and the towns around it all season.</p>
         <p class="body-lg">Being local matters. I know the light in this part of the Valley, I know the venues and the back roads, and I know exactly how to make your day film beautifully, with a storyteller’s eye for light and a near-obsession with clean audio.</p>
@@ -90,7 +100,7 @@ fbq('init','2142663756311688');fbq('track','PageView');
 <section class="section section--night" aria-labelledby="p2">
   <div class="container featured">
     <div class="featured__head">
-      <div><p class="eyebrow reveal">A recent Pembroke wedding</p><h2 id="p2" class="display-lg reveal" data-delay="1">Lyndon <em class="accent">&amp;</em> Paige</h2></div>
+      <div><p class="eyebrow reveal">A recent Pembroke wedding</p><h2 id="p2" class="display-lg" data-split>Lyndon <em class="accent">&amp;</em> Paige</h2></div>
       <p class="caps reveal" style="color:var(--on-night-muted)">The Farmstead · Pembroke</p>
     </div>
     <div class="reveal-img"><a href="https://www.youtube.com/watch?v=O0WLQU6qA5U" class="film film--autoplay " data-cursor="Play" data-yt="O0WLQU6qA5U" data-title="Lyndon & Paige — The Farmstead · Pembroke" aria-label="Play the Lyndon & Paige wedding film">
@@ -108,11 +118,20 @@ fbq('init','2142663756311688');fbq('track','PageView');
   </div>
 </section>
 
+<section class="quote-band" aria-label="Review">
+  <div class="quote-band__bg" data-speed="-70"><img src="assets/img/aisle-father.jpg" alt="" loading="lazy"></div>
+  <div class="container container--narrow">
+    <div class="quote-band__mark" aria-hidden="true">“</div>
+    <blockquote><p data-split>He captured our favourite moments from the Wilno Church to our reception, and we couldn’t be happier.</p></blockquote>
+    <p class="cite reveal">★★★★★ &nbsp; Madison · Google Review</p>
+  </div>
+</section>
+
 <section class="section" aria-labelledby="p3">
   <div class="container split">
     <div>
       <p class="eyebrow reveal">Where I film</p>
-      <h2 id="p3" class="display-md reveal" data-delay="1">Across the <em>county.</em></h2>
+      <h2 id="p3" class="display-md" data-split>Across the <em class="accent">county.</em></h2>
       <p class="body-lg reveal" data-delay="2" style="margin-top:24px">Pembroke, Petawawa, Cobden, Eganville, Barry’s Bay and the surrounding towns. Films start at $1,950, and most couples choose the Classic Collection at $2,750.</p>
       <div class="actions reveal" data-delay="3"><a class="btn" href="investment.html">See pricing <svg class="arrow" viewBox="0 0 18 10" fill="none" stroke="currentColor" stroke-width="1.1" aria-hidden="true"><path d="M0 5h17M13 1l4 4-4 4"/></svg></a><a class="link-line" href="films.html">Watch the films <svg class="arrow" viewBox="0 0 18 10" fill="none" stroke="currentColor" stroke-width="1.1" aria-hidden="true"><path d="M0 5h17M13 1l4 4-4 4"/></svg></a></div>
     </div>
@@ -122,7 +141,7 @@ fbq('init','2142663756311688');fbq('track','PageView');
 
 <section class="section section--paper2" aria-labelledby="p4">
   <div class="container container--narrow">
-    <div class="section-head section-head--center"><p class="eyebrow reveal">Common questions</p><h2 id="p4" class="display-md reveal" data-delay="1">Pembroke weddings, <em>answered.</em></h2></div>
+    <div class="section-head section-head--center"><p class="eyebrow reveal">Common questions</p><h2 id="p4" class="display-md" data-split>Pembroke weddings, <em class="accent">answered.</em></h2></div>
     <div class="faq reveal">
       <details><summary>How much does a wedding videographer cost in Pembroke? <span class="faq__icon"></span></summary><div class="faq__body"><p>Films start at $1,950. Most couples choose the Classic Collection at $2,750 (10 hours, feature film and social teaser). Travel is quoted for your specific day.</p></div></details>
       <details><summary>Do you cover Pembroke and Renfrew County? <span class="faq__icon"></span></summary><div class="faq__body"><p>Yes, it’s home. I film across Pembroke, Petawawa, Cobden, Eganville, Barry’s Bay and the surrounding towns.</p></div></details>
@@ -233,6 +252,6 @@ fbq('init','2142663756311688');fbq('track','PageView');
     </div>
   </div>
 </div>
-<script src="assets/js/site.js?v=1792211785" defer></script>
+<script src="assets/js/site.js?v=1792213077" defer></script>
 </body>
 </html>
