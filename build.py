@@ -221,9 +221,9 @@ def hgallery():
   <div class="hgallery__pin">
     <div class="container hgallery__head">
       <div><p class="eyebrow">Selected Films</p><h2 id="hg-title" class="display-md" data-split>Real days, <em class="accent">kept forever.</em></h2></div>
-      <p class="hgallery__count"><b data-hg-current>1</b> / 04 · Scroll</p>
+      <div class="hgallery__nav"><span class="hgallery__count"><b data-hg-current>1</b> / 04</span><button type="button" data-hg="-1" aria-label="Previous film">{ARROW}</button><button type="button" data-hg="1" aria-label="Next film">{ARROW}</button></div>
     </div>
-    <div class="hgallery__track">{cards}
+    <div class="hgallery__track" data-cursor="Drag">{cards}
       <div class="hcard hcard--end"><p class="eyebrow">There’s more</p><h3 class="display-sm" style="margin-bottom:24px">Every film is made for <em class="accent">one couple.</em> Yours is next.</h3><div class="actions"><a class="btn btn--gold magnetic" href="contact.html">Check your date {ARROW}</a><a class="link-line" href="films.html">All films {ARROW}</a></div></div>
     </div>
     <div class="hgallery__progress"><span></span></div>
@@ -516,7 +516,6 @@ def footer(show_cta=True):
     </div>
   </div>
 </div>
-<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js" defer></script>
 <script src="assets/js/site.js?v={VERSION}" defer></script>
 </body>
 </html>'''

@@ -1,5 +1,5 @@
 /* Jack Albert Weddings — site interactions (v2)
-   No framework. Lenis (smooth scroll) is optional; everything works without it. */
+   No framework, native scrolling. Scroll effects only run while the page moves. */
 (function () {
   "use strict";
 
@@ -69,22 +69,7 @@
     if (e.persisted && curtain) { curtain.classList.remove("is-in", "is-cover"); curtain.classList.add("is-out"); loaded(); }
   });
 
-  /* ======================================================================
-     Smooth scroll (Lenis, optional)
-     ====================================================================== */
-  var lenis = null;
-  if (window.Lenis && !reduce && fine) {
-    lenis = new window.Lenis({ lerp: 0.09, wheelMultiplier: 1 });
-    doc.classList.add("has-lenis");
-    (function raf(t) { lenis.raf(t); requestAnimationFrame(raf); })(0);
-    document.addEventListener("click", function (e) {
-      var a = e.target.closest('a[href^="#"]');
-      if (!a || a.getAttribute("href").length < 2) return;
-      var el = document.querySelector(a.getAttribute("href"));
-      if (el) { e.preventDefault(); lenis.scrollTo(el, { offset: -90 }); }
-    });
-  }
-  function lockScroll(on) { if (lenis) { on ? lenis.stop() : lenis.start(); } body.style.overflow = on ? "hidden" : ""; }
+  function lockScroll(on) { body.style.overflow = on ? "hidden" : ""; }
 
   /* ======================================================================
      Split headings into words / scrubbed paragraphs
@@ -170,7 +155,6 @@
     body.classList.toggle("menu-open", open);
     if (toggle) { toggle.setAttribute("aria-expanded", open ? "true" : "false"); toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu"); }
     if (menu) menu.setAttribute("aria-hidden", open ? "false" : "true");
-    if (lenis) open ? lenis.stop() : lenis.start();
   }
   if (toggle) toggle.addEventListener("click", function () { setMenu(!body.classList.contains("menu-open")); });
   if (menu) menu.addEventListener("click", function (e) { if (e.target.closest("a")) setMenu(false); });
@@ -267,93 +251,93 @@
   var heroMedia = document.querySelector(".hero__media");
   var heroContent = document.querySelector(".hero__content");
   var reel = document.querySelector(".reel");
-  var hg = document.querySelector(".hgallery");
-  var hgTrack = hg && hg.querySelector(".hgallery__track");
-  var hgBar = hg && hg.querySelector(".hgallery__progress");
-  var hgCount = hg && hg.querySelector("[data-hg-current]");
+  var reelFrame = reel && reel.querySelector(".reel__frame");
   var timeline = document.querySelector(".timeline");
+  var tlLine = timeline && timeline.querySelector(".timeline__line");
   var tlSteps = timeline ? timeline.querySelectorAll(".tl-step") : [];
-  var paras = document.querySelectorAll("[data-speed]");
-  var marquees = Array.prototype.map.call(document.querySelectorAll(".marquee__track"), function (t) { return { el: t, x: 0 }; });
+  var paras = Array.prototype.slice.call(document.querySelectorAll("[data-speed]"));
   var readBar = document.querySelector(".read-progress");
   var article = document.querySelector(".prose");
-  var hgDist = 0;
+  var queued = false;
 
-  function sizeGallery() {
-    if (!hg || !hgTrack) return;
-    if (small || reduce) { hg.style.height = ""; hgTrack.style.transform = ""; return; }
-    hgDist = Math.max(0, hgTrack.scrollWidth - window.innerWidth);
-    hg.style.height = (window.innerHeight + hgDist) + "px";
-  }
-  sizeGallery();
-  window.addEventListener("resize", function () { small = window.matchMedia("(max-width: 860px)").matches; sizeGallery(); });
-  window.addEventListener("load", sizeGallery);
-
-  var lastScroll = window.scrollY, vel = 0;
-  function frame() {
+  function update() {
+    queued = false;
     var y = window.scrollY, vh = window.innerHeight;
-    vel += ((y - lastScroll) - vel) * 0.12;
-    lastScroll = y;
-    onHeader(y);
+    // ---- reads (no style writes until every measurement is taken)
+    var reelR = reel && !small && !reduce ? reelFrame.parentElement.getBoundingClientRect() : null;
+    var paraR = small || reduce ? [] : paras.map(function (el) { return el.parentElement.getBoundingClientRect(); });
+    var scrubR = scrubs.map(function (sc) { return sc.el.getBoundingClientRect(); });
+    var tlR = timeline ? timeline.getBoundingClientRect() : null;
+    var stepTops = Array.prototype.map.call(tlSteps, function (st) { return st.getBoundingClientRect().top; });
+    var artR = readBar && article ? article.getBoundingClientRect() : null;
 
-    if (!reduce) {
-      if (heroMedia && y < vh * 1.2) {
-        var hp = y / vh;
-        heroMedia.style.transform = "translate3d(0," + (y * 0.35) + "px,0) scale(" + (1 + hp * 0.12) + ")";
-        if (heroContent) { heroContent.style.transform = "translate3d(0," + (y * -0.12) + "px,0)"; heroContent.style.opacity = String(clamp(1 - hp * 1.4, 0, 1)); }
-      }
-      if (reel && !small) {
-        var r = reel.getBoundingClientRect();
-        var p = clamp(-r.top / (reel.offsetHeight - vh), 0, 1);
-        var e = p < 0.75 ? 1 - Math.pow(1 - p / 0.75, 3) : 1;
-        reel.style.setProperty("--w", (34 + (100 - 34) * e) + "vw");
-        reel.style.setProperty("--h", (44 + (100 - 44) * e) + "vh");
-        reel.style.setProperty("--r", ((1 - e) * 4) + "px");
-        reel.style.setProperty("--x", (e * 60) + "vw");
-        reel.style.setProperty("--shade", (0.05 + e * 0.35).toFixed(3));
-        var pp = clamp((p - 0.7) / 0.2, 0, 1);
-        reel.style.setProperty("--po", pp.toFixed(3));
-        reel.style.setProperty("--ps", (0.7 + pp * 0.3).toFixed(3));
-      }
-      if (hg && hgTrack && !small && hgDist) {
-        var gr = hg.getBoundingClientRect();
-        var gp = clamp(-gr.top / hgDist, 0, 1);
-        hgTrack.style.transform = "translate3d(" + (-gp * hgDist) + "px,0,0)";
-        if (hgBar) hgBar.style.setProperty("--p", gp.toFixed(4));
-        if (hgCount) hgCount.textContent = String(Math.min(4, 1 + Math.floor(gp * 4.2)));
-      }
-      paras.forEach(function (el) {
-        var b = el.parentElement.getBoundingClientRect();
-        if (b.bottom < -100 || b.top > vh + 100 || small) return;
-        var q = (b.top + b.height / 2 - vh / 2) / vh;
-        el.style.transform = "translate3d(0," + (q * -parseFloat(el.dataset.speed)).toFixed(1) + "px,0)";
-      });
-      marquees.forEach(function (m) {
-        var half = m.el.scrollWidth / 2;
-        m.x -= 0.6 + Math.abs(vel) * 0.25;
-        if (-m.x >= half) m.x += half;
-        m.el.style.transform = "translate3d(" + m.x + "px,0,0) skewX(" + clamp(-vel * 0.15, -8, 8).toFixed(2) + "deg)";
-      });
+    // ---- writes
+    onHeader(y);
+    if (!reduce && heroMedia && y < vh * 1.2) {
+      var hp = y / vh;
+      heroMedia.style.transform = "translate3d(0," + (y * 0.35).toFixed(1) + "px,0) scale(" + (1 + hp * 0.1).toFixed(4) + ")";
+      if (heroContent) { heroContent.style.transform = "translate3d(0," + (y * -0.12).toFixed(1) + "px,0)"; heroContent.style.opacity = String(clamp(1 - hp * 1.4, 0, 1)); }
     }
-    scrubs.forEach(function (s) {
-      var b = s.el.getBoundingClientRect();
-      var sp = clamp((vh * 0.85 - b.top) / (b.height + vh * 0.35), 0, 1);
-      var n = Math.round(sp * s.words.length);
-      for (var i = 0; i < s.words.length; i++) s.words[i].classList.toggle("on", i < n || reduce);
+    if (reelR) {
+      // grows from a framed shot to full-bleed while the section passes through; the page never stops
+      var p = clamp((vh - reelR.top) / (vh * 0.95), 0, 1);
+      var e = 1 - Math.pow(1 - p, 3);
+      reel.style.setProperty("--w", (52 + 48 * e).toFixed(2) + "vw");
+      reel.style.setProperty("--h", (58 + 42 * e).toFixed(2) + "vh");
+      reel.style.setProperty("--r", ((1 - e) * 4).toFixed(2) + "px");
+      reel.style.setProperty("--x", (e * 40).toFixed(2) + "vw");
+      reel.style.setProperty("--shade", (0.05 + e * 0.3).toFixed(3));
+      var pp = clamp((p - 0.75) / 0.25, 0, 1);
+      reel.style.setProperty("--po", pp.toFixed(3));
+      reel.style.setProperty("--ps", (0.7 + pp * 0.3).toFixed(3));
+    }
+    paraR.forEach(function (b, k) {
+      if (b.bottom < -100 || b.top > vh + 100) return;
+      var q = (b.top + b.height / 2 - vh / 2) / vh;
+      paras[k].style.transform = "translate3d(0," + (q * -parseFloat(paras[k].dataset.speed)).toFixed(1) + "px,0)";
     });
-    if (timeline) {
-      var tb = timeline.getBoundingClientRect();
-      var tp = clamp((vh * 0.6 - tb.top) / tb.height, 0, 1);
-      timeline.querySelector(".timeline__line").style.setProperty("--p", tp.toFixed(4));
-      tlSteps.forEach(function (s) { s.classList.toggle("is-on", s.getBoundingClientRect().top < vh * 0.6); });
+    scrubs.forEach(function (sc, k) {
+      var b = scrubR[k];
+      var n = reduce ? sc.words.length : Math.round(clamp((vh * 0.85 - b.top) / (b.height + vh * 0.35), 0, 1) * sc.words.length);
+      if (n === sc.n) return;
+      sc.n = n;
+      for (var i = 0; i < sc.words.length; i++) sc.words[i].classList.toggle("on", i < n);
+    });
+    if (tlR) {
+      tlLine.style.setProperty("--p", clamp((vh * 0.6 - tlR.top) / tlR.height, 0, 1).toFixed(4));
+      stepTops.forEach(function (t, k) { tlSteps[k].classList.toggle("is-on", t < vh * 0.6); });
     }
-    if (readBar && article) {
-      var ab = article.getBoundingClientRect();
-      readBar.style.setProperty("--p", clamp(-ab.top / (ab.height - vh * 0.5), 0, 1).toFixed(4));
-    }
-    requestAnimationFrame(frame);
+    if (artR) readBar.style.setProperty("--p", clamp(-artR.top / (artR.height - vh * 0.5), 0, 1).toFixed(4));
   }
-  requestAnimationFrame(frame);
+  function requestUpdate() { if (!queued) { queued = true; requestAnimationFrame(update); } }
+  window.addEventListener("scroll", requestUpdate, { passive: true });
+  window.addEventListener("resize", function () { small = window.matchMedia("(max-width: 860px)").matches; requestUpdate(); });
+  window.addEventListener("load", requestUpdate);
+  update();
+
+  // film carousel: swipe, drag, arrows, progress
+  document.querySelectorAll(".hgallery").forEach(function (g) {
+    var tr = g.querySelector(".hgallery__track"), bar = g.querySelector(".hgallery__progress"), cnt = g.querySelector("[data-hg-current]");
+    var cards = tr.querySelectorAll(".hcard:not(.hcard--end)");
+    var sync = function () {
+      var max = tr.scrollWidth - tr.clientWidth;
+      var gp = max > 0 ? tr.scrollLeft / max : 0;
+      if (bar) bar.style.setProperty("--p", gp.toFixed(4));
+      if (cnt) cnt.textContent = String(Math.min(cards.length, 1 + Math.round(gp * (cards.length - 1))));
+    };
+    tr.addEventListener("scroll", sync, { passive: true });
+    var step = function (dir) { var c = cards[0]; tr.scrollBy({ left: dir * (c ? c.getBoundingClientRect().width + 30 : tr.clientWidth * 0.8), behavior: "smooth" }); };
+    g.querySelectorAll("[data-hg]").forEach(function (btn) { btn.addEventListener("click", function () { step(+btn.dataset.hg); }); });
+    if (fine) {
+      var down = false, moved = false, sx = 0, sl = 0;
+      tr.addEventListener("pointerdown", function (e) { if (e.pointerType !== "mouse") return; down = true; moved = false; sx = e.clientX; sl = tr.scrollLeft; tr.classList.add("is-dragging"); });
+      window.addEventListener("pointermove", function (e) { if (!down) return; var dx = e.clientX - sx; if (Math.abs(dx) > 5) moved = true; tr.scrollLeft = sl - dx; });
+      window.addEventListener("pointerup", function () { if (!down) return; down = false; tr.classList.remove("is-dragging"); });
+      tr.addEventListener("click", function (e) { if (moved) { e.preventDefault(); e.stopPropagation(); moved = false; } }, true);
+      tr.addEventListener("dragstart", function (e) { e.preventDefault(); });
+    }
+    sync();
+  });
 
   // scrollytelling image swap
   var scrolly = document.querySelector(".scrolly");
@@ -648,7 +632,7 @@
     });
     function scrollToForm() {
       var top = form.getBoundingClientRect().top + window.scrollY - 140;
-      if (window.scrollY > top) { lenis ? lenis.scrollTo(top) : window.scrollTo({ top: top, behavior: "smooth" }); }
+      if (window.scrollY > top) { window.scrollTo({ top: top, behavior: "smooth" }); }
     }
     form.addEventListener("submit", function (e) {
       e.preventDefault();

@@ -26,8 +26,8 @@ All article and location URLs match the current live site, so existing Google ra
 
 - Dark cinematic palette (espresso black, champagne gold, ivory) with film grain and ivory "breather" sections.
 - Film-leader countdown intro (first visit), letterbox bars opening over the hero, camera-viewfinder overlay with live timecode.
-- Showreel that expands to full screen as you scroll, sideways-scrolling film gallery, scroll-story with sticky images, word-by-word text reveals, gold timeline that fills as you scroll.
-- Custom cursor ("Play" on films), magnetic buttons, 3D-tilt pricing cards, scroll-reactive marquees, page-to-page wipe transitions, Lenis smooth scrolling.
+- Showreel that grows to full screen as it passes through, swipe/drag film carousel with arrows, scroll-story with sticky images, word-by-word text reveals, gold timeline that fills as you scroll.
+- Custom cursor ("Play" on films), magnetic buttons, 3D-tilt pricing cards, scroll-reactive marquees, page-to-page wipe transitions. Scrolling is fully native: no scroll-jacking or pinned sections.
 - Everything respects reduced-motion settings; phones get swipe galleries and simpler scenes.
 
 ## Conversion features
