@@ -1760,3 +1760,8 @@ input[type="date"]::-webkit-calendar-picker-indicator { cursor: pointer; }
 }
 /* the date reply line takes no room until there is something to say */
 .datecheck__msg:empty { min-height: 0; margin: 0; }
+
+/* slider controls respond on first tap and show they were pressed */
+.fs__btn, .fs__play, .fs__bars span { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+.fs__btn:active { transform: scale(.92); }
+.fs__btn { transition: background .4s, color .4s, border-color .4s, transform .2s var(--ease); }

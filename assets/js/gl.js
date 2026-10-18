@@ -200,7 +200,9 @@
     canvas.className = "gl-canvas";
     var gl = !reduce && makeGL(canvas), prog = null, texs = [], sizes = [];
     if (gl) { try { prog = program(gl, FRAG_SLIDER); } catch (e) { gl = null; } }
-    var p = 0, target = 0, dir = 1, from = 0, to = 0;
+    // each change runs on the clock (fixed length, eased), not a slow exponential chase
+    var p = 0, dir = 1, from = 0, to = 0, tStart = 0, DUR = 1100;
+    function ease(k) { return k < .5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2; }
 
     if (gl) {
       stage.appendChild(canvas);
@@ -234,8 +236,7 @@
         if (!inView || dead || document.hidden || (!busy && !ptr.moving() && ptr.h < .003 && ++idle > 3)) { running = false; return; }
         requestAnimationFrame(render);
         resize(); ptr.step();
-        p += (target - p) * .045;
-        if (Math.abs(target - p) < .001) p = target;
+        if (busy) { var k = Math.min(1, (performance.now() - tStart) / DUR); p = ease(k); }
         gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, texs[from]);
         gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D, texs[to]);
         gl.uniform2f(prog.u("uAR"), sizes[from][0], sizes[from][1]);
@@ -246,7 +247,7 @@
         gl.uniform2f(prog.u("uMouse"), ptr.x, ptr.y);
         gl.uniform1f(prog.u("uHover"), ptr.h);
         gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
-        if (p === 1 && busy) { busy = false; from = to; p = 0; target = 0; }
+        if (busy && p >= 1) { busy = false; from = to; p = 0; }
       };
       visible(root, function (v) { inView = v; wake(); auto(); });
     } else {
@@ -256,9 +257,10 @@
 
     function go(i, d) {
       i = (i + n) % n;
-      if (i === idx || busy) return;
+      if (i === idx) return;
       dir = d || (i > idx ? 1 : -1);
-      if (gl && !dead) { from = idx; to = i; p = 0; target = 1; busy = true; wake(); }
+      // a click mid-change lands the current slide at once and starts the next, so no click is ever ignored
+      if (gl && !dead) { from = idx; to = i; p = 0; tStart = performance.now(); busy = true; wake(); }
       else slides.forEach(function (s, k) { s.classList.toggle("is-active", k === i); });
       idx = i; setText(i); auto();
     }
@@ -268,9 +270,15 @@
     }
     root.querySelectorAll("[data-fs]").forEach(function (b) { b.addEventListener("click", function () { go(idx + (+b.dataset.fs), +b.dataset.fs); }); });
     bars.forEach(function (b, k) { b.parentElement && b.addEventListener("click", function () { go(k); }); });
-    var sx = null;
-    stage.addEventListener("pointerdown", function (e) { sx = e.clientX; });
-    window.addEventListener("pointerup", function (e) { if (sx === null) return; var dx = e.clientX - sx; sx = null; if (Math.abs(dx) > 50) go(idx + (dx < 0 ? 1 : -1), dx < 0 ? 1 : -1); });
+    // swipe: only a clearly sideways drag that starts on the stage counts; a scroll cancels it
+    var sx = null, sy = null;
+    stage.addEventListener("pointerdown", function (e) { sx = e.clientX; sy = e.clientY; });
+    stage.addEventListener("pointercancel", function () { sx = null; });
+    window.addEventListener("pointerup", function (e) {
+      if (sx === null) return;
+      var dx = e.clientX - sx, dy = e.clientY - sy; sx = null;
+      if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) go(idx + (dx < 0 ? 1 : -1), dx < 0 ? 1 : -1);
+    });
     root.addEventListener("keydown", function (e) { if (e.key === "ArrowRight") go(idx + 1, 1); if (e.key === "ArrowLeft") go(idx - 1, -1); });
     setText(0);
   }
