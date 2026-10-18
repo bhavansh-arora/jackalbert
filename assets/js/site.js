@@ -39,7 +39,7 @@
       requestAnimationFrame(function () {
         requestAnimationFrame(function () {
           doc.classList.remove("trans-in"); curtain.classList.add("is-out");
-          window.setTimeout(loaded, 120);
+          window.setTimeout(loaded, 260); // the hero starts as the panel begins to lift
         });
       });
     } else { doc.classList.remove("trans-in"); requestAnimationFrame(loaded); }
@@ -94,22 +94,8 @@
     }, MORPH);
   }
 
-  // page changes: browsers with cross-page View Transitions (Chrome, Edge, Safari 18.2+) animate natively,
-  // with no wait (see @view-transition in the CSS); others get the curtain wipe below
-  var VT = "onpagereveal" in window && !!document.startViewTransition && !reduce;
-  if (VT) {
-    // going back plays the motion in reverse: the page slides down to reveal the one beneath
-    window.addEventListener("pagereveal", function (e) {
-      if (!e.viewTransition) return;
-      var nav = window.navigation && window.navigation.activation;
-      if (nav && nav.navigationType === "traverse") {
-        doc.classList.add("vt-back");
-        e.viewTransition.finished.then(function () { doc.classList.remove("vt-back"); });
-      }
-    });
-  }
+  // page changes: a branded curtain (gold edge, JA seal, the destination's name) covers, the next page opens on it and it peels away
   document.addEventListener("click", function (e) {
-    if (VT) return;
     var a = e.target.closest("a[href]");
     if (!a || !curtain || reduce) return;
     var href = a.getAttribute("href");
@@ -121,21 +107,23 @@
   });
   // page wipe, then go; a second click during the wipe simply changes the destination
   var navT = 0;
-  var PAGE_NAMES = { "": "Home", "index.html": "Home", "films.html": "Films", "experience.html": "The Experience", "investment.html": "Investment",
-    "about.html": "About Jack", "journal.html": "The Journal", "contact.html": "Let’s talk", "ottawa-wedding-videographer.html": "Ottawa",
-    "pembroke-wedding-videographer.html": "Pembroke", "privacy.html": "Privacy" };
-  var curtainTitle = curtain && curtain.querySelector("[data-curtain-title]");
+  // name and scene number shown on the curtain for each destination (scene = its place in the menu)
+  var PAGE_NAMES = { "": ["Home", 1], "index.html": ["Home", 1], "films.html": ["Films", 2], "experience.html": ["The Experience", 3],
+    "investment.html": ["Investment", 4], "about.html": ["About Jack", 5], "journal.html": ["The Journal", 6], "contact.html": ["Let’s talk", 7],
+    "ottawa-wedding-videographer.html": ["Ottawa", 8], "pembroke-wedding-videographer.html": ["Pembroke", 8], "privacy.html": ["Privacy", 9] };
   function navigate(href) {
-    if (VT || !curtain || reduce) { location.href = href; return; }
+    if (!curtain || reduce) { location.href = href; return; }
     var page = href.split(/[?#]/)[0];
-    var name = PAGE_NAMES[page] || "The Journal";
-    if (curtainTitle) curtainTitle.textContent = name;
-    store.set("jaw-trans", "1"); store.set("jaw-trans-t", name);
+    var info = PAGE_NAMES[page] || ["The Journal", 6];
+    var scene = "Scene 0" + info[1];
+    if (window.__ct) window.__ct(info[0], scene);
+    store.set("jaw-trans", "1"); store.set("jaw-trans-t", info[0]); store.set("jaw-trans-n", scene);
     curtain.classList.remove("is-out");
     void curtain.offsetWidth;
     curtain.classList.add("is-in");
     window.clearTimeout(navT);
-    navT = window.setTimeout(function () { location.href = href; }, 680);
+    // leave once the name has set (longer names take a touch longer), then the next page opens on this exact frame
+    navT = window.setTimeout(function () { location.href = href; }, Math.min(950, Math.max(760, 200 + info[0].length * 18 + 500)));
   }
   // internal pages start downloading on hover/touch, so the hand-off after the wipe is near-instant
   var fetched = {};

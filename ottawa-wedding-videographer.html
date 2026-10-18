@@ -22,7 +22,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600&family=Instrument+Serif:ital@0;1&family=Geist+Mono:wght@400;500&family=Pinyon+Script&display=swap" rel="stylesheet">
 <script>document.documentElement.classList.add("js");try{if(sessionStorage.getItem("jaw-intro")==="1")document.documentElement.classList.add("no-loader");if(sessionStorage.getItem("jaw-trans")==="1")document.documentElement.classList.add("trans-in")}catch(e){}</script>
-<link rel="stylesheet" href="assets/css/site.css?v=1792338368">
+<link rel="stylesheet" href="assets/css/site.css?v=1792351741">
 
 <script>
 !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
@@ -39,9 +39,18 @@ fbq('init','2142663756311688');fbq('track','PageView');
   <div class="pl__foot"><span>Loading the reel</span><span class="pl__bar"><i></i></span><span class="pl__count" data-pl-count>000</span></div>
 </div>
 <div class="curtain" aria-hidden="true">
-  <div class="curtain__inner"><span class="curtain__kicker">Jack Albert · Wedding Films</span><span class="curtain__title"><span data-curtain-title>Jack Albert</span></span><span class="curtain__rule"></span></div>
+  <div class="curtain__gold"></div>
+  <div class="curtain__panel">
+    <div class="curtain__corners"><span>Jack Albert Wedding Films</span><span data-curtain-idx>Scene 01</span></div>
+    <div class="curtain__inner">
+      <div class="curtain__seal"><svg class="mono mono--curtain" viewBox="0 0 100 100" aria-hidden="true"><defs><path id="mt-curtain" d="M50 50m-37 0a37 37 0 1 1 74 0a37 37 0 1 1-74 0"/></defs><circle cx="50" cy="50" r="48" fill="none" stroke="currentColor" stroke-width=".7"/><circle cx="50" cy="50" r="44.5" fill="none" stroke="currentColor" stroke-width=".35" stroke-dasharray=".6 1.6"/><text class="mono__ring"><textPath href="#mt-curtain" startOffset="0">WEDDING FILMS · OTTAWA VALLEY · EST. JA ·</textPath></text><text class="mono__j" x="41" y="62">J</text><text class="mono__a" x="51" y="62">A</text><path d="M33 69h34" stroke="currentColor" stroke-width=".5"/></svg></div>
+      <span class="curtain__kicker">Now showing</span>
+      <span class="curtain__title" data-curtain-title>Jack Albert</span>
+    </div>
+    <div class="curtain__foot"><span>Ottawa Valley · Ontario</span><span class="curtain__bar"><i></i></span><span>For the moments you’ll feel again</span></div>
+  </div>
 </div>
-<script>try{var ct=sessionStorage.getItem("jaw-trans-t");if(ct)document.querySelector("[data-curtain-title]").textContent=ct}catch(e){}</script>
+<script>window.__ct=function(t,n){var el=document.querySelector("[data-curtain-title]"),ix=document.querySelector("[data-curtain-idx]");if(!el)return;el.textContent="";for(var i=0;i<t.length;i++){var s=document.createElement("span");s.className="cch";s.style.setProperty("--i",i);s.textContent=t[i]===" "?" ":t[i];el.appendChild(s)}if(ix&&n)ix.textContent=n};try{window.__ct(sessionStorage.getItem("jaw-trans-t")||"Jack Albert",sessionStorage.getItem("jaw-trans-n"))}catch(e){window.__ct("Jack Albert")}</script>
 <div class="announce"><a href="contact.html?src=bar"><span class="dot"></span>Now booking 2027 &amp; 2028<span class="announce__more"> weddings · Check your date</span> <svg class="arrow" viewBox="0 0 18 10" fill="none" stroke="currentColor" stroke-width="1.1" aria-hidden="true"><path d="M0 5h17M13 1l4 4-4 4"/></svg></a></div>
 <header class="site-header is-over-hero">
   <div class="container site-header__inner">
@@ -293,7 +302,7 @@ fbq('init','2142663756311688');fbq('track','PageView');
     </div>
   </div>
 </div>
-<script src="assets/js/site.js?v=1792338368" defer></script>
-<script src="assets/js/gl.js?v=1792338368" defer></script>
+<script src="assets/js/site.js?v=1792351741" defer></script>
+<script src="assets/js/gl.js?v=1792351741" defer></script>
 </body>
 </html>

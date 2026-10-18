@@ -680,9 +680,18 @@ def header(active, over_hero):
   <div class="pl__foot"><span>Loading the reel</span><span class="pl__bar"><i></i></span><span class="pl__count" data-pl-count>000</span></div>
 </div>
 <div class="curtain" aria-hidden="true">
-  <div class="curtain__inner"><span class="curtain__kicker">Jack Albert · Wedding Films</span><span class="curtain__title"><span data-curtain-title>Jack Albert</span></span><span class="curtain__rule"></span></div>
+  <div class="curtain__gold"></div>
+  <div class="curtain__panel">
+    <div class="curtain__corners"><span>Jack Albert Wedding Films</span><span data-curtain-idx>Scene 01</span></div>
+    <div class="curtain__inner">
+      <div class="curtain__seal">{mono("curtain", "mono mono--curtain")}</div>
+      <span class="curtain__kicker">Now showing</span>
+      <span class="curtain__title" data-curtain-title>Jack Albert</span>
+    </div>
+    <div class="curtain__foot"><span>Ottawa Valley · Ontario</span><span class="curtain__bar"><i></i></span><span>For the moments you’ll feel again</span></div>
+  </div>
 </div>
-<script>try{{var ct=sessionStorage.getItem("jaw-trans-t");if(ct)document.querySelector("[data-curtain-title]").textContent=ct}}catch(e){{}}</script>
+<script>window.__ct=function(t,n){{var el=document.querySelector("[data-curtain-title]"),ix=document.querySelector("[data-curtain-idx]");if(!el)return;el.textContent="";for(var i=0;i<t.length;i++){{var s=document.createElement("span");s.className="cch";s.style.setProperty("--i",i);s.textContent=t[i]===" "?"\u00a0":t[i];el.appendChild(s)}}if(ix&&n)ix.textContent=n}};try{{window.__ct(sessionStorage.getItem("jaw-trans-t")||"Jack Albert",sessionStorage.getItem("jaw-trans-n"))}}catch(e){{window.__ct("Jack Albert")}}</script>
 <div class="announce"><a href="contact.html?src=bar"><span class="dot"></span>Now booking 2027 &amp; 2028<span class="announce__more"> weddings · Check your date</span> {ARROW}</a></div>
 <header class="{cls}">
   <div class="container site-header__inner">
