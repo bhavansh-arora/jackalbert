@@ -752,16 +752,30 @@
   document.querySelectorAll("[data-rotate]").forEach(function (rot) {
     var words = rot.getAttribute("data-rotate").split("|"), w = rot.querySelector(".rot__w"), i = 0;
     if (reduce || words.length < 2) return;
+    // the slot eases to each word's width so the rest of the line glides instead of jumping
+    function fit() { rot.style.width = w.offsetWidth + "px"; }
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit); else fit();
+    window.addEventListener("resize", function () { rot.style.width = ""; fit(); });
     window.setInterval(function () {
       if (document.hidden) return;
       w.classList.add("is-out");
       window.setTimeout(function () {
-        i = (i + 1) % words.length; w.textContent = words[i];
+        i = (i + 1) % words.length; w.textContent = words[i]; fit();
         w.classList.remove("is-out"); w.classList.add("is-pre");
         void w.offsetWidth; w.classList.remove("is-pre");
       }, 520);
     }, 2600);
   });
+
+  // the floating badge hides over full-bleed films, forms and the footer, where it would cover controls
+  if (floatCta && "IntersectionObserver" in window) {
+    var blocked = new Set();
+    var bo = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { if (en.isIntersecting) blocked.add(en.target); else blocked.delete(en.target); });
+      floatCta.classList.toggle("is-blocked", blocked.size > 0);
+    }, { rootMargin: "0px 0px -60px 0px", threshold: 0 });
+    document.querySelectorAll(".fs, .site-footer, .msform, .quiz, .cta-band, .closer").forEach(function (el) { bo.observe(el); });
+  }
 
   // inline photo pills open as the sentence comes into view
   if ("IntersectionObserver" in window) {

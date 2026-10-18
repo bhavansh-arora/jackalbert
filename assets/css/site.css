@@ -1428,10 +1428,10 @@ body { font-family: var(--sans); letter-spacing: -.005em; }
 .hero__lab { margin-bottom: clamp(14px, 2vw, 26px); opacity: 0; transition: opacity 1s .9s; }
 .is-loaded .hero__lab { opacity: 1; }
 .hero__giant { margin: 0; font-size: clamp(64px, 11.4vw, 212px); line-height: .88; color: #efe7da; }
-.hl { display: block; overflow: hidden; padding-bottom: .07em; margin-bottom: -.07em; }
-.hl > span { display: block; transform: translateY(108%); transition: transform 1.4s var(--ease); }
-.hl + .hl > span { transition-delay: .12s; }
-.is-loaded .hl > span { transform: none; }
+.hero__giant .hl { display: block; overflow: hidden; padding-bottom: .07em; margin-bottom: -.07em; }
+.hero__giant .hl > span { display: block; transform: translateY(108%); transition: transform 1.4s var(--ease); }
+.hero__giant .hl + .hl > span { transition-delay: .12s; }
+.is-loaded .hero__giant .hl > span { transform: none; }
 .rot { display: inline-block; position: relative; vertical-align: bottom; }
 .rot__w { display: inline-block; padding-right: .06em; transition: transform .8s var(--ease), opacity .6s; }
 .rot__w.is-out { transform: translateY(-55%); opacity: 0; }
@@ -1606,3 +1606,108 @@ body { font-family: var(--sans); letter-spacing: -.005em; }
   .hero__lab > span:last-child { display: none; }
   .hero__rec { font-size: 10px; }
 }
+
+/* ==========================================================================
+   v3.1 — PIXEL PASS: one grid, one rhythm
+   ========================================================================== */
+/* the inset screens share the page grid: content lines up with the header */
+.hero__screen, .fs { --hx: max(calc(max((100% + 24px - var(--max)) / 2, 0px) + var(--gutter) - 12px), 20px); }
+.hero__content--studio { padding: clamp(22px, 3vw, 44px) var(--hx); }
+.hero__rec { left: var(--hx); top: clamp(18px, 2.2vw, 30px); }
+.hero__float { right: var(--hx); top: clamp(18px, 2.2vw, 30px); width: 288px; }
+[data-timecode] { width: auto; min-width: calc(11ch + 1.6em); white-space: nowrap; }
+
+/* hero row: sub and date check share a baseline; the reply sits below without pushing */
+.hero--studio .hero__cta { position: relative; }
+.hero--studio .hero__cta .datecheck__msg { position: absolute; left: 26px; right: 0; top: calc(100% + 10px); font-size: 17px; }
+.hero--studio .hero__sub { line-height: 1.6; }
+.rot { transition: width .8s var(--ease); white-space: nowrap; }
+
+/* date inputs speak the same type as the rest of the UI */
+.datecheck { padding-left: 24px; }
+.datecheck label { font-size: 10.5px; letter-spacing: .16em; }
+.datecheck input { font-family: var(--sans); font-size: 17px; letter-spacing: -.01em; font-variant-numeric: tabular-nums; }
+
+/* headings never leave a lonely word behind */
+.display-xl, .display-lg, .display-md, .display-sm, .closer__title, .quiz__q, .stack__card h3, .post-card__title, .bcard--quote blockquote, .fs__title { text-wrap: balance; }
+.body-lg, .bcard__note, .rcard blockquote p, .stack__card p { text-wrap: pretty; }
+
+/* bento: every card on the same 12-col grid, every label row the same height */
+.bcard--quote { margin: 0; }
+.bcard__lab { height: 34px; gap: 10px; }
+.bcard__lab .chip { min-height: 0; height: 30px; padding: 0 12px; font-size: 12px; }
+.bcard__shade { background: linear-gradient(180deg, rgba(5,12,8,.5), rgba(5,12,8,0) 28%), linear-gradient(0deg, rgba(5,12,8,.78), rgba(5,12,8,0) 55%); }
+.bcard__num { display: flex; align-items: baseline; }
+.bcard--quote figcaption .link-line { margin: 0; }
+
+/* the floating badge steps aside where it would cover controls */
+.float-cta.is-blocked { transform: scale(0) rotate(-120deg); pointer-events: none; }
+
+/* split heads: the copy column always sits on the heading's last line */
+.split-head > .reveal > .body-lg { margin-bottom: 18px; }
+
+@media (max-width: 860px) {
+  .hero__content--studio { padding: 22px 20px; }
+  .hero__rec { left: 20px; top: 18px; }
+  .hero--studio .hero__cta .datecheck__msg { position: static; margin-top: 10px; left: auto; }
+  .bento { gap: 10px; }
+  .bcard { padding: 18px; min-height: 160px; }
+  .bcard--wine { grid-column: span 2; min-height: 150px; }
+  .bcard--quote { grid-column: span 2; order: 9; }
+  .bcard--quote blockquote { font-size: 22px; margin: 14px 0; }
+  .bcard__lab { font-size: 10px; letter-spacing: .12em; gap: 8px; height: 30px; }
+  .bcard__go { width: 30px; height: 30px; }
+  .bcard__num { font-size: 42px; }
+}
+@media (max-width: 560px) {
+  .bcard--stat .bcard__lab .chip { display: none; }
+  .bcard .stars { letter-spacing: .04em; }
+}
+
+/* inner page heroes: the same clean screen as the home hero */
+.hero--page { --hx: max(calc(max((100% + 24px - var(--max)) / 2, 0px) + var(--gutter) - 12px), 20px); }
+.hero--page .letterbox, .hero--page .filmedge, .hero--page .vf-corner, .hero--page .scroll-cue { display: none; }
+.hero--page .viewfinder { inset: 0; }
+.hero--page .vf-tl { left: var(--hx); top: clamp(18px, 2.2vw, 30px); gap: 14px; }
+.hero--page .vf-tr { right: var(--hx); top: clamp(18px, 2.2vw, 30px); }
+.hero--page .viewfinder { font-size: 11px; }
+.hero--page .hero__content--page { padding: 0 var(--hx) clamp(28px, 4vw, 56px); }
+.hero--page .hero__scrim { background: linear-gradient(0deg, rgba(5,12,8,.85) 0%, rgba(5,12,8,.3) 45%, rgba(5,12,8,.05) 70%), linear-gradient(90deg, rgba(5,12,8,.5), rgba(5,12,8,0) 60%); }
+.hero__content--page .hero__sub { color: rgba(239,231,218,.8); font-size: 16px; line-height: 1.6; }
+
+/* the outlined background words belonged to the earlier concept */
+.bg-word { display: none; }
+
+/* contact: the form lives on its own card and stays in view while the details scroll */
+.contact-grid .form-wrap { padding: clamp(28px, 3.4vw, 52px); border-radius: var(--r-lg); background: var(--bg-2); border: 1px solid var(--line); }
+@media (min-width: 861px) {
+  .contact-aside { position: static; }
+  .contact-grid .form-wrap { position: sticky; top: calc(var(--header-h) + 24px); }
+}
+.check input { appearance: none; -webkit-appearance: none; flex: none; width: 20px; height: 20px; margin: 0; border: 1px solid var(--line-2); border-radius: 6px; background: transparent; display: grid; place-items: center; cursor: pointer; transition: background .3s, border-color .3s; }
+.check input::after { content: ""; width: 10px; height: 6px; border: solid #1a1410; border-width: 0 0 2px 2px; transform: translateY(-1px) rotate(-45deg) scale(0); transition: transform .3s var(--ease); }
+.check input:checked { background: var(--gold); border-color: var(--gold); }
+.check input:checked::after { transform: translateY(-1px) rotate(-45deg) scale(1); }
+.check input:focus-visible { outline: 1px solid var(--gold); outline-offset: 3px; }
+.choice span { border-radius: 14px; }
+
+/* collections: lists keep an even rhythm, buttons share one baseline, the feature wears wine */
+.collection__list { align-content: start; }
+.collection > .btn, .collection > a.btn { margin-top: auto; }
+.collection--featured, .call-card, .article-cta { background: linear-gradient(160deg, #5a1a28 0%, #3a0e18 60%, #2a0911 100%); border-color: rgba(236,212,168,.35); --line: rgba(239,231,218,.14); --muted: rgba(239,231,218,.62); }
+.collection--featured { box-shadow: 0 50px 90px -50px rgba(122,39,56,.7); }
+.call-card { border: 1px solid rgba(236,212,168,.3); }
+
+/* compare table fits a phone without sideways scrolling */
+@media (max-width: 560px) {
+  .compare { min-width: 0; font-size: 13px; table-layout: fixed; }
+  .compare th, .compare td { padding: 14px 4px; }
+  .compare th:first-child, .compare td:first-child { width: 34%; }
+  .compare thead th { font-size: 16px; }
+  .compare thead th small { font-size: 9px; letter-spacing: .06em; }
+}
+
+/* one vertical rhythm for every section */
+:root { --section: clamp(88px, 10vw, 156px); }
+@media (max-width: 420px) { .announce__more { display: none; } }
+.announce a { white-space: nowrap; }

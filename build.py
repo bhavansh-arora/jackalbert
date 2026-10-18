@@ -668,7 +668,7 @@ def header(active, over_hero):
   <div class="pl__count"><span data-pl-count>0</span><sup>%</sup></div>
 </div>
 <div class="curtain" aria-hidden="true"><div class="curtain__mark">Jack Albert</div></div>
-<div class="announce"><a href="contact.html?src=bar"><span class="dot"></span>Now booking 2027 &amp; 2028 weddings · Check your date {ARROW}</a></div>
+<div class="announce"><a href="contact.html?src=bar"><span class="dot"></span>Now booking 2027 &amp; 2028<span class="announce__more"> weddings · Check your date</span> {ARROW}</a></div>
 <header class="{cls}">
   <div class="container site-header__inner">
     <a class="logo logo--seal" href="index.html" aria-label="Jack Albert Weddings, home">
