@@ -402,6 +402,7 @@ def steps_stack():
         cards += f'''<article class="stack__card" style="--i:{i}">
       <div class="stack__text"><div class="stack__top"><span>Step 0{i + 1} / 0{len(STEPS_V3)}</span><span class="chip">{tag}</span></div><h3>{t}</h3><p>{d}</p></div>
       <div class="stack__img"><img src="assets/img/{img}" alt="" loading="lazy"></div>
+      <span class="stack__veil" aria-hidden="true"></span>
     </article>'''
     return f'<div class="stack">{cards}</div>'
 

@@ -370,6 +370,8 @@
   var article = document.querySelector(".prose");
   var queued = false;
 
+  var deckWrap = document.querySelector(".stack"), deck = deckWrap ? Array.prototype.slice.call(deckWrap.querySelectorAll(".stack__card")) : [];
+  deck.forEach(function (c) { c.__veil = c.querySelector(".stack__veil"); });
   function update() {
     queued = false;
     var y = window.scrollY, vh = window.innerHeight;
@@ -380,6 +382,11 @@
     var tlR = timeline ? timeline.getBoundingClientRect() : null;
     var stepTops = Array.prototype.map.call(tlSteps, function (st) { return st.getBoundingClientRect().top; });
     var artR = readBar && article ? article.getBoundingClientRect() : null;
+    var deckR = null;
+    if (deck.length && !small && !reduce) {
+      var dr = deckWrap.getBoundingClientRect();
+      if (dr.bottom > -200 && dr.top < vh + 200) deckR = deck.map(function (c) { return c.getBoundingClientRect(); });
+    }
 
     // ---- writes
     onHeader(y);
@@ -418,10 +425,26 @@
       stepTops.forEach(function (t, k) { tlSteps[k].classList.toggle("is-on", t < vh * 0.6); });
     }
     if (artR) readBar.style.setProperty("--p", clamp(-artR.top / (artR.height - vh * 0.5), 0, 1).toFixed(4));
+    if (deckR) {
+      // stacked steps: as the next card slides over, a veil in the card's own colour fades what's beneath,
+      // so the edges peeking out above read as a clean deck instead of chopped text
+      // (one veil's opacity only: it stays on the compositor, nothing inside the card restyles or repaints)
+      deck.forEach(function (c, k) {
+        var nx = deckR[k + 1], cov = nx ? clamp((deckR[k].bottom - nx.top) / deckR[k].height, 0, 1) : 0;
+        var v = Math.min(1, cov * 1.8).toFixed(3);
+        if (c.__cov === v) return;
+        c.__cov = v;
+        if (c.__veil) c.__veil.style.opacity = v;
+      });
+    }
   }
   function requestUpdate() { if (!queued) { queued = true; requestAnimationFrame(update); } }
   window.addEventListener("scroll", requestUpdate, { passive: true });
-  window.addEventListener("resize", function () { small = window.matchMedia("(max-width: 860px)").matches; requestUpdate(); });
+  window.addEventListener("resize", function () {
+    small = window.matchMedia("(max-width: 860px)").matches;
+    if (small) deck.forEach(function (c) { c.__cov = null; if (c.__veil) c.__veil.style.opacity = ""; });
+    requestUpdate();
+  });
   window.addEventListener("load", requestUpdate);
   update();
 
