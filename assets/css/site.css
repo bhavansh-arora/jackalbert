@@ -221,7 +221,7 @@ body::after {
   transition: clip-path .9s var(--ease-io), visibility 0s linear .9s;
 }
 .menu-open .mobile-menu { clip-path: circle(150% at calc(100% - 44px) 70px); visibility: visible; transition: clip-path .9s var(--ease-io), visibility 0s; }
-.menu-open .site-header { color: #f1e9dc; background: transparent; box-shadow: none; transform: none; }
+.menu-open .site-header { z-index: 115; color: #f1e9dc; background: transparent; box-shadow: none; transform: none; }
 .menu-open .site-header .btn { opacity: 0; pointer-events: none; }
 .menu-open { overflow: hidden; }
 .mobile-menu__links { list-style: none; margin: 0; padding: 0; }

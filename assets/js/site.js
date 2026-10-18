@@ -100,16 +100,25 @@
     if (!/^[\w\-]+\.html([?#].*)?$/.test(href)) return;
     if (href.split("#")[0] === location.pathname.split("/").pop() && href.indexOf("#") > -1) return;
     e.preventDefault();
+    navigate(href);
+  });
+  // page wipe, then go; a second click during the wipe simply changes the destination
+  var navT = 0;
+  function navigate(href) {
+    if (!curtain || reduce) { location.href = href; return; }
     store.set("jaw-trans", "1");
     curtain.classList.remove("is-out");
     curtain.classList.add("is-in");
-    window.setTimeout(function () { location.href = href; }, 720);
-  });
+    window.clearTimeout(navT);
+    navT = window.setTimeout(function () { location.href = href; }, 720);
+  }
   window.addEventListener("pageshow", function (e) {
     if (e.persisted && curtain) { curtain.classList.remove("is-in", "is-cover"); curtain.classList.add("is-out"); loaded(); }
   });
 
-  function lockScroll(on) { body.style.overflow = on ? "hidden" : ""; }
+  // scroll lock is counted, so closing one overlay never unlocks the page under another
+  var locks = 0;
+  function lockScroll(on) { locks = Math.max(0, locks + (on ? 1 : -1)); body.style.overflow = locks ? "hidden" : ""; }
 
   /* ======================================================================
      Split headings into words / scrubbed paragraphs
@@ -198,6 +207,8 @@
   var toggle = document.querySelector(".menu-toggle");
   var menu = document.getElementById("mobile-menu");
   function setMenu(open) {
+    if (open === body.classList.contains("menu-open")) return;
+    lockScroll(open);
     body.classList.toggle("menu-open", open);
     if (toggle) { toggle.setAttribute("aria-expanded", open ? "true" : "false"); toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu"); }
     if (menu) menu.setAttribute("aria-hidden", open ? "false" : "true");
@@ -310,7 +321,7 @@
     var t0 = performance.now() - 83000;
     var pad = function (n) { return (n < 10 ? "0" : "") + n; };
     var tcOn = true;
-    if ("IntersectionObserver" in window) new IntersectionObserver(function (en) { tcOn = en[0].isIntersecting; }).observe(tc);
+    if ("IntersectionObserver" in window) new IntersectionObserver(function (en) { tcOn = en[en.length - 1].isIntersecting; }).observe(tc);
     window.setInterval(function () {
       if (!tcOn || document.hidden) return;
       var f = Math.floor((performance.now() - t0) / (1000 / 24));
@@ -403,11 +414,18 @@
     var step = function (dir) { var c = cards[0]; tr.scrollBy({ left: dir * (c ? c.getBoundingClientRect().width + 30 : tr.clientWidth * 0.8), behavior: "smooth" }); };
     g.querySelectorAll("[data-hg]").forEach(function (btn) { btn.addEventListener("click", function () { step(+btn.dataset.hg); }); });
     if (fine) {
-      var down = false, moved = false, sx = 0, sl = 0;
-      tr.addEventListener("pointerdown", function (e) { if (e.pointerType !== "mouse") return; down = true; moved = false; sx = e.clientX; sl = tr.scrollLeft; tr.classList.add("is-dragging"); });
-      window.addEventListener("pointermove", function (e) { if (!down) return; var dx = e.clientX - sx; if (Math.abs(dx) > 5) moved = true; tr.scrollLeft = sl - dx; });
-      window.addEventListener("pointerup", function () { if (!down) return; down = false; tr.classList.remove("is-dragging"); });
-      tr.addEventListener("click", function (e) { if (moved) { e.preventDefault(); e.stopPropagation(); moved = false; } }, true);
+      var down = false, moved = false, sx = 0, sl = 0, dragEnd = 0;
+      var endDrag = function () { if (!down) return; down = false; tr.classList.remove("is-dragging"); if (moved) dragEnd = performance.now(); moved = false; };
+      tr.addEventListener("pointerdown", function (e) { if (e.pointerType !== "mouse" || e.button !== 0) return; down = true; moved = false; sx = e.clientX; sl = tr.scrollLeft; tr.classList.add("is-dragging"); });
+      window.addEventListener("pointermove", function (e) {
+        if (!down) return;
+        if (!(e.buttons & 1)) { endDrag(); return; } // released outside the window
+        var dx = e.clientX - sx; if (Math.abs(dx) > 5) moved = true; tr.scrollLeft = sl - dx;
+      });
+      window.addEventListener("pointerup", endDrag);
+      window.addEventListener("pointercancel", endDrag);
+      window.addEventListener("blur", endDrag);
+      tr.addEventListener("click", function (e) { if (performance.now() - dragEnd < 80) { e.preventDefault(); e.stopPropagation(); } }, true);
       tr.addEventListener("dragstart", function (e) { e.preventDefault(); });
     }
     sync();
@@ -453,17 +471,19 @@
      Film modal (YouTube) with a follow-up CTA
      ====================================================================== */
   var modal = document.getElementById("film-modal");
-  var lastFocus = null;
+  var lastFocus = null, wipeT = 0;
   function openFilm(id, title) {
     if (!modal) return;
-    lastFocus = document.activeElement;
+    window.clearTimeout(wipeT); // a quick close-then-reopen must not have the new film wiped
+    var already = modal.classList.contains("is-open");
+    if (!already) lastFocus = document.activeElement;
     modal.querySelector(".modal__frame").innerHTML = '<iframe src="https://www.youtube-nocookie.com/embed/' + encodeURIComponent(id) +
       '?autoplay=1&rel=0&modestbranding=1&playsinline=1" title="' + (title || "Wedding film").replace(/"/g, "") +
       '" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>';
     modal.querySelector(".modal__title").textContent = title || "";
     modal.classList.add("is-open");
     modal.setAttribute("aria-hidden", "false");
-    lockScroll(true);
+    if (!already) lockScroll(true);
     modal.querySelector(".modal__close").focus();
     track("ViewContent", { content_name: title, content_type: "wedding_film" });
   }
@@ -472,7 +492,7 @@
     modal.classList.remove("is-open");
     modal.setAttribute("aria-hidden", "true");
     lockScroll(false);
-    window.setTimeout(function () { modal.querySelector(".modal__frame").innerHTML = ""; }, 500);
+    wipeT = window.setTimeout(function () { modal.querySelector(".modal__frame").innerHTML = ""; }, 500);
     if (lastFocus) lastFocus.focus();
   }
   document.addEventListener("click", function (e) {
@@ -554,8 +574,7 @@
       track("InitiateCheckout", { content_name: "date_check" });
       store.set("jaw-exit", "1");
       var go = "contact.html?date=" + encodeURIComponent(input.value) + "&src=" + encodeURIComponent(f.dataset.datecheck || "site");
-      if (curtain && !reduce) { store.set("jaw-trans", "1"); curtain.classList.remove("is-out"); curtain.classList.add("is-in"); window.setTimeout(function () { location.href = go; }, 720); }
-      else location.href = go;
+      navigate(go);
     });
   });
 
@@ -569,8 +588,9 @@
   };
   document.querySelectorAll("[data-quiz]").forEach(function (q) {
     var steps = q.querySelectorAll(".quiz__step"), result = q.querySelector(".quiz__result"), bar = q.querySelector(".quiz__bar"), cnt = q.querySelector("[data-quiz-count]");
-    var score = { "sweet-simple": 0, "classic-collection": 0, "luxury-collection": 0 }, i = 0;
+    var score = { "sweet-simple": 0, "classic-collection": 0, "luxury-collection": 0 }, i = 0, shownAt = 0;
     function show(n) {
+      shownAt = performance.now();
       steps.forEach(function (s, k) { s.classList.toggle("is-active", k === n); });
       result.classList.toggle("is-active", n >= steps.length);
       bar.style.setProperty("--p", Math.min(1, (n + 1) / steps.length));
@@ -578,6 +598,8 @@
     }
     q.addEventListener("click", function (e) {
       var o = e.target.closest(".quiz__opt");
+      // only the visible question counts, and a double-click can't answer the next one too
+      if (o && (!o.closest(".quiz__step.is-active") || performance.now() - shownAt < 350)) o = null;
       if (o) {
         score[o.dataset.v] += +(o.dataset.w || 1);
         i++;
@@ -616,13 +638,20 @@
       dots.forEach(function (d, k) { d.classList.remove("is-active"); if (k === i) { void d.offsetWidth; d.classList.add("is-active"); } });
       if (user) restart();
     }
-    function restart() { window.clearInterval(timer); if (!reduce) timer = window.setInterval(function () { go(i + 1); }, 7000); }
+    var seen = true;
+    function restart() { window.clearInterval(timer); if (!reduce) timer = window.setInterval(function () { if (seen && !document.hidden) go(i + 1); }, 7000); }
+    if ("IntersectionObserver" in window) new IntersectionObserver(function (en) { seen = en[en.length - 1].isIntersecting; }).observe(wrap);
     var prev = wrap.querySelector(".reviews__arrow--prev"), next = wrap.querySelector(".reviews__arrow--next");
     if (prev) prev.addEventListener("click", function () { go(i - 1, true); });
     if (next) next.addEventListener("click", function () { go(i + 1, true); });
-    var sx = null;
-    wrap.addEventListener("touchstart", function (e) { sx = e.touches[0].clientX; }, { passive: true });
-    wrap.addEventListener("touchend", function (e) { if (sx === null) return; var dx = e.changedTouches[0].clientX - sx; if (Math.abs(dx) > 40) go(dx < 0 ? i + 1 : i - 1, true); sx = null; });
+    var sx = null, sy = null;
+    wrap.addEventListener("touchstart", function (e) { sx = e.touches[0].clientX; sy = e.touches[0].clientY; }, { passive: true });
+    wrap.addEventListener("touchcancel", function () { sx = null; }, { passive: true });
+    wrap.addEventListener("touchend", function (e) {
+      if (sx === null) return;
+      var dx = e.changedTouches[0].clientX - sx, dy = e.changedTouches[0].clientY - sy; sx = null;
+      if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy) * 1.5) go(dx < 0 ? i + 1 : i - 1, true);
+    });
     go(0); restart();
   });
 
@@ -657,7 +686,7 @@
         play(v); pv.classList.add("is-on");
       });
     });
-    fi.addEventListener("mouseleave", function () { pv.classList.remove("is-on"); });
+    fi.addEventListener("mouseleave", function () { pv.classList.remove("is-on"); Object.keys(vids).forEach(function (k) { vids[k].pause(); }); });
   }
 
   /* ======================================================================
@@ -711,8 +740,10 @@
       });
       return ok;
     }
+    var stepAt = 0;
     function show(n, quiet) {
-      stepIdx = n;
+      n = Math.max(0, Math.min(steps.length - 1, n));
+      stepIdx = n; stepAt = performance.now();
       steps.forEach(function (s, k) { s.classList.toggle("is-active", k === n); });
       bar.style.setProperty("--p", (n + 1) / steps.length);
       count.textContent = "Step " + (n + 1) + " of " + steps.length;
@@ -720,11 +751,12 @@
       if (f && fine && !quiet) window.setTimeout(function () { f.focus({ preventScroll: true }); }, 350);
     }
     form.addEventListener("click", function (e) {
-      if (e.target.closest("[data-next]")) { e.preventDefault(); if (valid(stepIdx)) { show(stepIdx + 1); scrollToForm(); } }
-      if (e.target.closest("[data-back]")) { e.preventDefault(); show(stepIdx - 1); }
+      var settled = performance.now() - stepAt > 400;
+      if (e.target.closest("[data-next]")) { e.preventDefault(); if (settled && valid(stepIdx)) { show(stepIdx + 1); scrollToForm(); } }
+      if (e.target.closest("[data-back]")) { e.preventDefault(); if (settled) show(stepIdx - 1); }
     });
     form.addEventListener("keydown", function (e) {
-      if (e.key === "Enter" && e.target.tagName !== "TEXTAREA" && stepIdx < steps.length - 1) { e.preventDefault(); if (valid(stepIdx)) show(stepIdx + 1); }
+      if (e.key === "Enter" && e.target.tagName !== "TEXTAREA" && stepIdx < steps.length - 1) { e.preventDefault(); if (performance.now() - stepAt > 400 && valid(stepIdx)) show(stepIdx + 1); }
     });
     function scrollToForm() {
       var top = form.getBoundingClientRect().top + window.scrollY - 140;
@@ -732,7 +764,7 @@
     }
     form.addEventListener("submit", function (e) {
       e.preventDefault();
-      if (!valid(stepIdx)) return;
+      if (performance.now() - stepAt < 400 || !valid(stepIdx)) return;
       var status = form.querySelector(".form__status");
       var btn = form.querySelector('button[type="submit"]');
       var label = btn.querySelector(".label"), orig = label.textContent;
