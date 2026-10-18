@@ -94,8 +94,22 @@
     }, MORPH);
   }
 
-  // page-to-page wipe
+  // page changes: browsers with cross-page View Transitions (Chrome, Edge, Safari 18.2+) animate natively,
+  // with no wait (see @view-transition in the CSS); others get the curtain wipe below
+  var VT = "onpagereveal" in window && !!document.startViewTransition && !reduce;
+  if (VT) {
+    // going back plays the motion in reverse: the page slides down to reveal the one beneath
+    window.addEventListener("pagereveal", function (e) {
+      if (!e.viewTransition) return;
+      var nav = window.navigation && window.navigation.activation;
+      if (nav && nav.navigationType === "traverse") {
+        doc.classList.add("vt-back");
+        e.viewTransition.finished.then(function () { doc.classList.remove("vt-back"); });
+      }
+    });
+  }
   document.addEventListener("click", function (e) {
+    if (VT) return;
     var a = e.target.closest("a[href]");
     if (!a || !curtain || reduce) return;
     var href = a.getAttribute("href");
@@ -112,7 +126,7 @@
     "pembroke-wedding-videographer.html": "Pembroke", "privacy.html": "Privacy" };
   var curtainTitle = curtain && curtain.querySelector("[data-curtain-title]");
   function navigate(href) {
-    if (!curtain || reduce) { location.href = href; return; }
+    if (VT || !curtain || reduce) { location.href = href; return; }
     var page = href.split(/[?#]/)[0];
     var name = PAGE_NAMES[page] || "The Journal";
     if (curtainTitle) curtainTitle.textContent = name;

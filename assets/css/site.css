@@ -1794,3 +1794,40 @@ input[type="date"]::-webkit-calendar-picker-indicator { cursor: pointer; }
 .stack__veil { position: absolute; inset: 0; z-index: 2; border-radius: inherit; background: inherit; opacity: 0; pointer-events: none; }
 @media (min-width: 861px) { .stack__veil { will-change: opacity; } }
 @media (max-width: 860px) { .stack__veil { display: none; } }
+
+/* ==========================================================================
+   Page changes (native cross-page View Transitions)
+   The header stays put; the page you're leaving recedes into the dark while
+   the next one rises over it like a sheet. Back plays it in reverse.
+   ========================================================================== */
+@view-transition { navigation: auto; }
+.site-header { view-transition-name: site-header; }
+.announce { view-transition-name: announce; }
+::view-transition { background: #050b08; }
+::view-transition-group(root) { animation-duration: .95s; }
+::view-transition-old(root), ::view-transition-new(root) { animation-duration: .95s; animation-timing-function: cubic-bezier(.76, 0, .24, 1); animation-fill-mode: both; mix-blend-mode: normal; }
+::view-transition-old(root) { animation-name: vt-recede; }
+::view-transition-new(root) { animation-name: vt-rise; }
+@keyframes vt-recede {
+  from { transform: none; clip-path: inset(0 round 0); filter: brightness(1); }
+  to { transform: translateY(-4%) scale(.9); clip-path: inset(0 round 28px); filter: brightness(.45); }
+}
+@keyframes vt-rise {
+  from { transform: translateY(100%); clip-path: inset(0 round 36px 36px 0 0); }
+  to { transform: none; clip-path: inset(0 round 0); }
+}
+/* back: the current page slides down and away, the previous one comes forward from the dark */
+html.vt-back::view-transition-old(root) { animation-name: vt-drop; z-index: 2; }
+html.vt-back::view-transition-new(root) { animation-name: vt-return; z-index: 1; }
+@keyframes vt-drop {
+  from { transform: none; clip-path: inset(0 round 0); }
+  to { transform: translateY(100%); clip-path: inset(0 round 36px 36px 0 0); }
+}
+@keyframes vt-return {
+  from { transform: translateY(-4%) scale(.9); clip-path: inset(0 round 28px); filter: brightness(.45); }
+  to { transform: none; clip-path: inset(0 round 0); filter: brightness(1); }
+}
+/* the header and bar are identical on both sides: hold them still instead of cross-fading */
+::view-transition-old(site-header), ::view-transition-old(announce) { animation: none; opacity: 0; }
+::view-transition-new(site-header), ::view-transition-new(announce) { animation: none; }
+@media (prefers-reduced-motion: reduce) { @view-transition { navigation: none; } }
