@@ -21,8 +21,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600&family=Instrument+Serif:ital@0;1&family=Geist+Mono:wght@400;500&family=Pinyon+Script&display=swap" rel="stylesheet">
-<script>document.documentElement.classList.add("js");try{if(sessionStorage.getItem("jaw-intro")==="1")document.documentElement.classList.add("no-loader")}catch(e){}</script>
-<link rel="stylesheet" href="assets/css/site.css?v=1792328908">
+<script>document.documentElement.classList.add("js");try{if(sessionStorage.getItem("jaw-intro")==="1")document.documentElement.classList.add("no-loader");if(sessionStorage.getItem("jaw-trans")==="1")document.documentElement.classList.add("trans-in")}catch(e){}</script>
+<link rel="stylesheet" href="assets/css/site.css?v=1792333981">
 
 <script>
 !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
@@ -38,7 +38,10 @@ fbq('init','2142663756311688');fbq('track','PageView');
   <div class="pl__name"><span class="ch"><span style="--i:1">J</span></span><span class="ch"><span style="--i:2">a</span></span><span class="ch"><span style="--i:3">c</span></span><span class="ch"><span style="--i:4">k</span></span> <em><span class="ch"><span style="--i:5">A</span></span><span class="ch"><span style="--i:6">l</span></span><span class="ch"><span style="--i:7">b</span></span><span class="ch"><span style="--i:8">e</span></span><span class="ch"><span style="--i:9">r</span></span><span class="ch"><span style="--i:10">t</span></span></em><span class="pl__script">wedding films</span></div>
   <div class="pl__foot"><span>Loading the reel</span><span class="pl__bar"><i></i></span><span class="pl__count" data-pl-count>000</span></div>
 </div>
-<div class="curtain" aria-hidden="true"><div class="curtain__mark">Jack Albert</div></div>
+<div class="curtain" aria-hidden="true">
+  <div class="curtain__inner"><span class="curtain__kicker">Jack Albert · Wedding Films</span><span class="curtain__title"><span data-curtain-title>Jack Albert</span></span><span class="curtain__rule"></span></div>
+</div>
+<script>try{var ct=sessionStorage.getItem("jaw-trans-t");if(ct)document.querySelector("[data-curtain-title]").textContent=ct}catch(e){}</script>
 <div class="announce"><a href="contact.html?src=bar"><span class="dot"></span>Now booking 2027 &amp; 2028<span class="announce__more"> weddings · Check your date</span> <svg class="arrow" viewBox="0 0 18 10" fill="none" stroke="currentColor" stroke-width="1.1" aria-hidden="true"><path d="M0 5h17M13 1l4 4-4 4"/></svg></a></div>
 <header class="site-header is-over-hero">
   <div class="container site-header__inner">
@@ -348,7 +351,7 @@ fbq('init','2142663756311688');fbq('track','PageView');
     </div>
   </div>
 </div>
-<script src="assets/js/site.js?v=1792328908" defer></script>
-<script src="assets/js/gl.js?v=1792328908" defer></script>
+<script src="assets/js/site.js?v=1792333981" defer></script>
+<script src="assets/js/gl.js?v=1792333981" defer></script>
 </body>
 </html>

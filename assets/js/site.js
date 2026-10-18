@@ -34,12 +34,15 @@
 
   if (doc.classList.contains("no-loader") || !loader || reduce) {
     if (curtain && store.get("jaw-trans") === "1") {
-      curtain.classList.add("is-cover");
-      requestAnimationFrame(function () {
-        requestAnimationFrame(function () { curtain.classList.remove("is-cover"); curtain.classList.add("is-out"); loaded(); });
-      });
+      // the page opened already covered (html.trans-in, set in <head>), so it never flashes; now the panel lifts away
       store.set("jaw-trans", "0");
-    } else { requestAnimationFrame(loaded); }
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () {
+          doc.classList.remove("trans-in"); curtain.classList.add("is-out");
+          window.setTimeout(loaded, 120);
+        });
+      });
+    } else { doc.classList.remove("trans-in"); requestAnimationFrame(loaded); }
   } else {
     store.set("jaw-intro", "1");
     introHold = [];
@@ -104,16 +107,38 @@
   });
   // page wipe, then go; a second click during the wipe simply changes the destination
   var navT = 0;
+  var PAGE_NAMES = { "": "Home", "index.html": "Home", "films.html": "Films", "experience.html": "The Experience", "investment.html": "Investment",
+    "about.html": "About Jack", "journal.html": "The Journal", "contact.html": "Let’s talk", "ottawa-wedding-videographer.html": "Ottawa",
+    "pembroke-wedding-videographer.html": "Pembroke", "privacy.html": "Privacy" };
+  var curtainTitle = curtain && curtain.querySelector("[data-curtain-title]");
   function navigate(href) {
     if (!curtain || reduce) { location.href = href; return; }
-    store.set("jaw-trans", "1");
+    var page = href.split(/[?#]/)[0];
+    var name = PAGE_NAMES[page] || "The Journal";
+    if (curtainTitle) curtainTitle.textContent = name;
+    store.set("jaw-trans", "1"); store.set("jaw-trans-t", name);
     curtain.classList.remove("is-out");
+    void curtain.offsetWidth;
     curtain.classList.add("is-in");
     window.clearTimeout(navT);
-    navT = window.setTimeout(function () { location.href = href; }, 720);
+    navT = window.setTimeout(function () { location.href = href; }, 680);
   }
+  // internal pages start downloading on hover/touch, so the hand-off after the wipe is near-instant
+  var fetched = {};
+  function prefetch(e) {
+    var a = e.target.closest && e.target.closest("a[href]");
+    if (!a) return;
+    var href = a.getAttribute("href");
+    if (!/^[\w\-]+\.html([?#].*)?$/.test(href)) return;
+    var page = href.split(/[?#]/)[0];
+    if (fetched[page]) return;
+    fetched[page] = 1;
+    var l = document.createElement("link"); l.rel = "prefetch"; l.href = page; document.head.appendChild(l);
+  }
+  document.addEventListener("pointerover", prefetch, { passive: true });
+  document.addEventListener("touchstart", prefetch, { passive: true });
   window.addEventListener("pageshow", function (e) {
-    if (e.persisted && curtain) { curtain.classList.remove("is-in", "is-cover"); curtain.classList.add("is-out"); loaded(); }
+    if (e.persisted && curtain) { window.clearTimeout(navT); doc.classList.remove("trans-in"); curtain.classList.remove("is-in"); curtain.classList.add("is-out"); loaded(); }
   });
 
   // scroll lock is counted, so closing one overlay never unlocks the page under another

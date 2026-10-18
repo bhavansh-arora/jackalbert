@@ -642,7 +642,7 @@ def head(title, description, path, extra=""):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600&family=Instrument+Serif:ital@0;1&family=Geist+Mono:wght@400;500&family=Pinyon+Script&display=swap" rel="stylesheet">
-<script>document.documentElement.classList.add("js");try{{if(sessionStorage.getItem("jaw-intro")==="1")document.documentElement.classList.add("no-loader")}}catch(e){{}}</script>
+<script>document.documentElement.classList.add("js");try{{if(sessionStorage.getItem("jaw-intro")==="1")document.documentElement.classList.add("no-loader");if(sessionStorage.getItem("jaw-trans")==="1")document.documentElement.classList.add("trans-in")}}catch(e){{}}</script>
 <link rel="stylesheet" href="assets/css/site.css?v={VERSION}">
 {extra}
 <script>
@@ -678,7 +678,10 @@ def header(active, over_hero):
   <div class="pl__name">{PL_NAME}<span class="pl__script">wedding films</span></div>
   <div class="pl__foot"><span>Loading the reel</span><span class="pl__bar"><i></i></span><span class="pl__count" data-pl-count>000</span></div>
 </div>
-<div class="curtain" aria-hidden="true"><div class="curtain__mark">Jack Albert</div></div>
+<div class="curtain" aria-hidden="true">
+  <div class="curtain__inner"><span class="curtain__kicker">Jack Albert · Wedding Films</span><span class="curtain__title"><span data-curtain-title>Jack Albert</span></span><span class="curtain__rule"></span></div>
+</div>
+<script>try{{var ct=sessionStorage.getItem("jaw-trans-t");if(ct)document.querySelector("[data-curtain-title]").textContent=ct}}catch(e){{}}</script>
 <div class="announce"><a href="contact.html?src=bar"><span class="dot"></span>Now booking 2027 &amp; 2028<span class="announce__more"> weddings · Check your date</span> {ARROW}</a></div>
 <header class="{cls}">
   <div class="container site-header__inner">
