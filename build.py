@@ -652,6 +652,16 @@ fbq('init','{BRAND["pixel"]}');fbq('track','PageView');
 </head>'''
 
 
+def _pl_name():
+    out, i = [], 0
+    for word, em in (("Jack", False), ("Albert", True)):
+        chars = "".join(f'<span class="ch"><span style="--i:{(i := i + 1)}">{c}</span></span>' for c in word)
+        out.append(f"<em>{chars}</em>" if em else chars)
+    return " ".join(out)
+
+
+PL_NAME = _pl_name()
+
 def header(active, over_hero):
     links = "".join(
         f'<a class="nav__link" href="{href}"{" aria-current=\"page\"" if key == active else ""}><span>{label}</span><span aria-hidden="true">{label}</span></a>'
@@ -662,10 +672,11 @@ def header(active, over_hero):
     cls = "site-header is-over-hero" if over_hero else "site-header"
     return f'''<a class="skip-link" href="#main">Skip to content</a>
 <div class="loader" aria-hidden="true">
-  <div class="pl__frame"><img src="assets/img/hero-poster.jpg" alt=""><img src="assets/img/bree-portrait.jpg" alt=""><img src="assets/img/champagne.jpg" alt=""><img src="assets/img/skyline-dance.jpg" alt=""><img src="assets/img/aisle-father.jpg" alt=""><img src="assets/img/cake-detail.jpg" alt=""><img src="assets/img/bride-window.jpg" alt=""><img src="assets/img/pembroke-kiss.jpg" alt=""><img src="assets/img/reel-poster.jpg" alt=""></div>
-  <div class="pl__brand"><span>Jack Albert</span><em>wedding films</em></div>
-  <div class="pl__meta">Ottawa Valley · Ontario<br>Est. for the moments you’ll feel again</div>
-  <div class="pl__count"><span data-pl-count>0</span><sup>%</sup></div>
+  <div class="pl__corners"><span>Jack Albert Wedding Films</span><span>Ottawa Valley · Ontario</span></div>
+  <div class="pl__rule"></div>
+  <div class="pl__frame"><img src="assets/img/bree-portrait.jpg" alt=""><img src="assets/img/champagne.jpg" alt=""><img src="assets/img/skyline-dance.jpg" alt=""><img src="assets/img/aisle-father.jpg" alt=""><img src="assets/img/cake-detail.jpg" alt=""><img src="assets/img/bride-window.jpg" alt=""><img src="assets/img/pembroke-kiss.jpg" alt=""><img src="assets/img/reel-poster.jpg" alt=""></div>
+  <div class="pl__name">{PL_NAME}<span class="pl__script">wedding films</span></div>
+  <div class="pl__foot"><span>Loading the reel</span><span class="pl__bar"><i></i></span><span class="pl__count" data-pl-count>000</span></div>
 </div>
 <div class="curtain" aria-hidden="true"><div class="curtain__mark">Jack Albert</div></div>
 <div class="announce"><a href="contact.html?src=bar"><span class="dot"></span>Now booking 2027 &amp; 2028<span class="announce__more"> weddings · Check your date</span> {ARROW}</a></div>

@@ -30,6 +30,7 @@
   var loader = document.querySelector(".loader");
   var curtain = document.querySelector(".curtain");
   function loaded() { body.classList.add("is-loaded"); }
+  var introHold = null; // hero videos wait on frame 0 while the intro plays, then start with the hand-off
 
   if (doc.classList.contains("no-loader") || !loader || reduce) {
     if (curtain && store.get("jaw-trans") === "1") {
@@ -41,24 +42,53 @@
     } else { requestAnimationFrame(loaded); }
   } else {
     store.set("jaw-intro", "1");
-    // stills flicker in the frame while the counter runs, then the frame opens to full screen
-    var frames = loader.querySelectorAll(".pl__frame img"), countEl = loader.querySelector("[data-pl-count]");
-    var fi = 0, t0 = performance.now(), DUR = 1700;
-    if (frames.length) frames[0].classList.add("is-on");
-    var flick = window.setInterval(function () {
-      if (!frames.length) return;
-      frames[fi].classList.remove("is-on"); fi = (fi + 1) % frames.length; frames[fi].classList.add("is-on");
-    }, 120);
+    introHold = [];
+    // title sequence: a gold rule opens into a widescreen frame, stills flicker while the name sets,
+    // then the frame glides into the page's own hero so the hand-off has no cut
+    var plFrames = Array.prototype.slice.call(loader.querySelectorAll(".pl__frame img"));
+    var plFrame = loader.querySelector(".pl__frame"), plCount = loader.querySelector("[data-pl-count]"), plBar = loader.querySelector(".pl__bar i");
+    var plHero = document.querySelector("[data-hero] .hero__media img");
+    var plTarget = document.querySelector(".hero__screen") || document.querySelector(".hero--page");
+    if (plHero && plFrame) {
+      var plFin = document.createElement("img"); plFin.alt = ""; plFin.className = "pl__final";
+      plFin.src = plHero.currentSrc || plHero.src; plFrame.appendChild(plFin);
+    }
+    var plI = 0, plFlick = 0, plT0 = performance.now(), OPEN = 550, MORPH = 1950, GLIDE = 950;
+    requestAnimationFrame(function () { requestAnimationFrame(function () { loader.classList.add("is-on"); }); });
+    window.setTimeout(function () {
+      loader.classList.add("is-open");
+      if (plFrames.length) plFrames[0].classList.add("is-on");
+      plFlick = window.setInterval(function () {
+        plFrames[plI].classList.remove("is-on"); plI = (plI + 1) % plFrames.length; plFrames[plI].classList.add("is-on");
+      }, 130);
+    }, OPEN);
     (function count(t) {
-      var k = Math.min(1, (t - t0) / DUR);
-      if (countEl) countEl.textContent = Math.round(100 * (1 - Math.pow(1 - k, 2)));
-      if (k < 1) { requestAnimationFrame(count); return; }
-      window.clearInterval(flick);
-      frames.forEach(function (f) { f.classList.remove("is-on"); });
-      if (frames[0]) frames[0].classList.add("is-on");
-      loader.classList.add("is-expand");
-      window.setTimeout(function () { loader.classList.add("is-done"); window.setTimeout(loaded, 150); window.setTimeout(function () { loader.remove(); }, 1300); }, 950);
-    })(t0);
+      var k = Math.min(1, (t - plT0) / MORPH), e = 1 - Math.pow(1 - k, 3);
+      if (plCount) plCount.textContent = ("00" + Math.round(100 * e)).slice(-3);
+      if (plBar) plBar.style.transform = "scaleX(" + e + ")";
+      if (k < 1) requestAnimationFrame(count);
+    })(plT0);
+    window.setTimeout(function () { loader.classList.add("is-leave"); }, MORPH - 260);
+    window.setTimeout(function () {
+      window.clearInterval(plFlick);
+      var r = plFrame.getBoundingClientRect(), vh = window.innerHeight;
+      var plTo = plTarget && plTarget.getBoundingClientRect();
+      var plLand = plTo && plTo.bottom > 120 && plTo.top < vh * 0.5;
+      // pin the frame where it is, then glide it onto the hero (or the full screen)
+      plFrame.style.left = r.left + "px"; plFrame.style.top = r.top + "px"; plFrame.style.width = r.width + "px"; plFrame.style.height = r.height + "px";
+      void plFrame.offsetWidth;
+      loader.classList.add("is-morph");
+      plFrame.style.left = (plLand ? plTo.left : 0) + "px"; plFrame.style.top = (plLand ? plTo.top : 0) + "px";
+      plFrame.style.width = (plLand ? plTo.width : window.innerWidth) + "px"; plFrame.style.height = (plLand ? plTo.height : vh) + "px";
+      plFrame.style.borderRadius = plLand ? window.getComputedStyle(plTarget).borderTopLeftRadius : "0px";
+      window.setTimeout(function () {
+        introHold.forEach(function (v) { try { v.currentTime = 0; } catch (e) {} play(v); });
+        introHold = null;
+        loaded();
+        loader.classList.add(plLand ? "is-fade" : "is-done");
+        window.setTimeout(function () { loader.remove(); }, 1200);
+      }, GLIDE);
+    }, MORPH);
   }
 
   // page-to-page wipe
@@ -230,9 +260,10 @@
     var src = small && v.dataset.srcMobile ? v.dataset.srcMobile : v.dataset.srcDesktop;
     // lighter VP9 WebM where supported (hero clips ship both)
     src = webm(src);
+    if (introHold) { v.autoplay = false; v.removeAttribute("autoplay"); }
     v.src = src;
     v.addEventListener("playing", function () { v.classList.add("is-playing"); }, { once: true });
-    play(v);
+    if (introHold) introHold.push(v); else play(v);
   });
   var loops = document.querySelectorAll("video[data-loop]");
   if ("IntersectionObserver" in window && !reduce) {
@@ -479,6 +510,22 @@
     if (!peak && (m >= 10 || m <= 2)) note += " Winter light films beautifully.";
     return label + ": " + note;
   }
+  // date fields: a tap anywhere on the field (label, text or empty space) opens the calendar
+  function openPicker(inp) {
+    if (typeof inp.showPicker !== "function") { inp.focus(); return; }
+    try { inp.showPicker(); } catch (e) { inp.focus(); }
+  }
+  document.querySelectorAll('input[type="date"]').forEach(function (inp) {
+    inp.addEventListener("click", function () { openPicker(inp); });
+    var host = inp.closest(".datecheck, .field");
+    if (!host) return;
+    host.classList.add("has-date");
+    host.addEventListener("click", function (e) {
+      if (e.target === inp || e.target.closest("button, a, label")) return;
+      openPicker(inp);
+    });
+  });
+
   document.querySelectorAll("[data-datecheck]").forEach(function (f) {
     var input = f.querySelector('input[type="date"]');
     var msg = f.parentElement.querySelector(".datecheck__msg");
@@ -486,7 +533,7 @@
     if (input) input.addEventListener("change", function () { if (msg) msg.textContent = dateInsight(input.value); });
     f.addEventListener("submit", function (e) {
       e.preventDefault();
-      if (!input.value) { input.showPicker ? input.showPicker() : input.focus(); return; }
+      if (!input.value) { openPicker(input); return; }
       track("InitiateCheckout", { content_name: "date_check" });
       store.set("jaw-exit", "1");
       var go = "contact.html?date=" + encodeURIComponent(input.value) + "&src=" + encodeURIComponent(f.dataset.datecheck || "site");
