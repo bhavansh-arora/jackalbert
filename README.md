@@ -24,11 +24,12 @@ All article and location URLs match the current live site, so existing Google ra
 
 ## Design & motion
 
-- Dark cinematic palette (espresso black, champagne gold, ivory) with film grain and ivory "breather" sections.
-- Film-leader countdown intro (first visit), letterbox bars opening over the hero, camera-viewfinder overlay with live timecode.
-- Showreel that grows to full screen as it passes through, swipe/drag film carousel with arrows, scroll-story with sticky images, word-by-word text reveals, gold timeline that fills as you scroll.
-- Custom cursor ("Play" on films), magnetic buttons, 3D-tilt pricing cards, scroll-reactive marquees, page-to-page wipe transitions. Scrolling is fully native: no scroll-jacking or pinned sections.
-- Everything respects reduced-motion settings; phones get swipe galleries and simpler scenes.
+- Palette: deep forest green, wine/burgundy feature sections, champagne gold, ivory. Type: Inter Tight display, Instrument Serif italic accents, Geist Mono labels.
+- Preloader: stills flicker in a frame while a counter runs to 100, then the frame opens into the page (first visit per session).
+- WebGL (`assets/js/gl.js`): the desktop heroes play through a live shader (liquid ripple + chromatic split around the cursor, grade and grain); the homepage film slider uses a displacement transition between films. WebGL never runs on software renderers and pauses off-screen; everything falls back to plain video/images.
+- Studio layout: inset rounded hero with a floating "latest film" card and rotating headline word, inline photo pills in the intro, bento grid, stacked step cards, review cards, contact sheet with grease-pencil marks, ticket pricing, giant gradient wordmark footer.
+- Every clip ships as H.264 MP4 plus a VP9 WebM fallback.
+- Scrolling is fully native; reduced-motion settings are respected.
 
 ## Conversion features
 

@@ -41,8 +41,24 @@
     } else { requestAnimationFrame(loaded); }
   } else {
     store.set("jaw-intro", "1");
-    // the slate claps (CSS, ~1s), then the board lifts away
-    window.setTimeout(function () { loader.classList.add("is-done"); window.setTimeout(loaded, 250); window.setTimeout(function () { loader.remove(); }, 1300); }, 1500);
+    // stills flicker in the frame while the counter runs, then the frame opens to full screen
+    var frames = loader.querySelectorAll(".pl__frame img"), countEl = loader.querySelector("[data-pl-count]");
+    var fi = 0, t0 = performance.now(), DUR = 1700;
+    if (frames.length) frames[0].classList.add("is-on");
+    var flick = window.setInterval(function () {
+      if (!frames.length) return;
+      frames[fi].classList.remove("is-on"); fi = (fi + 1) % frames.length; frames[fi].classList.add("is-on");
+    }, 120);
+    (function count(t) {
+      var k = Math.min(1, (t - t0) / DUR);
+      if (countEl) countEl.textContent = Math.round(100 * (1 - Math.pow(1 - k, 2)));
+      if (k < 1) { requestAnimationFrame(count); return; }
+      window.clearInterval(flick);
+      frames.forEach(function (f) { f.classList.remove("is-on"); });
+      if (frames[0]) frames[0].classList.add("is-on");
+      loader.classList.add("is-expand");
+      window.setTimeout(function () { loader.classList.add("is-done"); window.setTimeout(loaded, 150); window.setTimeout(function () { loader.remove(); }, 1300); }, 950);
+    })(t0);
   }
 
   // page-to-page wipe
@@ -204,10 +220,17 @@
   /* ======================================================================
      Video handling
      ====================================================================== */
+  // every clip ships as MP4 (H.264, hardware-decoded almost everywhere) plus a VP9 WebM fallback
+  // for browsers without H.264 support
+  var VP9 = (function () { try { var v = document.createElement("video"); return !v.canPlayType('video/mp4; codecs="avc1.42E01E"') && !!v.canPlayType('video/webm; codecs="vp9"'); } catch (e) { return false; } })();
+  function webm(src) { return VP9 && /\.mp4$/.test(src) ? src.replace(/\.mp4$/, ".webm") : src; }
   function play(v) { var p = v.play(); if (p && p.catch) p.catch(function () {}); }
   document.querySelectorAll("video[data-src-desktop]").forEach(function (v) {
     if (reduce) return;
-    v.src = small && v.dataset.srcMobile ? v.dataset.srcMobile : v.dataset.srcDesktop;
+    var src = small && v.dataset.srcMobile ? v.dataset.srcMobile : v.dataset.srcDesktop;
+    // lighter VP9 WebM where supported (hero clips ship both)
+    src = webm(src);
+    v.src = src;
     v.addEventListener("playing", function () { v.classList.add("is-playing"); }, { once: true });
     play(v);
   });
@@ -217,7 +240,7 @@
       entries.forEach(function (en) {
         var v = en.target;
         if (en.isIntersecting) {
-          if (!v.getAttribute("src") && v.dataset.src) v.src = v.dataset.src;
+          if (!v.getAttribute("src") && v.dataset.src) v.src = webm(v.dataset.src);
           v.addEventListener("playing", function () { v.classList.add("is-playing"); }, { once: true });
           play(v);
         } else if (!v.paused) v.pause();
@@ -229,7 +252,7 @@
     if (!fine || reduce) return;
     var v = f.querySelector("video");
     if (!v) return;
-    f.addEventListener("mouseenter", function () { if (!v.getAttribute("src")) v.src = f.dataset.preview; f.classList.add("is-previewing"); play(v); });
+    f.addEventListener("mouseenter", function () { if (!v.getAttribute("src")) v.src = webm(f.dataset.preview); f.classList.add("is-previewing"); play(v); });
     f.addEventListener("mouseleave", function () { f.classList.remove("is-previewing"); v.pause(); });
   });
 
@@ -549,7 +572,7 @@
     var vids = {};
     fi.querySelectorAll("[data-preview]").forEach(function (row) {
       var v = document.createElement("video");
-      v.muted = true; v.loop = true; v.playsInline = true; v.preload = "none"; v.dataset.src = row.dataset.preview;
+      v.muted = true; v.loop = true; v.playsInline = true; v.preload = "none"; v.dataset.src = webm(row.dataset.preview);
       pv.appendChild(v); vids[row.dataset.preview] = v;
     });
     body.appendChild(pv);
@@ -724,6 +747,29 @@
     var railVis = function () { if (!railMq.matches) return; var y = window.scrollY; rail.classList.toggle("is-on", y > M.heroH * 0.75 && y + M.vh < M.docH - 900); };
     window.addEventListener("scroll", railVis, { passive: true }); railVis();
   }
+
+  // hero word rotator: felt → heard → lived
+  document.querySelectorAll("[data-rotate]").forEach(function (rot) {
+    var words = rot.getAttribute("data-rotate").split("|"), w = rot.querySelector(".rot__w"), i = 0;
+    if (reduce || words.length < 2) return;
+    window.setInterval(function () {
+      if (document.hidden) return;
+      w.classList.add("is-out");
+      window.setTimeout(function () {
+        i = (i + 1) % words.length; w.textContent = words[i];
+        w.classList.remove("is-out"); w.classList.add("is-pre");
+        void w.offsetWidth; w.classList.remove("is-pre");
+      }, 520);
+    }, 2600);
+  });
+
+  // inline photo pills open as the sentence comes into view
+  if ("IntersectionObserver" in window) {
+    var po = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add("is-in"); po.unobserve(en.target); } });
+    }, { rootMargin: "0px 0px -15% 0px" });
+    document.querySelectorAll(".pill").forEach(function (p, k) { p.style.transitionDelay = (k * 0.12) + "s"; po.observe(p); });
+  } else document.querySelectorAll(".pill").forEach(function (p) { p.classList.add("is-in"); });
 
   // pause decorative loops while they are off-screen
   if ("IntersectionObserver" in window) {

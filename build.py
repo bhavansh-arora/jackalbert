@@ -356,6 +356,65 @@ def contact_sheet(caption="Selects · Real weddings, real moments"):
 ORNAMENT = '<div class="ornament" aria-hidden="true"><span></span><svg viewBox="0 0 40 20"><path d="M20 2c2 5 6 8 12 8-6 0-10 3-12 8-2-5-6-8-12-8 6 0 10-3 12-8z"/></svg><span></span></div>'
 
 
+# ---------------------------------------------------------------- studio components (v3)
+def fs_slider():
+    slides = titles = metas = bars = ""
+    for i, (k, f) in enumerate(FILMS.items()):
+        t = f["couple"].replace("&amp;", "&")
+        act = " is-active" if i == 0 else ""
+        slides += f'<div class="fs__slide{act}" data-slide data-img="assets/img/{f["img"]}" data-yt="{f["yt"]}" data-title="{t} — {f["place"]}"><img src="assets/img/{f["img"]}" alt="Still from {t}’s wedding film" loading="lazy"></div>'
+        a, b = f["couple"].split(" &amp; ")
+        titles += f'<h3 class="fs__title{act}"><span>{a}</span> <em>&amp;</em> <span>{b}</span></h3>'
+        metas += f'<p class="fs__meta{act}">{f["place"]}</p>'
+        bars += '<span role="button" tabindex="0" aria-label="Film ' + str(i + 1) + '"><i></i></span>'
+    first = next(iter(FILMS.values()))
+    return f'''<section class="fs" data-gl-slider tabindex="0" aria-label="Selected films">
+  <div class="fs__stage" data-cursor="Drag">{slides}</div>
+  <div class="fs__shade"></div>
+  <div class="fs__ui">
+    <div class="fs__top container"><p class="label label--light"><span>(03)</span><span>Selected films</span></p><span class="fs__count"><b data-fs-cur>01</b> / 0{len(FILMS)}</span></div>
+    <div class="fs__mid container"><div class="fs__titles">{titles}</div></div>
+    <div class="fs__bottom container">
+      <div class="fs__metas">{metas}</div>
+      <div class="fs__controls">
+        <button class="fs__btn" type="button" data-fs="-1" aria-label="Previous film">{ARROW}</button>
+        <button class="fs__play" type="button" data-fs-play data-yt="{first["yt"]}" data-title="Film">Play film {PLAY}</button>
+        <button class="fs__btn" type="button" data-fs="1" aria-label="Next film">{ARROW}</button>
+      </div>
+    </div>
+    <div class="fs__bars container">{bars}</div>
+  </div>
+</section>'''
+
+
+STEPS_V3 = [
+    ("Day 1", "Inquire", "Share your date, venue and what matters most. You’ll get a quick text so you know it arrived, then a reply by email within 24 hours.", "bree-portrait.jpg"),
+    ("Within a week", "Connect", "A relaxed call to make sure we’re the right fit. Tell me about the two of you, your people, and the moments you can’t imagine missing.", "about-jack.jpg"),
+    ("Weeks before", "Plan your story", "We shape the timeline and filming plan around your people and priorities, with buffer where it counts so nothing gets rushed.", "cake-detail.jpg"),
+    ("The day", "Your wedding day", "Calm direction when it helps, with space for the real moments to unfold. One familiar face, mostly invisible.", "aisle-father.jpg"),
+    ("6–8 weeks", "Relive it", "Your finished film arrives in a private 4K gallery, yours to download, keep and watch on every anniversary.", "reel-poster.jpg"),
+]
+
+
+def steps_stack():
+    cards = ""
+    for i, (tag, t, d, img) in enumerate(STEPS_V3):
+        cards += f'''<article class="stack__card" style="--i:{i}">
+      <div class="stack__text"><div class="stack__top"><span>Step 0{i + 1} / 0{len(STEPS_V3)}</span><span class="chip">{tag}</span></div><h3>{t}</h3><p>{d}</p></div>
+      <div class="stack__img"><img src="assets/img/{img}" alt="" loading="lazy"></div>
+    </article>'''
+    return f'<div class="stack">{cards}</div>'
+
+
+def review_cards():
+    imgs = ["preview-shelby-bobby.jpg", "skyline-dance.jpg", "aisle-father.jpg", "bride-window.jpg"]
+    cards = ""
+    for (q, who), img in zip(REVIEWS, imgs):
+        cards += f'''<figure class="rcard reveal"><div class="rcard__img"><img src="assets/img/{img}" alt="" loading="lazy"></div>
+      <blockquote><p>“{q}”</p></blockquote><figcaption><span>{who}</span><span class="rcard__q" aria-hidden="true">“</span></figcaption></figure>'''
+    return f'<div class="rcards">{cards}</div>'
+
+
 HEROES = {
     # key: (scene label, eyebrow, title, sub, poster, video or None, buttons html, size)
     "films": ("Scene 02 · The Films", "The Films", 'Real days, <em class="gold-text">kept forever.</em>',
@@ -402,7 +461,7 @@ def page_hero(scene, eyebrow, title, sub, poster, video, buttons, size="", crumb
            if video else "")
     cls = "hero hero--page" + (" hero--short" if size == "short" else "")
     return f'''<section class="{cls}" data-hero aria-label="Introduction">
-  <div class="hero__media"><img src="assets/img/{poster}" alt="" fetchpriority="high">{vid}</div>
+  <div class="hero__media"{' data-gl-video' if video else ''}><img src="assets/img/{poster}" alt="" fetchpriority="high">{vid}</div>
   <div class="hero__scrim"></div>
   <div class="letterbox letterbox--top"></div>
   <div class="letterbox letterbox--bottom"></div>
@@ -486,6 +545,9 @@ SNIPPETS = {
     "marquee_words": marquee(["Warm", "Cinematic", "Honest", "Timeless", "Yours"]),
 }
 SNIPPETS["mosaic"] = mosaic()
+SNIPPETS["fs_slider"] = fs_slider()
+SNIPPETS["steps_stack"] = steps_stack()
+SNIPPETS["review_cards"] = review_cards()
 SNIPPETS["contact_sheet"] = contact_sheet()
 SNIPPETS["actrail"] = actrail()
 SNIPPETS["ornament"] = ORNAMENT
@@ -579,7 +641,7 @@ def head(title, description, path, extra=""):
 <link rel="manifest" href="site.webmanifest">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Mono:wght@400&family=Pinyon+Script&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600&family=Instrument+Serif:ital@0;1&family=Geist+Mono:wght@400;500&family=Pinyon+Script&display=swap" rel="stylesheet">
 <script>document.documentElement.classList.add("js");try{{if(sessionStorage.getItem("jaw-intro")==="1")document.documentElement.classList.add("no-loader")}}catch(e){{}}</script>
 <link rel="stylesheet" href="assets/css/site.css?v={VERSION}">
 {extra}
@@ -600,14 +662,10 @@ def header(active, over_hero):
     cls = "site-header is-over-hero" if over_hero else "site-header"
     return f'''<a class="skip-link" href="#main">Skip to content</a>
 <div class="loader" aria-hidden="true">
-  <div class="slate">
-    <div class="slate__clap"><span class="slate__stick slate__stick--top"></span><span class="slate__stick"></span></div>
-    <div class="slate__board">
-      <div class="slate__row slate__row--big"><span>Production</span><b>Your Wedding Film</b></div>
-      <div class="slate__grid"><div><span>Director</span><b>Jack Albert</b></div><div><span>Scene</span><b>01</b></div><div><span>Take</span><b>01</b></div></div>
-      <div class="slate__grid slate__grid--2"><div><span>Roll</span><b>A001</b></div><div><span>Location</span><b>Ottawa Valley</b></div><div><span>Date</span><b data-today>—</b></div></div>
-    </div>
-  </div>
+  <div class="pl__frame"><img src="assets/img/hero-poster.jpg" alt=""><img src="assets/img/bree-portrait.jpg" alt=""><img src="assets/img/champagne.jpg" alt=""><img src="assets/img/skyline-dance.jpg" alt=""><img src="assets/img/aisle-father.jpg" alt=""><img src="assets/img/cake-detail.jpg" alt=""><img src="assets/img/bride-window.jpg" alt=""><img src="assets/img/pembroke-kiss.jpg" alt=""><img src="assets/img/reel-poster.jpg" alt=""></div>
+  <div class="pl__brand"><span>Jack Albert</span><em>wedding films</em></div>
+  <div class="pl__meta">Ottawa Valley · Ontario<br>Est. for the moments you’ll feel again</div>
+  <div class="pl__count"><span data-pl-count>0</span><sup>%</sup></div>
 </div>
 <div class="curtain" aria-hidden="true"><div class="curtain__mark">Jack Albert</div></div>
 <div class="announce"><a href="contact.html?src=bar"><span class="dot"></span>Now booking 2027 &amp; 2028 weddings · Check your date {ARROW}</a></div>
@@ -636,16 +694,17 @@ def header(active, over_hero):
 
 
 def footer(show_cta=True):
-    cta = f'''<div class="credits">
-      <p class="credits__label">— End Credits —</p>
-      <dl class="credits__list">
-        <div class="reveal"><dt>Starring</dt><dd>You &amp; your people</dd></div>
-        <div class="reveal"><dt>Directed, filmed &amp; edited by</dt><dd>Jack Albert</dd></div>
-        <div class="reveal"><dt>Filmed on location in</dt><dd>The Ottawa Valley, Pembroke, Ottawa, Kingston &amp; beyond</dd></div>
-        <div class="reveal"><dt>Original score</dt><dd>Your vows, your speeches, your first dance</dd></div>
-        <div class="reveal"><dt>Running time</dt><dd>Forever · delivered in 6–8 weeks</dd></div>
-      </dl>
-      <div class="actions credits__cta reveal"><a class="btn btn--gold magnetic" href="contact.html?src=credits">Check your date {ARROW}</a><a class="btn btn--ghost-light magnetic" href="{BRAND["calendly"]}" target="_blank" rel="noopener">Book a call</a></div>
+    cta = f'''<div class="closer">
+      <div class="closer__left">
+        <p class="label"><span>(Fin)</span><span>Your story, next</span></p>
+        <h2 class="display-xl closer__title" data-split>Let’s tell <em>your story.</em></h2>
+        <p class="closer__sub">Dates for 2027 and 2028 are booking now. Share a few details and Jack replies within 24 hours.</p>
+        <div class="closer__form">{datecheck("footer", "Your date", "Check my date")}</div>
+      </div>
+      <a class="closer__circle magnetic" href="contact.html?src=footer-circle" aria-label="Check your date">
+        <span class="spin"><svg viewBox="0 0 120 120" aria-hidden="true"><defs><path id="cc" d="M60 60m-48 0a48 48 0 1 1 96 0a48 48 0 1 1-96 0"/></defs><text><textPath href="#cc">Check your date · Check your date · </textPath></text></svg></span>
+        {ARROW}
+      </a>
     </div>''' if show_cta else ""
     return f'''<footer class="site-footer">
   <div class="container">
@@ -687,7 +746,7 @@ def footer(show_cta=True):
         </ul>
       </div>
     </div>
-    <div class="footer-fin" aria-hidden="true"><span class="footer-fin__word">Fin.</span>{mono("ftr", "mono mono--ftr")}</div>
+    <div class="footer-name" aria-hidden="true">Jack Albert</div>
     <div class="footer-bottom">
       <span>© <span data-year>{date.today().year}</span> Jack Albert Weddings · Ottawa Valley, Ontario</span>
       <span><a href="privacy.html">Privacy</a></span>
@@ -724,6 +783,7 @@ def footer(show_cta=True):
   </div>
 </div>
 <script src="assets/js/site.js?v={VERSION}" defer></script>
+<script src="assets/js/gl.js?v={VERSION}" defer></script>
 </body>
 </html>'''
 
@@ -773,7 +833,8 @@ def render(path, meta, body, posts):
     out += f'\n<body data-cal-url="{BRAND["calendly"]}">\n' + header(meta.get("nav", ""), meta.get("hero") == "dark")
     out += '\n<main id="main">\n' + expand(body, posts) + "\n</main>\n"
     # pages ending in the full-bleed CTA band don't need the footer CTA as well
-    show_cta = meta.get("footer_cta", "yes") != "no"
+    # pages that end with the invitation band don't repeat the closing CTA
+    show_cta = meta.get("footer_cta", "yes") != "no" and "{{cta_band}}" not in body
     out += footer(show_cta)
     out = out.replace(f'href="{BRAND["calendly"]}"', f'href="{BRAND["calendly"]}" data-calendly')
     (OUT / path).write_text(out)
