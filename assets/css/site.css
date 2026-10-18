@@ -151,7 +151,7 @@ body::after {
 .btn--sm { min-height: 44px; padding: 0 22px; font-size: 11px; }
 .btn--block { width: 100%; }
 .btn svg:not(.arrow) { width: 14px; height: 14px; }
-.magnetic { will-change: transform; }
+.magnetic:hover { will-change: transform; }
 
 .link-line {
   position: relative; display: inline-flex; align-items: center; gap: 12px; padding-bottom: 8px;
@@ -353,7 +353,6 @@ body::after {
 .js .reveal-img img, .js .reveal-img video { transform: scale(1.25); transition: transform 2.2s var(--ease); }
 .js .reveal-img.is-visible { clip-path: inset(0 0 0 0); }
 .js .reveal-img.is-visible img, .js .reveal-img.is-visible video { transform: scale(1); }
-[data-speed] { will-change: transform; }
 
 /* ---------- statement ---------- */
 .statement { display: grid; grid-template-columns: 5fr 7fr; gap: clamp(40px, 7vw, 130px); align-items: center; }
@@ -361,7 +360,7 @@ body::after {
 .statement__media .frame-img { aspect-ratio: 4 / 5; }
 .badge-spin { position: absolute; right: -40px; bottom: 44px; width: 140px; height: 140px; border-radius: 50%; background: var(--bg); display: grid; place-items: center; z-index: 2; }
 .badge-spin svg { width: 124px; height: 124px; }
-.spin { display: block; line-height: 0; animation: spin 24s linear infinite; will-change: transform; }
+.spin { display: block; line-height: 0; animation: spin 24s linear infinite; }
 .badge-spin text { font-family: var(--mono); font-size: 9.4px; letter-spacing: .3em; text-transform: uppercase; fill: var(--fg); }
 .badge-spin .dot { fill: var(--gold); }
 @keyframes spin { to { transform: rotate(360deg); } }

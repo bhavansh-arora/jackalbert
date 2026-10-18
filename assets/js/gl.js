@@ -103,7 +103,7 @@
   }
   function visible(el, cb) {
     if (!("IntersectionObserver" in window)) { cb(true); return; }
-    new IntersectionObserver(function (e) { cb(e[0].isIntersecting); }, { rootMargin: "80px" }).observe(el);
+    new IntersectionObserver(function (e) { cb(e[e.length - 1].isIntersecting); }, { rootMargin: "80px" }).observe(el);
   }
   function pointer(el) {
     var s = { x: .5, y: .5, tx: .5, ty: .5, h: 0, th: 0 };
@@ -113,6 +113,7 @@
     }, { passive: true });
     el.addEventListener("pointerleave", function () { s.th = 0; });
     s.step = function () { s.x += (s.tx - s.x) * .08; s.y += (s.ty - s.y) * .08; s.h += (s.th - s.h) * .05; };
+    s.moving = function () { return Math.abs(s.tx - s.x) + Math.abs(s.ty - s.y) + Math.abs(s.th - s.h) > .002; };
     return s;
   }
 
@@ -131,22 +132,34 @@
     host.appendChild(canvas);
     var resize = sizer(canvas, gl, prog);
     var ptr = pointer(host.closest("[data-hero]") || host);
-    var on = true, ready = false, t0 = performance.now(), lastY = window.scrollY, vel = 0, frames = 0, checks = 0, lastT = -1;
-    visible(host, function (v) { on = v; if (v) loop(); });
+    var on = false, running = false, dead = false, ready = false, t0 = performance.now(), lastY = window.scrollY, vel = 0, frames = 0, checks = 0, lastT = -1, tw = 0, th = 0;
+    // exactly one render loop at a time: it stops when the hero is off screen, the tab is hidden or the GPU drops the context
+    function start() { if (running || !on || dead || document.hidden) return; running = true; requestAnimationFrame(loop); }
+    function fallback() { dead = true; host.classList.remove("gl-on"); if (canvas.parentNode) canvas.remove(); }
+    visible(host, function (v) { on = v; start(); });
+    document.addEventListener("visibilitychange", start);
+    canvas.addEventListener("webglcontextlost", function (e) { e.preventDefault(); fallback(); });
     window.addEventListener("resize", resize);
     function loop() {
-      if (!on) return;
+      if (!on || dead || document.hidden) { running = false; return; }
       requestAnimationFrame(loop);
       resize(); ptr.step();
       var y = window.scrollY; vel += (Math.min(1, Math.abs(y - lastY) / 40) - vel) * .1; lastY = y;
+      var fresh = false;
       if (video.readyState >= 2 && video.videoWidth && video.currentTime !== lastT) {
-        lastT = video.currentTime;
+        lastT = video.currentTime; fresh = true;
         gl.bindTexture(gl.TEXTURE_2D, tex);
-        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, video);
-        gl.uniform2f(prog.u("uTexRes"), video.videoWidth, video.videoHeight);
+        // allocate once, then update in place: re-allocating a 1080p texture every frame wears the GPU down over time
+        if (video.videoWidth !== tw || video.videoHeight !== th) {
+          tw = video.videoWidth; th = video.videoHeight;
+          gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, video);
+          gl.uniform2f(prog.u("uTexRes"), tw, th);
+        } else gl.texSubImage2D(gl.TEXTURE_2D, 0, 0, 0, gl.RGB, gl.UNSIGNED_BYTE, video);
         if (!ready) { ready = true; host.classList.add("gl-on"); }
       }
       if (!ready) return;
+      // between video frames, only redraw while the ripple or scroll wobble is moving
+      if (!fresh && ptr.h < .003 && vel < .003 && !ptr.moving()) return;
       gl.uniform1f(prog.u("uTime"), (performance.now() - t0) / 1000);
       gl.uniform2f(prog.u("uMouse"), ptr.x, ptr.y);
       gl.uniform1f(prog.u("uHover"), ptr.h);
@@ -158,10 +171,9 @@
         var px = new Uint8Array(4), lit = 0;
         [[.3, .3], [.5, .5], [.7, .6], [.5, .8]].forEach(function (q) { gl.readPixels(Math.floor(canvas.width * q[0]), Math.floor(canvas.height * q[1]), 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, px); lit += px[0] + px[1] + px[2]; });
         if (lit > 40) checks = 99;
-        else if (checks >= 12) { on = false; host.classList.remove("gl-on"); canvas.remove(); }
+        else if (checks >= 12) fallback();
       }
     }
-    loop();
   }
 
   /* ---------------------------------------------------------------- film slider */
@@ -208,8 +220,18 @@
       var ptr = pointer(stage);
       var t0 = performance.now();
       window.addEventListener("resize", resize);
+      var running = false, dead = false, idle = 0;
+      var wake = function () { idle = 0; if (running || !inView || dead || document.hidden) return; running = true; requestAnimationFrame(render); };
+      stage.addEventListener("pointermove", wake, { passive: true });
+      stage.addEventListener("pointerleave", wake);
+      document.addEventListener("visibilitychange", wake);
+      canvas.addEventListener("webglcontextlost", function (e) {
+        e.preventDefault(); dead = true; root.classList.remove("gl-on"); root.classList.add("gl-off");
+        slides.forEach(function (s, k) { s.classList.toggle("is-active", k === idx); });
+      });
       var render = function () {
-        if (!inView) return;
+        // settled, no hover, nothing transitioning: draw a few more frames then sleep until something changes
+        if (!inView || dead || document.hidden || (!busy && !ptr.moving() && ptr.h < .003 && ++idle > 3)) { running = false; return; }
         requestAnimationFrame(render);
         resize(); ptr.step();
         p += (target - p) * .045;
@@ -226,7 +248,7 @@
         gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
         if (p === 1 && busy) { busy = false; from = to; p = 0; target = 0; }
       };
-      visible(root, function (v) { inView = v; if (v) render(); auto(); });
+      visible(root, function (v) { inView = v; wake(); auto(); });
     } else {
       root.classList.add("gl-off");
       visible(root, function (v) { inView = v; auto(); });
@@ -236,7 +258,7 @@
       i = (i + n) % n;
       if (i === idx || busy) return;
       dir = d || (i > idx ? 1 : -1);
-      if (gl) { from = idx; to = i; p = 0; target = 1; busy = true; }
+      if (gl && !dead) { from = idx; to = i; p = 0; target = 1; busy = true; wake(); }
       else slides.forEach(function (s, k) { s.classList.toggle("is-active", k === i); });
       idx = i; setText(i); auto();
     }

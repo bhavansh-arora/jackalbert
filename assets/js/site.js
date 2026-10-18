@@ -217,8 +217,17 @@
     body.classList.add("has-cursor");
     var ring = cur.querySelector(".cursor__ring"), dot = cur.querySelector(".cursor__dot"), lab = cur.querySelector(".cursor__label");
     var mx = -100, my = -100, rx = -100, ry = -100;
-    window.addEventListener("mousemove", function (e) { mx = e.clientX; my = e.clientY; dot.style.transform = "translate(" + mx + "px," + my + "px)"; }, { passive: true });
-    (function loop() { rx += (mx - rx) * 0.18; ry += (my - ry) * 0.18; ring.style.transform = "translate(" + rx + "px," + ry + "px)"; requestAnimationFrame(loop); })();
+    // the ring eases after the pointer and sleeps once it has caught up
+    var ringOn = false;
+    function ringLoop() {
+      rx += (mx - rx) * 0.18; ry += (my - ry) * 0.18;
+      ring.style.transform = "translate(" + rx + "px," + ry + "px)";
+      if (Math.abs(mx - rx) + Math.abs(my - ry) > 0.4) requestAnimationFrame(ringLoop); else ringOn = false;
+    }
+    window.addEventListener("mousemove", function (e) {
+      mx = e.clientX; my = e.clientY; dot.style.transform = "translate(" + mx + "px," + my + "px)";
+      if (!ringOn) { ringOn = true; requestAnimationFrame(ringLoop); }
+    }, { passive: true });
     document.addEventListener("mouseover", function (e) {
       var l = e.target.closest("[data-cursor]");
       var a = e.target.closest("a, button, summary, label, input, select, textarea");
@@ -264,6 +273,14 @@
     v.src = src;
     v.addEventListener("playing", function () { v.classList.add("is-playing"); }, { once: true });
     if (introHold) introHold.push(v); else play(v);
+  });
+  // while the tab sits in the background nothing decodes; on return only the clips that were playing resume
+  var napping = [];
+  document.addEventListener("visibilitychange", function () {
+    if (document.hidden) {
+      napping = Array.prototype.filter.call(document.querySelectorAll("video"), function (v) { return !v.paused; });
+      napping.forEach(function (v) { v.pause(); });
+    } else { napping.forEach(play); napping = []; }
   });
   var loops = document.querySelectorAll("video[data-loop]");
   if ("IntersectionObserver" in window && !reduce) {
@@ -624,8 +641,14 @@
     });
     body.appendChild(pv);
     var px = 0, py = 0, tx = 0, ty = 0;
-    fi.addEventListener("mousemove", function (e) { tx = e.clientX; ty = e.clientY; });
-    (function loop() { px += (tx - px) * 0.12; py += (ty - py) * 0.12; pv.style.left = px + "px"; pv.style.top = py + "px"; requestAnimationFrame(loop); })();
+    // the preview follows on the compositor (translate, not left/top) and sleeps when it has arrived
+    var pvOn = false;
+    function pvLoop() {
+      px += (tx - px) * 0.12; py += (ty - py) * 0.12;
+      pv.style.translate = px + "px " + py + "px";
+      if (Math.abs(tx - px) + Math.abs(ty - py) > 0.4) requestAnimationFrame(pvLoop); else pvOn = false;
+    }
+    fi.addEventListener("mousemove", function (e) { tx = e.clientX; ty = e.clientY; if (!pvOn) { pvOn = true; requestAnimationFrame(pvLoop); } });
     fi.querySelectorAll("[data-preview]").forEach(function (row) {
       row.addEventListener("mouseenter", function () {
         var v = vids[row.dataset.preview];
